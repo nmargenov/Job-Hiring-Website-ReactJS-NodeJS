@@ -66,6 +66,10 @@ exports.setupProfile = async (userID, firstName, lastName, phone) =>{
         throw new Error("User not found");
     }
 
+    if(user.isSetup){
+        throw new Error("Account setup has already been completed")
+    }
+
     user.firstName = firstName;
     user.lastName = lastName;
     user.phone = phone;

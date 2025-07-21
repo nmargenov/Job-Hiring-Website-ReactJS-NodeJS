@@ -12,7 +12,6 @@ exports.MustBeSetup = (req,res,next)=>{
 
 exports.MustNotBeSetup = (req,res,next)=>{
     try{
-        console.log(req.user);
         if(req.user?.isSetup){
             throw new Error('Account setup has already been completed');
         }else{
