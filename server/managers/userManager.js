@@ -3,6 +3,9 @@ const LoginCode = require("../models/LoginCode");
 
 const transporter = require("../config/nodemailerConfig");
 const { emailRegex } = require("../utils/regex");
+const { sign, verify } = require("../utils/jwt");
+
+const SECRET = process.env.SECRET;
 
 exports.sendCode = async (email) =>{
     const code = Math.floor(100000 + Math.random() * 900000).toString(); //6 digits code
@@ -30,4 +33,32 @@ exports.sendCode = async (email) =>{
     }catch(err){
         return {message: err.message};
     }
+}
+
+exports.verifyCode = async (email,code) => {
+    const login = await LoginCode.findOne({ email, code, expiresAt: { $gt: new Date() } }); // checks for login with email and code and valid expiresAt date 
+    if(!login){
+        throw new Error("Invalid or expired login code!");
+    }
+
+    let user = await User.findOne({email}); //checks for existing user
+    if(!user){
+        user = await User.create({email}); //creates an user if not existing
+    }
+
+    await LoginCode.deleteMany({email}); //deletes all existing codes for the user in the database(manages storage)
+
+    const token = returnToken(user);
+    return token;
+    
+}
+
+async function returnToken(user){
+    const payload = {
+        _id: user._id,
+        email: user.email,
+        role: user.role
+    };
+
+    return await sign(payload, SECRET, {expiresIn: '7d'});
 }
