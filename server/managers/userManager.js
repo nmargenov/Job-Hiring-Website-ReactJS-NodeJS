@@ -1,0 +1,33 @@
+const User = require("../models/User");
+const LoginCode = require("../models/LoginCode");
+
+const transporter = require("../config/nodemailerConfig");
+const { emailRegex } = require("../utils/regex");
+
+exports.sendCode = async (email) =>{
+    const code = Math.floor(100000 + Math.random() * 900000).toString(); //6 digits code
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000); //10 mins
+
+    if(!emailRegex.test(email)){
+        throw new Error("Invalid email!"); // checks if the email is valid or not
+    }
+
+    await LoginCode.findOneAndUpdate(
+        {email},
+        {code, expiresAt},
+        {upsert: true, new: true}
+    ); //creates new login in the database or updates the existing code
+
+    try{
+        await transporter.sendMail({
+            from: 'no-reply@jobsite.com',
+            to: email,
+            subject: 'Your Login Code',
+            text: `Your login code is: ${code} and is valid for 10 minutes.`,
+        });
+
+        return {message:"Email sent"};
+    }catch(err){
+        return {message: err.message};
+    }
+}

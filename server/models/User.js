@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const emailRegex = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
+const { emailRegex } = require("../utils/regex");
 
 const userSchema = new mongoose.Schema({
     email:{
