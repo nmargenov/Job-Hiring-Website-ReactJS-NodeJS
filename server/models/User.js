@@ -17,6 +17,24 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ["seeker","hirer","admin"],
         default: 'seeker'
+    },
+    phone: {
+        type: String,
+        default: '',
+    },
+    firstName: {
+        type: String,
+        default: '',
+        maxLength: [30, 'First name must be up to 30 characters!'],
+    },
+    lastName: {
+        type: String,
+        default: '',
+        maxLength: [30, 'Last name must be up to 30 characters!'],
+    },
+        isSetup: {
+        type: Boolean,
+        default: false,
     }
 }, { timestamps: true });
 
