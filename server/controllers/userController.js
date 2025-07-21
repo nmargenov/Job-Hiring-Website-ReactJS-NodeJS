@@ -1,11 +1,14 @@
-const { sendCode, verifyCode } = require('../managers/userManager');
-const { mustBeGuest } = require('../middlewares/authMiddleware');
+const { sendCode, verifyCode, setupProfile } = require('../managers/userManager');
+const { mustBeGuest, mustBeAuth } = require('../middlewares/authMiddleware');
+const { MustNotBeSetup } = require('../middlewares/isSetupMiddleware');
+const { formatErrorMessage } = require('../utils/errorMessage');
 
 const router = require('express').Router();
 
 const paths = {
     login: '/login',
-    verifyCode: '/verifycode'
+    verifyCode: '/verifycode',
+    setupProfile: '/setupprofile'
 }
 
 router.post(paths.login, mustBeGuest,async (req,res)=>{
@@ -14,7 +17,8 @@ router.post(paths.login, mustBeGuest,async (req,res)=>{
         await sendCode(email);
         res.status(200).send({message:"Code is sent successfully!"});
     }catch(err){
-        res.status(400).send({message: err.message});
+        const error = formatErrorMessage(err);
+        res.status(400).send({message: error});
     }
 });
 
@@ -25,8 +29,21 @@ router.post(paths.verifyCode, mustBeGuest, async(req,res)=>{
         const token = await verifyCode(email,code);
         res.status(200).json(token);
     }catch(err){
-        res.status(400).send({message: err.message});
-    }
+        const error = formatErrorMessage(err);
+        res.status(400).send({message: error});    }
+});
+
+router.post(paths.setupProfile, mustBeAuth, MustNotBeSetup, async (req,res) =>{
+    try{
+        const firstName = req.body.firstName?.trim();
+        const lastName = req.body.lastName?.trim();
+        const phone = req.body.phone?.trim();
+        const userID = req.user._id;
+        const token = await setupProfile(userID,firstName,lastName,phone);
+        res.status(200).json(token);
+    }catch(err){
+        const error = formatErrorMessage(err);
+        res.status(400).send({message: error});    }
 });
 
 module.exports = router;

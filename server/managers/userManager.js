@@ -59,11 +59,41 @@ exports.verifyCode = async (email,code) => {
     
 }
 
+exports.setupProfile = async (userID, firstName, lastName, phone) =>{
+
+    const user = await User.findById(userID);
+    if (!user) {
+        throw new Error("User not found");
+    }
+
+    user.firstName = firstName;
+    user.lastName = lastName;
+    user.phone = phone;
+    user.isSetup = true;
+
+    await user.save(); //Will throw if firstName, lastName, or phone are invalid
+
+    return returnToken(user);
+};
+
+async function changeFirstName(userID, firstName){
+    return user = await User.findByIdAndUpdate(userID, {firstName});
+}
+
+async function changeLastName(userID, lastName){
+    return user = await User.findByIdAndUpdate(userID, {lastName});
+}
+
+async function changePhoneNumber(userID, phone){
+    return user = await User.findByIdAndUpdate(userID, {phone});
+}
+
 async function returnToken(user){
     const payload = {
         _id: user._id,
-        email: user.email,
-        role: user.role
+        firstName: user.firstName,
+        role: user.role,
+        isSetup: user.isSetup
     };
 
     return await sign(payload, SECRET, {expiresIn: '7d'});
