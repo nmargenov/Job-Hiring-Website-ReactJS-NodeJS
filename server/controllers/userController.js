@@ -1,4 +1,5 @@
 const { sendCode, verifyCode } = require('../managers/userManager');
+const { mustBeGuest } = require('../middlewares/authMiddleware');
 
 const router = require('express').Router();
 
@@ -7,7 +8,7 @@ const paths = {
     verifyCode: '/verifycode'
 }
 
-router.post(paths.login,async (req,res)=>{
+router.post(paths.login, mustBeGuest,async (req,res)=>{
     try{
         const email = req.body.email?.trim();
         await sendCode(email);
@@ -17,7 +18,7 @@ router.post(paths.login,async (req,res)=>{
     }
 });
 
-router.post(paths.verifyCode, async(req,res)=>{
+router.post(paths.verifyCode, mustBeGuest, async(req,res)=>{
     try{
         const email = req.body.email?.trim();
         const code = req.body.code?.trim();

@@ -16,9 +16,6 @@ exports.sendCode = async (email) =>{
     }
 
     const existing = await LoginCode.findOne({ email });
-    console.log(new Date());
-    console.log(existing);
-    console.log(new Date);
     if (existing && new Date() - existing.updatedAt < 60 * 1000) {
         throw new Error('Please wait 60 seconds before requesting another code.'); //make sure only 1 code can be send in 1 minute timer (anti-spam)
     }
