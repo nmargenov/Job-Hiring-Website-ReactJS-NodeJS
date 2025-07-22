@@ -1,7 +1,5 @@
 const router = require('express').Router();
 
-const paths = {
-   
-}
+const { PATHS } = require('../utils/paths');
 
 module.exports = router;

@@ -5,13 +5,9 @@ const { formatErrorMessage } = require('../utils/errorMessage');
 
 const router = require('express').Router();
 
-const paths = {
-    login: '/login',
-    verifyCode: '/verifycode',
-    setupProfile: '/setupprofile'
-}
+const { PATHS } = require('../utils/paths');
 
-router.post(paths.login, mustBeGuest,async (req,res)=>{
+router.post(PATHS.login, mustBeGuest,async (req,res)=>{
     try{
         const email = req.body.email?.trim();
         await sendCode(email);
@@ -22,7 +18,7 @@ router.post(paths.login, mustBeGuest,async (req,res)=>{
     }
 });
 
-router.post(paths.verifyCode, mustBeGuest, async(req,res)=>{
+router.post(PATHS.verifyCode, mustBeGuest, async(req,res)=>{
     try{
         const email = req.body.email?.trim();
         const code = req.body.code?.trim();
@@ -33,7 +29,7 @@ router.post(paths.verifyCode, mustBeGuest, async(req,res)=>{
         res.status(400).send({message: error});    }
 });
 
-router.post(paths.setupProfile, mustBeAuth, MustNotBeSetup, async (req,res) =>{
+router.post(PATHS.setupProfile, mustBeAuth, MustNotBeSetup, async (req,res) =>{
     try{
         const firstName = req.body.firstName?.trim();
         const lastName = req.body.lastName?.trim();
