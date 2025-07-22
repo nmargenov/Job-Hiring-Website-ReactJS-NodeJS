@@ -19,24 +19,9 @@ const userSchema = new mongoose.Schema({
         enum: ["seeker","hirer","admin"],
         default: 'seeker'
     },
-    businessName: {
-        type: String,
-        default: '',
-        // required: [true, "Business name is required"],
-        required: [function(){ if (this.isSetup && this.role === "hirer"){ return true;}}, 'Business name is required'],
-        validate: {
-        validator: function (val) {
-            if (!this.isSetup) return true;
-            if (this.role !== 'hirer') return true; 
-            return val.length >= 5 && val.length <= 50;
-        },
-        message: 'Business name must be between 5 and 50 characters'
-        }
-    },
     phone: {
         type: String,
         default: '',
-        // required: [true, "Phone is required"],
         required: [function(){ if (this.isSetup){ return true;}}, 'Phone number is required'],
         validate: {
         validator: function (val) {
@@ -48,7 +33,6 @@ const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
         default: '',
-        // required: [() =>{if (!this.isSetup){ console.log('test'); console.log(this.isSetup); return true}}, "First name is required"],
         required: [function(){ if (this.isSetup){ return true;}}, 'First name is required'],
         validate: {
         validator: function (val) {
@@ -62,7 +46,6 @@ const userSchema = new mongoose.Schema({
     lastName: {
         type: String,
         default: '',
-        // required: [true, "Last name is required"],
         required: [function(){ if (this.isSetup){ return true;}}, 'Last name is required'],
         validate: {
         validator: function (val) {
