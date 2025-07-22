@@ -4,6 +4,7 @@ const LoginCode = require("../models/LoginCode");
 const transporter = require("../config/nodemailerConfig");
 const { emailRegex } = require("../utils/regex");
 const { sign, verify } = require("../utils/jwt");
+const { MESSAGES } = require('../utils/messages/Messages');
 
 const SECRET = process.env.SECRET;
 
@@ -12,12 +13,12 @@ exports.sendCode = async (email) =>{
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000); //10 mins
 
     if(!emailRegex.test(email)){
-        throw new Error("Invalid email!"); // checks if the email is valid or not
+        throw new Error(MESSAGES.invalidEmail); // checks if the email is valid or not
     }
 
     const existing = await LoginCode.findOne({ email });
     if (existing && new Date() - existing.updatedAt < 60 * 1000) {
-        throw new Error('Please wait 60 seconds before requesting another code.'); //make sure only 1 code can be send in 1 minute timer (anti-spam)
+        throw new Error(MESSAGES.timeInterval); //make sure only 1 code can be send in 1 minute timer (anti-spam)
     }
 
 
@@ -35,7 +36,7 @@ exports.sendCode = async (email) =>{
             text: `Your login code is: ${code} and is valid for 10 minutes.`,
         });
 
-        return {message:"Email sent"};
+        return {message:MESSAGES.emailSent};
     }catch(err){
         return {message: err.message};
     }
@@ -44,7 +45,7 @@ exports.sendCode = async (email) =>{
 exports.verifyCode = async (email,code) => {
     const login = await LoginCode.findOne({ email, code, expiresAt: { $gt: new Date() } }); // checks for login with email and code and valid expiresAt date 
     if(!login){
-        throw new Error("Invalid or expired login code!");
+        throw new Error(MESSAGES.invalidCode);
     }
 
     let user = await User.findOne({email}); //checks for existing user
@@ -63,11 +64,11 @@ exports.setupProfile = async (userID, firstName, lastName, phone) =>{
 
     const user = await User.findById(userID);
     if (!user) {
-        throw new Error("User not found");
+        throw new Error(MESSAGES.userNotFound);
     }
 
     if(user.isSetup){
-        throw new Error("Account setup has already been completed")
+        throw new Error(MESSAGES.alreadyCompletedSetup)
     }
 
     user.firstName = firstName;

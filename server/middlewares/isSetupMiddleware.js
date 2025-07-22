@@ -1,7 +1,9 @@
+const { MESSAGES } = require("../utils/messages/Messages");
+
 exports.MustBeSetup = (req,res,next)=>{
     try{
         if(!req.user?.isSetup){
-            throw new Error('You must finish setting up your account');
+            throw new Error(MESSAGES.mustFinishSetup);
         }else{
             next();
         }
@@ -13,7 +15,7 @@ exports.MustBeSetup = (req,res,next)=>{
 exports.MustNotBeSetup = (req,res,next)=>{
     try{
         if(req.user?.isSetup){
-            throw new Error('Account setup has already been completed');
+            throw new Error(MESSAGES.mustNotBeFinishedSetup);
         }else{
             next();
         }

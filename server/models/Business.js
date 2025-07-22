@@ -5,28 +5,28 @@ const businessSchema = new mongoose.Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: [true, MESSAGES.business.owner.required],
+        required: [true, MESSAGES.Business.owner.required],
         unique: true
     },
     businessName: {
         type: String,
         default: '',
-        required: [true, MESSAGES.business.businessName.required],
+        required: [true, MESSAGES.Business.businessName.required],
         validate: {
             validator: function (val) {
 
                 return val.length >= 5 && val.length <= 50;
             },
-            message: MESSAGES.business.businessName.length
+            message: MESSAGES.Business.businessName.length
         },
     },
     bio: {
         type: String,
-        maxLength: [500,MESSAGES.business.bio.length]
+        maxLength: [500,MESSAGES.Business.bio.length]
     },
     employeeCount: {
         type: Number,
-        min: [1,MESSAGES.business.employeeCount.length]
+        min: [1,MESSAGES.Business.employeeCount.length]
     }
 });
 

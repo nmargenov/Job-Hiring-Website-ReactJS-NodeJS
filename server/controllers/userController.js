@@ -2,6 +2,7 @@ const { sendCode, verifyCode, setupProfile } = require('../managers/userManager'
 const { mustBeGuest, mustBeAuth } = require('../middlewares/authMiddleware');
 const { MustNotBeSetup } = require('../middlewares/isSetupMiddleware');
 const { formatErrorMessage } = require('../utils/errorMessage');
+const { MESSAGES } = require('../utils/messages/Messages');
 
 const router = require('express').Router();
 
@@ -11,7 +12,7 @@ router.post(PATHS.login, mustBeGuest,async (req,res)=>{
     try{
         const email = req.body.email?.trim();
         await sendCode(email);
-        res.status(200).send({message:"Code is sent successfully!"});
+        res.status(200).send({message: MESSAGES.codeSent});
     }catch(err){
         const error = formatErrorMessage(err);
         res.status(400).send({message: error});

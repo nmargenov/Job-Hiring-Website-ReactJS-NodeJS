@@ -1,4 +1,5 @@
 const { verify } = require("../utils/jwt");
+const { MESSAGES } = require("../utils/messages/Messages");
 
 const SECRET = process.env.SECRET;
 const AUTH_COOKIE = process.env.AUTH_COOKIE;
@@ -16,7 +17,7 @@ exports.auth = async (req, res, next) => {
             
             next();
         } catch (err) {
-            res.status(409).send({ message: "Invalid authorization token!" });
+            res.status(409).send({ message: MESSAGES.invalidToken });
         }
 
     } else {
@@ -27,7 +28,7 @@ exports.auth = async (req, res, next) => {
 exports.mustBeAuth = (req,res,next)=>{
     try{
         if(!req.user){
-            throw new Error('Unauthorized!');
+            throw new Error(MESSAGES.unauthorized);
         }else{
             next();
         }
@@ -39,7 +40,7 @@ exports.mustBeAuth = (req,res,next)=>{
 exports.mustBeGuest = (req,res,next)=>{
     try{
         if(req.user){
-            throw new Error('Forbidden!');
+            throw new Error(MESSAGES.forbidden);
         }else{
             next();
         }
