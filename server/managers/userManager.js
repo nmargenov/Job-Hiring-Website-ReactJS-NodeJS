@@ -3,16 +3,14 @@ const LoginCode = require("../models/LoginCode");
 
 const transporter = require("../config/nodemailerConfig");
 const { emailRegex } = require("../utils/regex");
-const { sign, verify } = require("../utils/jwt");
+const { returnToken } = require("../utils/jwt");
 const { MESSAGES } = require('../utils/messages/Messages');
 
-const SECRET = process.env.SECRET;
-
-exports.sendCode = async (email) =>{
+exports.sendCode = async (email) => {
     const code = Math.floor(100000 + Math.random() * 900000).toString(); //6 digits code
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000); //10 mins
 
-    if(!emailRegex.test(email)){
+    if (!emailRegex.test(email)) {
         throw new Error(MESSAGES.invalidEmail); // checks if the email is valid or not
     }
 
@@ -23,12 +21,12 @@ exports.sendCode = async (email) =>{
 
 
     await LoginCode.findOneAndUpdate(
-        {email},
-        {code, expiresAt},
-        {upsert: true, new: true}
+        { email },
+        { code, expiresAt },
+        { upsert: true, new: true }
     ); //creates new login in the database or updates the existing code
 
-    try{
+    try {
         await transporter.sendMail({
             from: 'no-reply@jobsite.com',
             to: email,
@@ -36,38 +34,38 @@ exports.sendCode = async (email) =>{
             text: `Your login code is: ${code} and is valid for 10 minutes.`,
         });
 
-        return {message:MESSAGES.emailSent};
-    }catch(err){
-        return {message: err.message};
+        return { message: MESSAGES.emailSent };
+    } catch (err) {
+        return { message: err.message };
     }
 }
 
-exports.verifyCode = async (email,code) => {
+exports.verifyCode = async (email, code) => {
     const login = await LoginCode.findOne({ email, code, expiresAt: { $gt: new Date() } }); // checks for login with email and code and valid expiresAt date 
-    if(!login){
+    if (!login) {
         throw new Error(MESSAGES.invalidCode);
     }
 
-    let user = await User.findOne({email}); //checks for existing user
-    if(!user){
-        user = await User.create({email}); //creates an user if not existing
+    let user = await User.findOne({ email }); //checks for existing user
+    if (!user) {
+        user = await User.create({ email }); //creates an user if not existing
     }
 
-    await LoginCode.deleteMany({email}); //deletes all existing codes for the user in the database(manages storage)
+    await LoginCode.deleteMany({ email }); //deletes all existing codes for the user in the database(manages storage)
 
     const token = returnToken(user);
     return token;
-    
+
 }
 
-exports.setupProfile = async (userID, firstName, lastName, phone) =>{
+exports.setupProfile = async (userID, firstName, lastName, phone) => {
 
     const user = await User.findById(userID);
     if (!user) {
         throw new Error(MESSAGES.userNotFound);
     }
 
-    if(user.isSetup){
+    if (user.isSetup) {
         throw new Error(MESSAGES.alreadyCompletedSetup)
     }
 
@@ -81,25 +79,15 @@ exports.setupProfile = async (userID, firstName, lastName, phone) =>{
     return returnToken(user);
 };
 
-async function changeFirstName(userID, firstName){
-    return user = await User.findByIdAndUpdate(userID, {firstName});
+async function changeFirstName(userID, firstName) {
+    return user = await User.findByIdAndUpdate(userID, { firstName });
 }
 
-async function changeLastName(userID, lastName){
-    return user = await User.findByIdAndUpdate(userID, {lastName});
+async function changeLastName(userID, lastName) {
+    return user = await User.findByIdAndUpdate(userID, { lastName });
 }
 
-async function changePhoneNumber(userID, phone){
-    return user = await User.findByIdAndUpdate(userID, {phone});
+async function changePhoneNumber(userID, phone) {
+    return user = await User.findByIdAndUpdate(userID, { phone });
 }
 
-async function returnToken(user){
-    const payload = {
-        _id: user._id,
-        firstName: user.firstName,
-        role: user.role,
-        isSetup: user.isSetup
-    };
-
-    return await sign(payload, SECRET, {expiresIn: '7d'});
-}

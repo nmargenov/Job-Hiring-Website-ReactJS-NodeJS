@@ -8,5 +8,7 @@ exports.MESSAGES={
     alreadyCompletedSetup:"Account setup has already been completed",
     invalidToken:"Invalid authorization token!",
     unauthorized:"Unauthorized",
-    forbidden:"Forbidden"
+    forbidden:"Forbidden",
+    mustFinishSetup:"You must finish setting up your account",
+    mustNotBeFinishedSetup:"Account setup has already been completed"
 }

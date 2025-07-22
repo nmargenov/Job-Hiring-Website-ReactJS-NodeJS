@@ -4,4 +4,5 @@ exports.PATHS={
     login: '/login',
     verifyCode: '/verifycode',
     setupProfile: '/setupprofile',
+    businessApply: "/"
 }

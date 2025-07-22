@@ -22,14 +22,16 @@ const businessSchema = new mongoose.Schema({
     },
     bio: {
         type: String,
+        default: "",
         maxLength: [500,MESSAGES.Business.bio.length]
     },
     employeeCount: {
         type: Number,
+        default: 1,
         min: [1,MESSAGES.Business.employeeCount.length]
-    }
-});
+    },
+},{timestamps:true});
 
-const business = mongoose.model("Business", businessSchema);
+const Business = mongoose.model("Business", businessSchema);
 
-module.exports = business
+module.exports = Business
