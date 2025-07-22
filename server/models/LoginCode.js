@@ -1,19 +1,21 @@
 const mongoose = require("mongoose");
 
+const { MESSAGES } = require("../utils/messages/mongooseMessages");
+
 const LoginCodeSchema = new mongoose.Schema({
     email:{
            type: String,
-           required: [true, 'Email is required'],
-           minLength: [3, 'Email must be between 3 and 50 characters'],
-           maxLength: [50, 'Email must be between 3 and 50 characters'],
+           required: [true, MESSAGES.email.required],
+           minLength: [3, MESSAGES.email.length],
+           maxLength: [50, MESSAGES.email.length],
            validate: {
                validator: (value) => emailRegex.test(value),
-               message: "Invalid email format!",
+               message: MESSAGES.email.invalidFormat
            }
        },
     code: {
         type: String,
-        required: [true, 'Code is required'],
+        required: [true, MESSAGES.LoginCode.code.required],
     },
     expiresAt: Date,
 }, { timestamps: true });
