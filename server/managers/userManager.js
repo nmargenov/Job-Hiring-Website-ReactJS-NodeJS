@@ -90,6 +90,23 @@ exports.sendLoginCode = async (email) => {
     await sendEmail(email, 'Login code', `Your login code is: ${code} and is valid for 10 minutes.`);
 }
 
+exports.verifyEmailCode = async (userID, code) => {
+    let user = await User.findById(userID);
+    if(!user) throw new Error(MESSAGES.userNotFound);
+    if(!user.isSetup) throw new Error(MESSAGES.mustFinishSetup);
+    
+    const emailEntry = await EmailCode.findOne({ email: user.email, code, expiresAt: { $gt: new Date() } }); // checks for email with email and code and valid expiresAt date 
+    if(!emailEntry) throw new Error(MESSAGES.invalidCode);
+
+    user.email = emailEntry.newEmail;
+
+    const newUser = await user.save();
+
+    await EmailCode.deleteMany({ email: user.email });
+    
+    return returnToken(newUser);
+}
+
 exports.verifyLoginCode = async (email, code) => {
     const login = await LoginCode.findOne({ email, code, expiresAt: { $gt: new Date() } }); // checks for login with email and code and valid expiresAt date 
     if (!login) {

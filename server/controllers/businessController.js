@@ -12,8 +12,8 @@ router.post(PATHS.businessApply, mustBeAuth, MustBeSetup, async (req,res)=>{
         const businessName = req.body.businessName?.trim();
         const bio = req.body.bio?.trim();
         const employeeCount = req.body.employeeCount?.trim();
-        const message = await apply(userID,businessName,bio,employeeCount);
-        res.status(200).send({message});
+        const token = await apply(userID,businessName,bio,employeeCount);
+        res.status(200).json(token);
     }catch(err){
         const error = formatErrorMessage(err);
         res.status(400).send({message: error});

@@ -1,6 +1,9 @@
 const jsonwebtoken = require("jsonwebtoken");
+const User = require("../models/User");
 
-exports.sign = (payload, secret, options) =>{
+const SECRET = process.env.SECRET;
+
+const sign = (payload, secret, options) =>{
     return new Promise((resolve,reject)=>{
         jsonwebtoken.sign(payload,secret,options,(err,token)=>{
             if(err){
