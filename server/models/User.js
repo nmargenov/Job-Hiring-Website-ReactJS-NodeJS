@@ -65,7 +65,7 @@ const userSchema = new mongoose.Schema({
     hasBusinessApplication: {
         type: Boolean,
         default: false,
-        required: [true]
+        required: [true, MESSAGES.userModel.hasBusinessApplication.required]
     },
     business: {
         type: mongoose.Schema.Types.ObjectId,
@@ -75,7 +75,7 @@ const userSchema = new mongoose.Schema({
     isApproved: {
         type: Boolean,
         default: false,
-        required: [true]
+        required: [true, MESSAGES.userModel.isApproved.required]
     }
 }, { timestamps: true });
 

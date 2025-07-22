@@ -22,6 +22,12 @@ exports.MESSAGES={
         },
         isSetup:{
             required:"isSetup is required",
+        },
+        hasBusinessApplication:{
+            required:"hasBusinessApplication is required"
+        },
+        isApproved:{
+            required:"isApproved is required"
         }
     },
     LoginCode:{
