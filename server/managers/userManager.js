@@ -32,7 +32,7 @@ async function createDatabaseEntry(model, email, code, expiresAt, newEmail) {
 
     await model.findOneAndUpdate(
         { email },
-        { code:toUpdate.code, expiresAt:toUpdate.expiresAt, newEmail: toUpdate.newEmail },
+        { code: toUpdate.code, expiresAt: toUpdate.expiresAt, newEmail: toUpdate.newEmail },
         { upsert: true, new: true }
     ); //creates new login in the database or updates the existing code
 }
@@ -58,17 +58,17 @@ exports.sendEmailCode = async (userID, newEmail) => {
 
     const user = await User.findById(userID);
 
-    if(!user){
+    if (!user) {
         throw new Error(MESSAGES.userNotFound);
     }
 
     const email = user.email;
 
     await emailCheck(email); //checks old email
-    
-    
-    if(!newEmail) throw new Error(MESSAGES.invalidEmail); //make sure new email exists
-    
+
+
+    if (!newEmail) throw new Error(MESSAGES.invalidEmail); //make sure new email exists
+
     await emailCheck(newEmail); // checks new email
 
     await antispamCode(EmailCode, email);
@@ -92,18 +92,18 @@ exports.sendLoginCode = async (email) => {
 
 exports.verifyEmailCode = async (userID, code) => {
     let user = await User.findById(userID);
-    if(!user) throw new Error(MESSAGES.userNotFound);
-    if(!user.isSetup) throw new Error(MESSAGES.mustFinishSetup);
-    
+    if (!user) throw new Error(MESSAGES.userNotFound);
+    if (!user.isSetup) throw new Error(MESSAGES.mustFinishSetup);
+
     const emailEntry = await EmailCode.findOne({ email: user.email, code, expiresAt: { $gt: new Date() } }); // checks for email with email and code and valid expiresAt date 
-    if(!emailEntry) throw new Error(MESSAGES.invalidCode);
+    if (!emailEntry) throw new Error(MESSAGES.invalidCode);
 
     user.email = emailEntry.newEmail;
 
     const newUser = await user.save();
 
     await EmailCode.deleteMany({ email: user.email });
-    
+
     return returnToken(newUser);
 }
 
@@ -146,15 +146,18 @@ exports.setupProfile = async (userID, firstName, lastName, phone) => {
     return returnToken(user);
 };
 
-async function changeFirstName(userID, firstName) {
-    return user = await User.findByIdAndUpdate(userID, { firstName });
-}
+exports.changeProfile = async (userID, firstName, lastName, phone) => {
+    
+    let user = await User.findById(userID);
+    if(!user) throw new Error(MESSAGES.userNotFound);
 
-async function changeLastName(userID, lastName) {
-    return user = await User.findByIdAndUpdate(userID, { lastName });
-}
+    let toUpdate = {};
 
-async function changePhoneNumber(userID, phone) {
-    return user = await User.findByIdAndUpdate(userID, { phone });
-}
+    if(firstName) user.firstName = firstName;
+    if(lastName) user.lastName = lastName;
+    if(phone) user.phone = phone;
 
+    user = await user.save();
+
+    return returnToken(user);
+}

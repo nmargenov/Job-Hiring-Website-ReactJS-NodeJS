@@ -1,4 +1,4 @@
-const { setupProfile, sendLoginCode, verifyLoginCode, sendEmailCode, verifyEmailCode } = require('../managers/userManager');
+const { setupProfile, sendLoginCode, verifyLoginCode, sendEmailCode, verifyEmailCode, changeProfile } = require('../managers/userManager');
 const { mustBeGuest, mustBeAuth } = require('../middlewares/authMiddleware');
 const { MustNotBeSetup, MustBeSetup } = require('../middlewares/isSetupMiddleware');
 const { formatErrorMessage } = require('../utils/errorMessage');
@@ -20,13 +20,13 @@ router.post(PATHS.email, mustBeAuth, MustBeSetup, async (req, res) => {
     }
 });
 
-router.post(PATHS.verifyEmailCode, mustBeAuth, MustBeSetup, async (req,res)=>{
-    try{
+router.post(PATHS.verifyEmailCode, mustBeAuth, MustBeSetup, async (req, res) => {
+    try {
         const userID = req.user._id;
         const code = req.body?.code?.trim();
-        const token = await verifyEmailCode(userID,code); 
+        const token = await verifyEmailCode(userID, code);
         res.status(200).json(token);
-    }catch (err) {
+    } catch (err) {
         const error = formatErrorMessage(err);
         res.status(400).send({ message: error });
     }
@@ -68,5 +68,19 @@ router.post(PATHS.setupProfile, mustBeAuth, MustNotBeSetup, async (req, res) => 
         res.status(400).send({ message: error });
     }
 });
+
+router.patch(PATHS.userID, mustBeAuth, MustBeSetup, async (req, res) => {
+    try {
+        const userID = req.user._id;
+        const firstName = req.body?.firstName?.trim();
+        const lastName = req.body?.lastName?.trim();
+        const phone = req.body?.phone?.trim();
+        const token = await changeProfile(userID,firstName,lastName,phone);
+        res.status(200).json(token);
+    } catch (err) {
+        const error = formatErrorMessage(err);
+        res.status(400).send({ message: error });
+    }
+})
 
 module.exports = router;

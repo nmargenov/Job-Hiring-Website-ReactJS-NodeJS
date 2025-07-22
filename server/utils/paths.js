@@ -7,4 +7,5 @@ exports.PATHS={
     email: "/email",
     setupProfile: '/setupprofile',
     businessApply: "/",
+    userID: "/:userID"
 }
