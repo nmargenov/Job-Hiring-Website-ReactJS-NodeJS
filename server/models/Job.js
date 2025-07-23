@@ -5,7 +5,7 @@ const { MESSAGES } = require("../utils/messages/mongooseMessages");
 const jobSchema = new mongoose.Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'Business',
         required: [true, MESSAGES.Job.owner.required],
     },
     title: {
@@ -22,13 +22,16 @@ const jobSchema = new mongoose.Schema({
     },
     salary: {
         type: Number,
-        min:[1, MESSAGES.Job.salary.minValue]
+        min:[1, MESSAGES.Job.salary.minValue],
+        default:null
     },
     location: {
-        type: String
+        type: String,
+        default:null,
     },
     experience:{
         type: Number,
+        default:null
     },
     applies: [{
         type: mongoose.Schema.Types.ObjectId,

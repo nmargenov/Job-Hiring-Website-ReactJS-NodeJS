@@ -51,6 +51,9 @@ exports.MESSAGES = {
         }
     },
     Job: {
+        owner:{
+            required:"Owner is required"
+        },
         title: {
             required: "Title is required",
             length: "Title must be between 5 and 150 characters long",
