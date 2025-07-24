@@ -1,4 +1,4 @@
-const { createJob } = require('../managers/jobManager');
+const { createJob, getAllActiveJobs } = require('../managers/jobManager');
 const { mustBeAuth } = require('../middlewares/authMiddleware');
 const { MustBeSetup } = require('../middlewares/isSetupMiddleware');
 const { formatErrorMessage } = require('../utils/errorMessage');
@@ -15,8 +15,18 @@ router.post('/', mustBeAuth, MustBeSetup, async (req, res) => {
         const salary = req.body?.salary?.trim();
         const location = req.body?.location?.trim();
         const experience = req.body?.experience?.trim();
-        const job = await createJob(userID,title,description,salary,location,experience);
+        const job = await createJob(userID, title, description, salary, location, experience);
         res.status(200).json(job);
+    } catch (err) {
+        const error = formatErrorMessage(err);
+        res.status(400).send({ message: error });
+    }
+});
+
+router.get("/", async (req, res) => {
+    try {
+        const jobs = await getAllActiveJobs();
+        res.status(200).json(jobs);
     } catch (err) {
         const error = formatErrorMessage(err);
         res.status(400).send({ message: error });
