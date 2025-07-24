@@ -3,10 +3,11 @@ exports.PATHS={
     business:"/api/business",
     jobs: "/api/jobs",
     login: '/login',
-    verifyLoginCode: '/logincode',
-    verifyEmailCode: '/emailcode',
+    verifyLoginCode: '/login/code',
+    verifyEmailCode: '/email/code',
     email: "/email",
-    setupProfile: '/setupprofile',
+    setupProfile: '/profile/setup',
     businessApply: "/",
     userID: "/:userID",
+    archiveJob: "/:jobID/archive"
 }

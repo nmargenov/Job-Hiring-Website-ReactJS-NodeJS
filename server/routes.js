@@ -8,7 +8,7 @@ const { PATHS } = require("./utils/paths");
 
 router.use(PATHS.users,userController);
 router.use(PATHS.business,businessController);
-router.use('/api/jobs',jobsController);
+router.use(PATHS.jobs,jobsController);
 
 router.all('/*splat', (req, res) => {
   res.status(404).json({ message: "Path not found!" });

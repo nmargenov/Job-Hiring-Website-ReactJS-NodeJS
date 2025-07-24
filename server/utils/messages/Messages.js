@@ -10,5 +10,7 @@ exports.MESSAGES={
     unauthorized:"Unauthorized",
     forbidden:"Forbidden",
     mustFinishSetup:"You must finish setting up your account",
-    mustNotBeFinishedSetup:"Account setup has already been completed"
+    mustNotBeFinishedSetup:"Account setup has already been completed",
+    invalidJobId:"Invalid job id",
+    alreadyArchived:"Job is already archived",
 }
