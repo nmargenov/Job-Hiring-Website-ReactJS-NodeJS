@@ -9,5 +9,6 @@ exports.PATHS={
     setupProfile: '/profile/setup',
     businessApply: "/",
     userID: "/:userID",
-    archiveJob: "/:jobID/archive"
+    archiveJob: "/:jobID/archive",
+    jobID: "/:jobID"
 }

@@ -1,4 +1,4 @@
-const { createJob, getAllActiveJobs, archiveJob } = require('../managers/jobManager');
+const { createJob, getAllActiveJobs, archiveJob, editJob } = require('../managers/jobManager');
 const { mustBeAuth } = require('../middlewares/authMiddleware');
 const { MustBeSetup } = require('../middlewares/isSetupMiddleware');
 const { formatErrorMessage } = require('../utils/errorMessage');
@@ -37,7 +37,24 @@ router.post(PATHS.archiveJob, mustBeAuth, MustBeSetup, async (req, res) => {
     try {
         const userID = req.user._id;
         const jobID = req.params.jobID?.trim();
-        const job = await archiveJob(userID,jobID);
+        const job = await archiveJob(userID, jobID);
+        res.status(200).json(job);
+    } catch (err) {
+        const error = formatErrorMessage(err);
+        res.status(400).send({ message: error });
+    }
+});
+
+router.patch(PATHS.jobID, mustBeAuth, MustBeSetup, async (req, res) => {
+    try {
+        const userID = req.user._id;
+        const jobID = req.params?.jobID?.trim();
+        const title = req.body?.title?.trim();
+        const description = req.body?.description?.trim();
+        const salary = req.body?.salary?.trim();
+        const location = req.body?.location?.trim();
+        const experience = req.body?.experience?.trim();
+        const job = await editJob(userID, jobID, title, description, salary, location, experience);
         res.status(200).json(job);
     } catch (err) {
         const error = formatErrorMessage(err);

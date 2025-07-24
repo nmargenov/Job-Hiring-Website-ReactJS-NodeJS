@@ -22,29 +22,66 @@ exports.createJob = async (userID, title, description, salary, location, experie
 };
 
 exports.archiveJob = async (userID, jobID) => {
-    let job = await Job.findById(jobID).populate('owner',"owner")
+    let job = await checkIfJobOwner(jobID, userID);
+
+    job = await Job.findByIdAndUpdate(
+        jobID,
+        {
+            isActive: false
+        },
+        {
+            runValidators: true,
+            new: true
+        }
+    ).populate('owner', 'businessName');
+
+    return job;
+};
+
+exports.editJob = async (userID, jobID, title, description, salary, location, experience) => {
+    let job = await checkIfJobOwner(jobID, userID);
+
+    job = await Job.findByIdAndUpdate(
+        jobID,
+        {
+            title,
+            description,
+            salary,
+            location,
+            experience
+        },
+        {
+            runValidators: true,
+            new: true
+        }
+    ).populate('owner', 'businessName');;
+
+    return job;
+};
+
+exports.getAllActiveJobs = async () => {
+    return await Job.find({ isActive: true }).populate('owner', 'businessName')
+};
+
+async function checkIfJobOwner(jobID, userID) {
+    const job = await Job.findById(jobID).populate('owner', "owner")
 
     if (!job) {
         throw new Error(MESSAGES.invalidJobId);
     }
 
     let owner = job.owner.owner;
-    if(owner instanceof mongoose.Types.ObjectId){
-       owner = owner.toHexString();
+    if (owner instanceof mongoose.Types.ObjectId) {
+        owner = owner.toHexString(); //checks if ownerID is of type ObjectId and transforms it to string
     }
 
-    if(owner !== userID){
-        throw new Error(MESSAGES.unauthorized);
+    if (owner !== userID) {
+        throw new Error(MESSAGES.unauthorized); //checks if the owner is the logged in user
     }
-    
-    if(!job.isActive){
-        throw new Error(MESSAGES.alreadyArchived);
+
+    if (!job.isActive) {
+        throw new Error(MESSAGES.alreadyArchived); //checks if the job is archived
     }
-    
-    job = await Job.findByIdAndUpdate(jobID,{isActive:false},{runValidators:true, new:true}).populate('owner','businessName');
-    return job;
+
+    return job
 }
-
-exports.getAllActiveJobs = async () => {
-    return await Job.find({ isActive: true }).populate('owner', 'businessName')
-};
