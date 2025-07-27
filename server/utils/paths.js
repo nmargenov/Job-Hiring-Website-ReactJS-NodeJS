@@ -12,5 +12,7 @@ exports.PATHS={
     userID: "/:userID",
     archiveJob: "/:jobID/archive",
     jobID: "/:jobID",
-    adminBusiness:"/:businessID"
+    adminBusiness:"/:businessID",
+    acceptBusiness:"/:businessID/accept",
+    declineBusiness:"/:businessID/decline",
 }

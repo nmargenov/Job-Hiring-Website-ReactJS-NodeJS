@@ -1,4 +1,5 @@
 const Business = require("../models/Business");
+const Job = require("../models/Job");
 const User = require("../models/User");
 const { MESSAGES } = require("../utils/messages/Messages");
 
@@ -7,17 +8,35 @@ exports.acceptBusiness = async (userID, businessID) => {
 
     const business = await checkBusiness(businessID);
 
-    const newUser = await User.findByIdAndUpdate(business.owner._id, { isApproved: true }, { runValidators: true, new: true });
+    const newUser = await User.findByIdAndUpdate(business.owner._id, { role:"hirer", isApproved: true }, { runValidators: true, new: true });
 
     return newUser.populate('business');
 };
 
 exports.declineBusiness = async (userID, businessID) => {
-    const admin = await checkIfAdmin(userID);
+    await checkIfAdmin(userID);
 
     const business = await checkBusiness(businessID);
 
     const user = await User.findByIdAndUpdate(business.owner._id, { hasBusinessApplication: false, business: null }, { runValidators: true, new: true });
+
+    await Business.findByIdAndDelete(businessID);
+
+    return user;
+}
+
+exports.deleteBusiness = async (userID, businessID) => {
+    await checkIfAdmin(userID);
+
+    const business = await Business.findById(businessID).populate('owner');
+
+    if (!business || !business.owner.isSetup || business.owner.role !== "hirer" || !business.owner.isApproved) {
+        throw new Error(MESSAGES.forbidden);
+    }
+
+    const user = await User.findByIdAndUpdate(business.owner._id, {isApproved:false, hasBusinessApplication: false, business: null, role:"seeker"}, { runValidators: true, new: true });
+
+    await Job.deleteMany({ owner: business._id });
 
     await Business.findByIdAndDelete(businessID);
 
