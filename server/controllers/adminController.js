@@ -1,0 +1,21 @@
+const { acceptBusiness } = require('../managers/adminManager');
+const { mustBeAuth } = require('../middlewares/authMiddleware');
+const { MustBeSetup } = require('../middlewares/isSetupMiddleware');
+const { formatErrorMessage } = require('../utils/errorMessage');
+const { PATHS } = require('../utils/paths');
+
+const router = require('express').Router();
+
+router.post(PATHS.adminBusiness, mustBeAuth, MustBeSetup, async (req, res) => {
+    try{
+        const userID = req.user._id;
+        const businessID = req.params.businessID;
+        const user = await acceptBusiness(userID, businessID);
+        res.status(200).json(user);
+    }catch(err){
+        const error = formatErrorMessage(err);
+        res.status(400).send({ message: error });
+    }
+});
+
+module.exports = router;

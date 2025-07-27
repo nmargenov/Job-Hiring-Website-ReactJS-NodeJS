@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema({
             validator: function (val) {
                 if (!this.isSetup) return true;
                 if (this.role === 'hirer') return true;
-                return val.length >= 5 && val.length <= 30;
+                return val.length >= 3 && val.length <= 30;
             },
             message: MESSAGES.userModel.firstName.length
         }
