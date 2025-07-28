@@ -29,6 +29,12 @@ export const Header = () => {
         i18n.changeLanguage(lng);
     };
 
+    function onLanguageClick(e, lang) {
+         if (e.key === 'Enter') {
+            switchLang(lang);
+        }
+    }
+
 
     return (
         <header className={styles['header']}>
@@ -55,8 +61,8 @@ export const Header = () => {
                             <NavItem destination={'/contacts'} icon={faPhone} text={t("contacts")} toggleOpen={toggleOpen} />
                         </div>
                         <div className={styles['section']}>
-                            <button onClick={() => switchLang('en')}>English</button>
-                            <button onClick={() => switchLang('bg')}>Български</button>
+                            <a onKeyDown={(e)=>{onLanguageClick(e,"en")}} tabIndex={0} className={styles['language-option']} onClick={() => switchLang('en')}>English</a>
+                            <a onKeyDown={(e)=>{onLanguageClick(e,"bg")}} tabIndex={0} className={styles['language-option']} onClick={() => switchLang('bg')}>Български</a>
                         </div>
                     </nav>
                 </>
