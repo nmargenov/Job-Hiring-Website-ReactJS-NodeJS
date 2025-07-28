@@ -1,0 +1,21 @@
+.item span {
+    color:black;
+    font-size: 20px;
+}
+
+.item{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+    width: 100%;
+    padding: 15px 10px;
+}
+
+.item:hover{
+    background-color: rgb(230, 230, 230);
+}
+
+.item:active{
+    background-color: rgb(211, 211, 211);
+}

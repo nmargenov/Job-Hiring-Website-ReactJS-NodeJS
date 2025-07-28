@@ -1,0 +1,142 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    border-bottom: 2px solid darkgray;
+    box-shadow: 0 0 5px black;
+}
+
+.logo {
+    max-height: 100px;
+    margin: 0px 50px;
+    position: relative;
+}
+
+.logo img {
+    max-height: 100px;
+    cursor: pointer;
+}
+
+.blue-box {
+    position: absolute;
+    bottom: 0;
+    left: 5%;
+    width: 90%;
+    height: 5px;
+    background-color: #1c408a;
+}
+
+.right-div {
+    margin-right: 50px;
+    display: flex;
+    align-items: center;
+    gap:10px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.login-button {
+    padding: 20px 25px;
+    width: fit-content;
+    border-radius: 50px;
+    background-color: #d40080;
+    color: white;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+.login-button:hover,
+.login-button:focus {
+    opacity: 0.8;
+}
+
+.login-button:active {
+    opacity: 0.5;
+}
+
+svg {
+    color: #999;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+
+svg:focus {
+    outline: 2px solid #333;
+}
+
+.nav-div{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    background-color: black;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    width: 300px;
+    height: 100%;
+    position: absolute;
+    right:0;
+    top:0;
+}
+
+.section{
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid lightgray;
+}
+
+.nav > .section:first-of-type{
+    align-items: end;
+    padding: 10px;
+}
+
+
+@media (max-width: 768px) {
+
+    .right-div .login-button{
+        display: none;
+    }
+
+    .logo{
+        height: 60px;
+    }
+
+    .logo img{
+        height: 60px;
+    }
+
+    /* .hamburger {
+        display: flex;
+    }
+
+    .nav {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background-color: #333;
+        flex-direction: column;
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-in-out;
+    }
+
+    .nav.open {
+        max-height: 200px;
+    }
+
+    .nav a {
+        padding: 1rem;
+        border-top: 1px solid #444;
+    } */
+}
