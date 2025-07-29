@@ -39,7 +39,7 @@ export const Header = () => {
             {isOpen &&
                 <>
                     <div onClick={toggleOpen} className={styles['nav-div']}></div>
-                    <Nav toggleOpen={toggleOpen}/>
+                    <Nav isOpen={isOpen} onKey={onKey} toggleOpen={toggleOpen}/>
                 </>
             }
         </header>

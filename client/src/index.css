@@ -5,7 +5,7 @@
     --cookies-modal-color: #253b48;
     --hover-background: rgb(230, 230, 230);
     --active-background: rgb(216, 216, 216);
-
+    --svg-color: #999;
 }
 
 :root[data-theme='dark'] {
@@ -15,6 +15,7 @@
     --cookies-modal-color: #1d6a97;
     --hover-background: rgb(37, 37, 37);
     --active-background: rgb(14, 14, 14);
+    --svg-color:#ffffff;
 }
 
 body {

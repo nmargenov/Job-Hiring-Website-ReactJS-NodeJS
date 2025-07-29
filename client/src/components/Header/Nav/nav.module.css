@@ -23,7 +23,7 @@ a {
 } 
 
 svg {
-    color: #999;
+    color: var(--svg-color);
     font-size: 30px;
     cursor: pointer;
 }
@@ -61,7 +61,9 @@ svg:focus {
 }
 
 .nav>.section:first-of-type {
-    align-items: end;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
     padding: 10px;
 }
 

@@ -2,14 +2,15 @@ import { useTranslation } from 'react-i18next';
 import { useConsent } from '../../../contexts/CookieConsentContext';
 import { useTheme } from "../../../contexts/ThemeContext";
 import { Link } from "react-router-dom";
-import { faHome, faPhone, faCookie } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHome, faPhone, faCookie, faClose, faXmark, } from "@fortawesome/free-solid-svg-icons"
 
 import { NavItem } from '../navItem/NavItem';
 
 import styles from './nav.module.css';
 
 
-export const Nav = ({ toggleOpen }) => {
+export const Nav = ({ toggleOpen, onKey, isOpen }) => {
     const { prefs, setShowModal } = useConsent();
     const { changeTheme } = useTheme();
 
@@ -43,6 +44,8 @@ export const Nav = ({ toggleOpen }) => {
     return (
         <nav className={styles['nav']}>
             <div className={styles['section']}>
+                <FontAwesomeIcon tabIndex={0}
+                    onClick={toggleOpen} onKeyDown={(e) => { onKey(e) }} icon={faClose} />
                 <Link onClick={toggleOpen} to={"/login"} className={styles['login-button']}>{t("login")}</Link>
             </div>
             <div className={styles['section']}>
