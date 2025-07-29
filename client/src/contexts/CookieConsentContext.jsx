@@ -24,15 +24,21 @@ export const ConsentProvider = ({ children }) => {
   const [showModal, setShowModal] = useState(true);
 
   useEffect(() => {
-    const saved = getCookie('cookie_preferences');
-    if (saved) {
-      const obj = JSON.parse(saved);
-      setPrefs(obj);
-      setShowModal(false);
-      deleteCookies(obj);
-    }else{
-      deleteCookies(prefs);
+    try {
+      const saved = getCookie('cookie_preferences');
+      if (saved) {
+        const obj = JSON.parse(saved);
+        setPrefs(obj);
+        setShowModal(false);
+        deleteCookies(obj);
+      } else {
+        deleteCookies(prefs);
+      }
+    } catch (err) {
+      console.log("Error with cookies: "+err);
+      savePreferences(prefs);
     }
+
   }, []);
 
   const setPreference = (key, value) => {

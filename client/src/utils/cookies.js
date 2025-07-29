@@ -4,8 +4,12 @@ export const setCookie = (name, value, days = 365) => {
 };
 
 export const getCookie = (name) => {
-    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    return match ? decodeURIComponent(match[2]) : null;
+    try{
+        const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        return match ? decodeURIComponent(match[2]) : null;
+    }catch(err){
+        console.log("Invalid JSON: " + err);
+    }
 };
 
 export const deleteDeclinedCookies = (declinedCookies) => {

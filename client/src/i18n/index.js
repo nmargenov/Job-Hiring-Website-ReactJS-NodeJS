@@ -3,8 +3,15 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 import { getCookie } from '../utils/cookies';
 
-const prefsRaw = getCookie('cookie_preferences');
-const prefs = prefsRaw ? JSON.parse(prefsRaw) : { language: false };
+let prefs = null;
+try {
+    const prefsRaw = getCookie('cookie_preferences');
+    prefs = prefsRaw ? JSON.parse(prefsRaw) : { language: false };
+
+} catch (err) {
+    prefs = {language:false}
+    console.log("Invalid JSON: " + err);
+}
 
 import translationEN from './en.json';
 import translationBG from './bg.json';

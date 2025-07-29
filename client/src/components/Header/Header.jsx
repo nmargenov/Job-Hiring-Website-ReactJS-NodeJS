@@ -33,8 +33,7 @@ export const Header = () => {
     const switchLang = (lng) => {
         i18n.changeLanguage(lng);
         if (prefs.language === true) {
-            document.cookie = `i18next=${lng}; path=/; max-age=31536000`; // 1 year
-
+            document.cookie = `i18next=${lng}; path=/; max-age=31536000`;
         }
     };
 
