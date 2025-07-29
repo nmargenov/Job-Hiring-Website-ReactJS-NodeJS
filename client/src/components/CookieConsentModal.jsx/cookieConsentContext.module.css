@@ -1,0 +1,131 @@
+.main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.opacity {
+    background-color: black;
+    opacity: 0.5;
+    width: 100%;
+    height: 100%;
+}
+
+
+.cookie-modal {
+    z-index: 999;
+    position: absolute;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 700px;
+    background-color: white;
+    box-shadow: 0 0 5px black;
+}
+
+.cookie-modal ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.cookie-modal li {
+    list-style: none;
+    background-color: #f0f4f7;
+    padding: 10px;
+    width: 100%;
+}
+
+.cookie-modal li label {
+    display: flex;
+    font-size: 18px;
+    justify-content: space-between;
+    color: #253b48;
+}
+
+.cookie-modal input[type="checkbox"] {
+    height: 25px;
+    width: 25px;
+}
+
+.cookie-modal .title-div {
+    display: flex;
+    text-align: left;
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid gray;
+    padding: 20px 30px 40px 30px;
+}
+
+.cookie-modal .title {
+    font-weight: bold;
+    font-size: 18px;
+    color: #253b48;
+}
+
+.cookie-modal .usage-div {
+    padding: 20px 30px 20px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 300px;
+    overflow-y: scroll;
+    border-bottom: 1px solid gray;
+}
+
+.cookie-modal .usage-title {
+    font-weight: bold;
+    font-size: 18px;
+    color: #253b48;
+}
+
+.cookie-modal .buttons-div {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px 47px 20px 30px;
+}
+
+.cookie-modal .accept-all-button {
+    border: none;
+    padding: 15px 20px;
+    background-color: #253b48;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cookie-modal .save-settings-button {
+    background-color: #e5ebef;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 8px;
+    color: #253b48;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cookie-modal button:hover {
+    opacity: 0.8;
+}
+
+.cookie-modal button:active {
+    opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+
+    .cookie-modal .buttons-div{
+        flex-direction: column-reverse;
+        gap: 10px;
+    }
+}

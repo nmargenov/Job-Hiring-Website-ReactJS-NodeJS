@@ -1,11 +1,17 @@
 import './App.css'
+import { CookieConsentModal } from './components/CookieConsentModal.jsx/CookieConsentModal'
 import { Header } from './components/Header/Header'
+import { ConsentProvider } from './contexts/CookieConsentContext'
 
 function App() {
 
   return (
     <>
-      <Header/>
+      <ConsentProvider>
+        <CookieConsentModal />
+        <Header />
+      </ConsentProvider>
+
     </>
   )
 }
