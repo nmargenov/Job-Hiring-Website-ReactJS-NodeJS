@@ -10,6 +10,12 @@
     "theme-preference": "Theme Preference",
     "save-settings": "Save settings",
     "accept-all": "Accept all",
-    "dark-theme":"Dark theme",
-    "light-theme":"Light theme"
+    "dark-theme": "Dark theme",
+    "light-theme": "Light theme",
+    "login-title": "Login",
+    "login-span1": "User login. If you don’t have an account, one will be created for you after logging in with your email.",
+    "login-span2": "<strong>Introducing passwordless login!</strong> You no longer need a password—logging into Jobs is now easier and more secure.",
+    "login-span3": "<strong>How does it work?</strong> Instead of relying on a traditional password, when you log in from a new browser, you’ll receive a code via email. Simply enter the code, and you’re in!",
+    "login-span4": "<strong>Why is it easier and more secure?</strong> You no longer need to create and remember complex passwords, nor worry about reusing the same password on different sites.",
+    "email": "Email"
 }

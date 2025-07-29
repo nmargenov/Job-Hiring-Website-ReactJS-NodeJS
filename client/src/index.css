@@ -6,6 +6,8 @@
     --hover-background: rgb(230, 230, 230);
     --active-background: rgb(216, 216, 216);
     --svg-color: #999;
+    --login-form-color:white;
+    --login-form-text: #343436;
 }
 
 :root[data-theme='dark'] {
@@ -15,11 +17,19 @@
     --cookies-modal-color: #1d6a97;
     --hover-background: rgb(37, 37, 37);
     --active-background: rgb(14, 14, 14);
-    --svg-color:#ffffff;
+    --svg-color: #ffffff;
+    --login-form-color:#343436;
+    --login-form-text: white;
 }
 
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
     transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }

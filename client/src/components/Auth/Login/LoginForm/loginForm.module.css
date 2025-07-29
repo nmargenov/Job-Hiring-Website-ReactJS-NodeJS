@@ -1,0 +1,80 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+}
+
+.form input[type="email"] {
+    width: 100%;
+    padding: 20px 15px;
+    border-radius: 5px;
+    outline: none;
+    z-index: 1;
+    font-size: 16px;
+    border: 2px solid gray;
+    color: var(--login-form-text);
+    background-color: var(--login-form-color);
+}
+
+.form .input-container {
+    position: relative;
+    margin-top: 20px;
+}
+
+.input-container label {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    color: gray;
+    background-color: var(--login-form-color);
+    padding: 0 5px;
+    font-size: 16px;
+    pointer-events: none;
+    transition: 0.2s ease all;
+}
+
+.input-container input:focus+label,
+.input-container input:not(:placeholder-shown)+label {
+    top: 0;
+    font-size: 12px;
+}
+
+.submit-div {
+    display: flex;
+    justify-content: center;
+}
+
+input[type="submit"] {
+    padding: 20px 0px;
+    width: 80px;
+    text-align: center;
+    border-radius: 50px;
+    background-color: #d40080;
+    color: white;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover,
+input[type="submit"]:focus {
+    opacity: 0.8;
+}
+
+input[type="submit"]:active {
+    opacity: 0.5;
+}
+
+input[type="submit"]:disabled {
+    opacity: 0.2;
+    cursor:not-allowed;
+}
+
+input[type="email"]:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

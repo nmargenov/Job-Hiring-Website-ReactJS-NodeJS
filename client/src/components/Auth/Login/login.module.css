@@ -1,0 +1,24 @@
+.login-div {
+    background-color: var(--login-form-color);
+    max-width: 550px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid gray;
+    padding: 24px;
+    margin: 20px;
+}
+
+.login-div h2 {
+    margin-bottom: 10px;
+    font-weight: 500;
+    font-size: 32px;
+    padding-bottom: 20px;
+}
+
+.login-div ul {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    list-style: none;
+    font-size: 18px;
+}
