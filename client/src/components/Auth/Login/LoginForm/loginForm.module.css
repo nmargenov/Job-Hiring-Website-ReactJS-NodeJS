@@ -86,3 +86,13 @@ input[type="email"]:disabled {
 .invalid-label{
     color: rgb(255, 28, 28) !important;
 }
+
+.error-msg-div{
+    color:rgb(255, 28, 28);
+    display: flex;
+    text-align: center;
+    margin-top: 10px;
+    height: 35px;
+    margin-bottom: -20px;
+    overflow: hidden;
+}

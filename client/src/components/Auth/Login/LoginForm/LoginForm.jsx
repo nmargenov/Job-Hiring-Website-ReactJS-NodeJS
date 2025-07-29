@@ -18,6 +18,9 @@ export const LoginForm = () => {
 
     return (
         <form className={styles['form']} onSubmit={onSubmit}>
+            <div className={styles['error-msg-div']}>
+                <span>{errorMsg}</span>
+            </div>
             <div className={styles['input-container']}>
                 <input
                     type="email"
