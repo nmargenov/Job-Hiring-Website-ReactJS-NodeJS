@@ -3,6 +3,8 @@ import { CookieConsentModal } from './components/CookieConsentModal.jsx/CookieCo
 import { Header } from './components/Header/Header'
 import { ConsentProvider } from './contexts/CookieConsentContext'
 import { ThemeProvider } from './contexts/ThemeContext'
+import { Login } from './components/Login/Login.jsx';
+import { Route, Routes } from 'react-router-dom'
 
 function App() {
 
@@ -12,6 +14,9 @@ function App() {
         <ThemeProvider>
           <CookieConsentModal />
           <Header />
+          <Routes>
+            <Route path='/login' element={<Login />} />
+          </Routes>
         </ThemeProvider>
       </ConsentProvider>
 
