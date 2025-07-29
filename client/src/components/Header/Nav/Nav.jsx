@@ -39,6 +39,7 @@ export const Nav = ({ toggleOpen, onKey, isOpen }) => {
 
     function onCookieClick() {
         setShowModal(true);
+        toggleOpen();
     }
 
     return (
