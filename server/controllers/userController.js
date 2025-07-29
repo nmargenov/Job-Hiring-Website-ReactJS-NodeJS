@@ -35,8 +35,8 @@ router.post(PATHS.verifyEmailCode, mustBeAuth, MustBeSetup, async (req, res) => 
 router.post(PATHS.login, mustBeGuest, async (req, res) => {
     try {
         const email = req.body?.email?.trim();
-        await sendLoginCode(email);
-        res.status(200).send({ message: MESSAGES.codeSent });
+        const id = await sendLoginCode(email);
+        res.status(200).json(id);
     } catch (err) {
         const error = formatErrorMessage(err);
         res.status(400).send({ message: error });

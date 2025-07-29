@@ -30,11 +30,13 @@ async function createDatabaseEntry(model, email, code, expiresAt, newEmail) {
     const toUpdate = { code, expiresAt };
     model === EmailCode ? (toUpdate['oldEmail'] = email, toUpdate['newEmail'] = newEmail) : null;
 
-    await model.findOneAndUpdate(
+    const entry = await model.findOneAndUpdate(
         { email },
         { code: toUpdate.code, expiresAt: toUpdate.expiresAt, newEmail: toUpdate.newEmail },
         { upsert: true, new: true }
     ); //creates new login in the database or updates the existing code
+
+    return entry;
 }
 
 async function sendEmail(email, subject, text) {
@@ -85,9 +87,11 @@ exports.sendLoginCode = async (email) => {
 
     await antispamCode(LoginCode, email);
 
-    await createDatabaseEntry(LoginCode, email, code, expiresAt);
-
+    const dbEntry = await createDatabaseEntry(LoginCode, email, code, expiresAt);
+    
     await sendEmail(email, 'Login code', `Your login code is: ${code} and is valid for 10 minutes.`);
+
+    return dbEntry._id;
 }
 
 exports.verifyEmailCode = async (userID, code) => {
