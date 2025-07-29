@@ -12,8 +12,8 @@ import styles from './header.module.css';
 
 export const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const {prefs, setShowModal } = useConsent();
-    const { theme, changeTheme } = useTheme();
+    const { setShowModal } = useConsent();
+    const { changeTheme } = useTheme();
 
     const { t } = useTranslation();
 
@@ -74,7 +74,6 @@ export const Header = () => {
                         </div>
                         <span onClick={() => { changeTheme('light') }}>light</span>
                         <span onClick={() => { changeTheme('dark') }}>dark</span>
-                        <span onClick={() => { console.log(prefs) }}>prefs</span>
                     </nav>
 
                 </>

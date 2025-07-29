@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getCookie, setCookie } from "../utils/cookies";
+import { useConsent } from "./CookieConsentContext";
 
 const ThemeContext = createContext({
     theme: 'light',
@@ -12,8 +13,10 @@ export const useTheme = () => useContext(ThemeContext);
 export const ThemeProvider = ({ children }) => {
     const [theme, setTheme] = useState('light');
 
-    const prefsRaw = getCookie('cookie_preferences');
-    const prefs = prefsRaw ? JSON.parse(prefsRaw) : { theme: false };
+    // const prefsRaw = getCookie('cookie_preferences');
+    // const prefs = prefsRaw ? JSON.parse(prefsRaw) : { theme: false };
+
+    const { prefs } = useConsent();
 
     function checkIfCookieAllowed() {
         return prefs.theme === true;
@@ -23,7 +26,8 @@ export const ThemeProvider = ({ children }) => {
 
         setTheme(value);
 
-        if (checkIfCookieAllowed) {
+        if (checkIfCookieAllowed()) {
+            console.log('allowed');
             setCookie('theme', value);
         }
     }
