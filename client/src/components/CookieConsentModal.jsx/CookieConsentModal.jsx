@@ -5,10 +5,10 @@ import styles from "./cookieConsentContext.module.css";
 
 export const CookieConsentModal = () => {
     const { prefs, setPreference, savePreferences, showModal, acceptAll } = useConsent();
+    const { t } = useTranslation();
 
     if (!showModal) return null;
 
-    const { t } = useTranslation();
 
     return (
         <div className={styles["main"]}>

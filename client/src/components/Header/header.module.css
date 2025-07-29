@@ -123,6 +123,10 @@ svg:focus {
     background-color: rgb(211, 211, 211);
 }
 
+span{
+    color:black;
+}
+
 @media (max-width: 768px) {
 
     .right-div .login-button{

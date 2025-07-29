@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { getCookie, setCookie,deleteDeclinedCookies } from '../utils/cookies';
+import { getCookie, setCookie, deleteDeclinedCookies } from '../utils/cookies';
 
 // Default preferences
 const defaultPrefs = {
@@ -25,10 +25,13 @@ export const ConsentProvider = ({ children }) => {
 
   useEffect(() => {
     const saved = getCookie('cookie_preferences');
-
     if (saved) {
-      setPrefs(JSON.parse(saved));
+      const obj = JSON.parse(saved);
+      setPrefs(obj);
       setShowModal(false);
+      deleteCookies(obj);
+    }else{
+      deleteCookies(prefs);
     }
   }, []);
 
@@ -40,17 +43,21 @@ export const ConsentProvider = ({ children }) => {
   const savePreferences = () => {
     setCookie('cookie_preferences', JSON.stringify(prefs));
     setShowModal(false);
-    
+
+    deleteCookies(prefs);
+  };
+
+  function deleteCookies(arr) {
     const declined = [];
 
-    if (!prefs.language) declined.push('i18next');
-    if (!prefs.theme) declined.push('theme');
-    
+    if (!arr.language) declined.push('i18next');
+    if (!arr.theme) declined.push('theme');
+
     if (declined.length > 0) {
       deleteDeclinedCookies(declined);
     }
-    window.location.reload();
-  };
+  }
+
 
   const acceptAll = () => {
     const acceptedPrefs = {
@@ -61,7 +68,6 @@ export const ConsentProvider = ({ children }) => {
     setPrefs(acceptedPrefs);
     setCookie('cookie_preferences', JSON.stringify(acceptedPrefs));
     setShowModal(false);
-    window.location.reload();
   }
 
   return (

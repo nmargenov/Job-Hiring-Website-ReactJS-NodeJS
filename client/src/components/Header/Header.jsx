@@ -5,13 +5,15 @@ import { faList, faClose, faHome, faPhone, faCookie } from "@fortawesome/free-so
 import { NavItem } from './navItem/NavItem';
 import { useTranslation } from 'react-i18next';
 import { useConsent } from '../../contexts/CookieConsentContext';
+import { useTheme } from "../../contexts/ThemeContext";
 
 import styles from './header.module.css';
 
 
 export const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const { setShowModal } = useConsent();
+    const {prefs, setShowModal } = useConsent();
+    const { theme, changeTheme } = useTheme();
 
     const { t } = useTranslation();
 
@@ -32,17 +34,19 @@ export const Header = () => {
     };
 
     function onLanguageClick(e, lang) {
-         if (e.key === 'Enter') {
+        if (e.key === 'Enter') {
             switchLang(lang);
         }
     }
 
-    function onCookieClick(){
+    function onCookieClick() {
         setShowModal(true);
     }
 
     return (
         <header className={styles['header']}>
+            {theme === "light" && <span>light</span>}
+            {theme === "dark" && <span>dark</span>}
             <div className={styles['logo']}>
                 <Link to={"/"}><img src='/images/logo.png' alt="" /></Link>
                 <div className={styles['blue-box']}></div>
@@ -67,10 +71,14 @@ export const Header = () => {
                             <NavItem onClick={onCookieClick} icon={faCookie} text={t("cookie-title")} />
                         </div>
                         <div className={styles['section']}>
-                            <a onKeyDown={(e)=>{onLanguageClick(e,"en")}} tabIndex={0} className={styles['language-option']} onClick={() => switchLang('en')}>English</a>
-                            <a onKeyDown={(e)=>{onLanguageClick(e,"bg")}} tabIndex={0} className={styles['language-option']} onClick={() => switchLang('bg')}>Български</a>
+                            <a onKeyDown={(e) => { onLanguageClick(e, "en") }} tabIndex={0} className={styles['language-option']} onClick={() => switchLang('en')}>English</a>
+                            <a onKeyDown={(e) => { onLanguageClick(e, "bg") }} tabIndex={0} className={styles['language-option']} onClick={() => switchLang('bg')}>Български</a>
                         </div>
+                        <span onClick={() => { changeTheme('light') }}>light</span>
+                        <span onClick={() => { changeTheme('dark') }}>dark</span>
+                        <span onClick={() => { console.log(prefs) }}>prefs</span>
                     </nav>
+
                 </>
             }
         </header>
