@@ -1,8 +1,9 @@
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
+import { getCookie } from '../utils/cookies';
 
-const prefsRaw = localStorage.getItem('cookie_preferences');
+const prefsRaw = getCookie('cookie_preferences');
 const prefs = prefsRaw ? JSON.parse(prefsRaw) : { language: false };
 
 import translationEN from './en.json';

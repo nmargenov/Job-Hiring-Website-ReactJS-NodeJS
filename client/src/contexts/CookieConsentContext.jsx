@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { getCookie, setCookie } from '../utils/cookies';
 
 // Default preferences
 const defaultPrefs = {
@@ -22,9 +23,9 @@ export const ConsentProvider = ({ children }) => {
   const [prefs, setPrefs] = useState(defaultPrefs);
   const [showModal, setShowModal] = useState(true);
 
-  // Load from localStorage on mount
   useEffect(() => {
-    const saved = localStorage.getItem('cookie_preferences');
+    const saved = getCookie('cookie_preferences');
+
     if (saved) {
       setPrefs(JSON.parse(saved));
       setShowModal(false);
@@ -37,7 +38,7 @@ export const ConsentProvider = ({ children }) => {
   };
 
   const savePreferences = () => {
-    localStorage.setItem('cookie_preferences', JSON.stringify(prefs));
+    setCookie('cookie_preferences', JSON.stringify(prefs));
     setShowModal(false);
     window.location.reload();
   };
@@ -49,7 +50,7 @@ export const ConsentProvider = ({ children }) => {
       theme: true,
     }
     setPrefs(acceptedPrefs);
-    localStorage.setItem('cookie_preferences', JSON.stringify(acceptedPrefs));
+    setCookie('cookie_preferences', JSON.stringify(prefs));
     setShowModal(false);
     window.location.reload();
   }
