@@ -8,11 +8,12 @@ import { useConsent } from '../../contexts/CookieConsentContext';
 import { useTheme } from "../../contexts/ThemeContext";
 
 import styles from './header.module.css';
+import { ToggleSwitch } from '../shared/ToggleSwitch/ToggleSwitch';
 
 
 export const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const { setShowModal } = useConsent();
+    const { prefs, setShowModal } = useConsent();
     const { changeTheme } = useTheme();
 
     const { t } = useTranslation();
@@ -31,6 +32,10 @@ export const Header = () => {
 
     const switchLang = (lng) => {
         i18n.changeLanguage(lng);
+        if (prefs.language === true) {
+            document.cookie = `i18next=${lng}; path=/; max-age=31536000`; // 1 year
+
+        }
     };
 
     function onLanguageClick(e, lang) {
@@ -72,8 +77,10 @@ export const Header = () => {
                             <a onKeyDown={(e) => { onLanguageClick(e, "en") }} tabIndex={0} className={styles['language-option']} onClick={() => switchLang('en')}>English</a>
                             <a onKeyDown={(e) => { onLanguageClick(e, "bg") }} tabIndex={0} className={styles['language-option']} onClick={() => switchLang('bg')}>Български</a>
                         </div>
-                        <span onClick={() => { changeTheme('light') }}>light</span>
-                        <span onClick={() => { changeTheme('dark') }}>dark</span>
+                        <div>
+                            <span onClick={() => { changeTheme('light') }}>light</span>
+                            <span onClick={() => { changeTheme('dark') }}>dark</span>
+                        </div>
                     </nav>
 
                 </>
