@@ -3,21 +3,45 @@ import { useTranslation } from "react-i18next";
 
 import styles from "./cookieConsentContext.module.css";
 import { ToggleSwitch } from "../shared/ToggleSwitch/ToggleSwitch";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faClose, } from "@fortawesome/free-solid-svg-icons"
 
 export const CookieConsentModal = () => {
-    const { prefs, setPreference, savePreferences, showModal, acceptAll } = useConsent();
+    const { prefs, tempPrefs, setPreference, savePreferences, showModal, acceptAll, acceptEssentials } = useConsent();
     const { t } = useTranslation();
 
     if (!showModal) return null;
 
+    function onKey(e) {
+        if (e.key === 'Enter' || e.key === "Escape") {
+            acceptEssentials();
+        }
+    }
+
+    const handleKeyDown = (e) => {
+        if (e.key === "Escape") {
+            acceptEssentials();
+        }
+    };
+
+    const handleOutsideClick = (e) => {
+        if (e.target.classList.contains(styles.opacity)) {
+            acceptEssentials();
+        }
+    };
 
     return (
         <div className={styles["main"]}>
-            <div className={styles["opacity"]}>
+            <div
+                onClick={handleOutsideClick}
+                onKeyDown={handleKeyDown}
+                tabIndex={0} className={styles["opacity"]}>
             </div>
             <div className={styles["cookie-modal"]} role="dialog" aria-modal="true" aria-labelledby="consent-title">
                 <div className={styles['title-div']}>
                     <span className={styles['title']} id="consent-title">{t('cookie-title')}</span>
+                    <FontAwesomeIcon tabIndex={0}
+                        onClick={acceptEssentials} onKeyDown={(e) => { onKey(e) }} icon={faClose} />
                 </div>
                 <div className={styles['usage-div']}>
                     <span className={styles['usage-title']}>{t('cookie-usage-title')}</span>
@@ -26,19 +50,19 @@ export const CookieConsentModal = () => {
                         <li>
                             <label>
                                 {t('required-cookie')}
-                                <ToggleSwitch check={true} disabled={true}/>
+                                <ToggleSwitch check={true} disabled={true} />
                             </label>
                         </li>
                         <li>
                             <label>
                                 {t('language-preferences')}
-                                <ToggleSwitch check={prefs.language}  action={() => setPreference('language', !prefs.language)}/>
+                                <ToggleSwitch check={tempPrefs.language} action={() => setPreference('language', !tempPrefs.language)} />
                             </label>
                         </li>
                         <li>
                             <label>
                                 {t('theme-preference')}
-                                <ToggleSwitch check={prefs.theme}  action={() => setPreference('theme', !prefs.theme)}/>
+                                <ToggleSwitch check={tempPrefs.theme} action={() => setPreference('theme', !tempPrefs.theme)} />
                             </label>
                         </li>
                     </ul>

@@ -3,7 +3,7 @@ import { useConsent } from '../../../contexts/CookieConsentContext';
 import { useTheme } from "../../../contexts/ThemeContext";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faPhone, faCookie, faClose, faXmark, } from "@fortawesome/free-solid-svg-icons"
+import { faHome, faPhone, faCookie, faClose, } from "@fortawesome/free-solid-svg-icons"
 
 import { NavItem } from '../navItem/NavItem';
 

@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { getCookie, setCookie, deleteDeclinedCookies } from '../utils/cookies';
 
-// Default preferences
 const defaultPrefs = {
   essential: true,
   language: false,
@@ -10,17 +9,20 @@ const defaultPrefs = {
 
 const ConsentContext = createContext({
   prefs: defaultPrefs,
-  setPreference: (key, value) => { },
-  savePreferences: () => { },
+  tempPrefs: defaultPrefs,
+  setPreference: () => {},
+  savePreferences: () => {},
   showModal: true,
-  setShowModal: () => { },
-  acceptAll: () => { },
+  setShowModal: () => {},
+  acceptAll: () => {},
+  acceptEssentials: () => {},
 });
 
 export const useConsent = () => useContext(ConsentContext);
 
 export const ConsentProvider = ({ children }) => {
-  const [prefs, setPrefs] = useState(defaultPrefs);
+  const [prefs, setPrefs] = useState(defaultPrefs);       // saved preferences
+  const [tempPrefs, setTempPrefs] = useState(defaultPrefs); // temporary changes
   const [showModal, setShowModal] = useState(true);
 
   useEffect(() => {
@@ -29,56 +31,64 @@ export const ConsentProvider = ({ children }) => {
       if (saved) {
         const obj = JSON.parse(saved);
         setPrefs(obj);
+        setTempPrefs(obj); // initialize temp with saved values
         setShowModal(false);
         deleteCookies(obj);
       } else {
-        deleteCookies(prefs);
+        deleteCookies(defaultPrefs);
       }
     } catch (err) {
-      console.log("Error with cookies: "+err);
-      savePreferences(prefs);
+      console.log("Error with cookies: " + err);
+      savePreferences(defaultPrefs);
     }
-
   }, []);
 
   const setPreference = (key, value) => {
-    if (key === 'essential') return; // can't change essential
-    setPrefs((prev) => ({ ...prev, [key]: value }));
+    if (key === 'essential') return;
+    setTempPrefs((prev) => ({ ...prev, [key]: value }));
   };
 
   const savePreferences = () => {
-    setCookie('cookie_preferences', JSON.stringify(prefs));
+    setPrefs(tempPrefs);
+    setCookie('cookie_preferences', JSON.stringify(tempPrefs));
     setShowModal(false);
-
-    deleteCookies(prefs);
+    deleteCookies(tempPrefs);
   };
 
   function deleteCookies(arr) {
     const declined = [];
-
     if (!arr.language) declined.push('i18next');
     if (!arr.theme) declined.push('theme');
-
     if (declined.length > 0) {
       deleteDeclinedCookies(declined);
     }
   }
 
-
   const acceptAll = () => {
-    const acceptedPrefs = {
-      essential: true,
-      language: true,
-      theme: true,
-    }
+    const acceptedPrefs = { essential: true, language: true, theme: true };
     setPrefs(acceptedPrefs);
+    setTempPrefs(acceptedPrefs);
     setCookie('cookie_preferences', JSON.stringify(acceptedPrefs));
     setShowModal(false);
-  }
+  };
+
+  const acceptEssentials = () => {
+    setTempPrefs(prefs);
+    setShowModal(false);
+  };
 
   return (
     <ConsentContext.Provider
-      value={{ prefs, setPreference, savePreferences, showModal, setShowModal, acceptAll }}
+      value={{
+        prefs,
+        tempPrefs,
+        setPreference,
+        savePreferences,
+        showModal,
+        setShowModal,
+        acceptAll,
+        acceptEssentials,
+      }}
     >
       {children}
     </ConsentContext.Provider>
