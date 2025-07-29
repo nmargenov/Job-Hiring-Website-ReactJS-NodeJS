@@ -101,7 +101,7 @@ svg:focus {
     padding: 10px;
 }
 
-.nav>.section:last-of-type {
+.nav>.section:nth-last-of-type(-n+2) {
     flex-direction: row;
     justify-content: space-evenly;
     padding: 10px 0;
@@ -115,17 +115,14 @@ svg:focus {
 }
 
 .language-option:hover {
-    background-color: rgb(230, 230, 230);
+    background-color: var(--hover-background);
     border-radius: 50px;
 }
 
 .language-option:active {
-    background-color: rgb(211, 211, 211);
+    background-color: var(--active-background);
 }
 
-span {
-    color: var(--text-color)
-}
 
 @media (max-width: 768px) {
 

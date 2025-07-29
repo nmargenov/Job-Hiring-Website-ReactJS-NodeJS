@@ -9,5 +9,7 @@
     "language-preferences": "Language Preference",
     "theme-preference": "Theme Preference",
     "save-settings": "Save settings",
-    "accept-all": "Accept all"
+    "accept-all": "Accept all",
+    "dark-theme":"Dark theme",
+    "light-theme":"Light theme"
 }

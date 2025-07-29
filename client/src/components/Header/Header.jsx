@@ -43,6 +43,12 @@ export const Header = () => {
         }
     }
 
+    function onThemeClick(e, theme){
+        if (e.key === 'Enter') {
+            changeTheme(theme);
+        }
+    }
+
     function onCookieClick() {
         setShowModal(true);
     }
@@ -76,9 +82,9 @@ export const Header = () => {
                             <a onKeyDown={(e) => { onLanguageClick(e, "en") }} tabIndex={0} className={styles['language-option']} onClick={() => switchLang('en')}>English</a>
                             <a onKeyDown={(e) => { onLanguageClick(e, "bg") }} tabIndex={0} className={styles['language-option']} onClick={() => switchLang('bg')}>Български</a>
                         </div>
-                        <div>
-                            <span onClick={() => { changeTheme('light') }}>light</span>
-                            <span onClick={() => { changeTheme('dark') }}>dark</span>
+                        <div className={styles['section']}>
+                            <a onKeyDown={(e) => { onThemeClick(e, "en") }} tabIndex={0} className={styles['language-option']} onClick={() => changeTheme('light')}>{t("light-theme")}</a>
+                            <a onKeyDown={(e) => { onThemeClick(e, "bg") }} tabIndex={0} className={styles['language-option']} onClick={() => changeTheme('dark')}>{t("dark-theme")}</a>
                         </div>
                     </nav>
 

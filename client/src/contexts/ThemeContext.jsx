@@ -27,7 +27,6 @@ export const ThemeProvider = ({ children }) => {
         setTheme(value);
 
         if (checkIfCookieAllowed()) {
-            console.log('allowed');
             setCookie('theme', value);
         }
     }

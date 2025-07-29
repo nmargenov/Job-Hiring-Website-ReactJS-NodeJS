@@ -1,19 +1,24 @@
 :root[data-theme='light'] {
-  --bg-color: white;
-  --header-color:white;
-  --text-color:black;
-  --cookies-modal-color:#253b48;
+    --bg-color: white;
+    --header-color: white;
+    --text-color: black;
+    --cookies-modal-color: #253b48;
+    --hover-background: rgb(230, 230, 230);
+    --active-background: rgb(216, 216, 216);
+
 }
 
 :root[data-theme='dark'] {
-  --bg-color: #1c1c1d;
-  --header-color:#343436;
-  --text-color: white;
-  --cookies-modal-color:#1d6a97;
+    --bg-color: #1c1c1d;
+    --header-color: #343436;
+    --text-color: white;
+    --cookies-modal-color: #1d6a97;
+    --hover-background: rgb(37, 37, 37);
+    --active-background: rgb(14, 14, 14);
 }
 
 body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
