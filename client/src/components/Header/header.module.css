@@ -69,7 +69,7 @@ a {
 }
 
 
-/* 
+
 @media (max-width: 768px) {
 
     .right-div .login-button {
@@ -83,4 +83,4 @@ a {
     .logo img {
         height: 60px;
     }
-} */
+}

@@ -7,26 +7,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClose, } from "@fortawesome/free-solid-svg-icons"
 
 export const CookieConsentModal = () => {
-    const { prefs, tempPrefs, setPreference, savePreferences, showModal, acceptAll, acceptEssentials } = useConsent();
+    const { tempPrefs, setPreference, savePreferences, showModal, acceptAll, closeModal } = useConsent();
     const { t } = useTranslation();
 
     if (!showModal) return null;
 
     function onKey(e) {
         if (e.key === 'Enter' || e.key === "Escape") {
-            acceptEssentials();
+            closeModal();
         }
     }
 
-    const handleKeyDown = (e) => {
-        if (e.key === "Escape") {
-            acceptEssentials();
-        }
-    };
-
     const handleOutsideClick = (e) => {
         if (e.target.classList.contains(styles.opacity)) {
-            acceptEssentials();
+            closeModal();
         }
     };
 
@@ -34,14 +28,13 @@ export const CookieConsentModal = () => {
         <div className={styles["main"]}>
             <div
                 onClick={handleOutsideClick}
-                onKeyDown={handleKeyDown}
                 tabIndex={0} className={styles["opacity"]}>
             </div>
             <div className={styles["cookie-modal"]} role="dialog" aria-modal="true" aria-labelledby="consent-title">
                 <div className={styles['title-div']}>
                     <span className={styles['title']} id="consent-title">{t('cookie-title')}</span>
                     <FontAwesomeIcon tabIndex={0}
-                        onClick={acceptEssentials} onKeyDown={(e) => { onKey(e) }} icon={faClose} />
+                        onClick={closeModal} onKeyDown={(e) => { onKey(e) }} icon={faClose} />
                 </div>
                 <div className={styles['usage-div']}>
                     <span className={styles['usage-title']}>{t('cookie-usage-title')}</span>

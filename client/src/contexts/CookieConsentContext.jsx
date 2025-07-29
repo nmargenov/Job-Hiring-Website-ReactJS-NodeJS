@@ -15,7 +15,7 @@ const ConsentContext = createContext({
   showModal: true,
   setShowModal: () => {},
   acceptAll: () => {},
-  acceptEssentials: () => {},
+  closeModal: () => {},
 });
 
 export const useConsent = () => useContext(ConsentContext);
@@ -55,7 +55,7 @@ export const ConsentProvider = ({ children }) => {
     deleteCookies(tempPrefs);
   };
 
-  function deleteCookies(arr) {
+  const deleteCookies = (arr) => {
     const declined = [];
     if (!arr.language) declined.push('i18next');
     if (!arr.theme) declined.push('theme');
@@ -72,7 +72,7 @@ export const ConsentProvider = ({ children }) => {
     setShowModal(false);
   };
 
-  const acceptEssentials = () => {
+  const closeModal = () => {
     setTempPrefs(prefs);
     setShowModal(false);
   };
@@ -87,7 +87,7 @@ export const ConsentProvider = ({ children }) => {
         showModal,
         setShowModal,
         acceptAll,
-        acceptEssentials,
+        closeModal,
       }}
     >
       {children}
