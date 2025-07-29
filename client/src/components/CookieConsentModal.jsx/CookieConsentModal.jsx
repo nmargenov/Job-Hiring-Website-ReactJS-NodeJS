@@ -19,7 +19,7 @@ export const CookieConsentModal = () => {
                     <span className={styles['title']} id="consent-title">{t('cookie-title')}</span>
                 </div>
                 <div className={styles['usage-div']}>
-                    <span className={styles['usage-title']}>{t('cookie-title')}</span>
+                    <span className={styles['usage-title']}>{t('cookie-usage-title')}</span>
                     <span className={styles['usage']}>{t('cookie-usage')}</span>
                     <ul>
                         <li>

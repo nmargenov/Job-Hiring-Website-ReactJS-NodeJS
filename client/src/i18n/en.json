@@ -1,12 +1,13 @@
 {
-    "login":"Login",
-    "homepage":"Home",
-    "contacts":"Contacts",
-    "cookie-title":"Cookie settings",
-    "cookie-usage":"We use cookies to ensure the basic functionalities of the website and to enhance your online experience. You can choose for each category to opt-in/out whenever you want.",
-    "required-cookie":"Essential Cookies (required)",
-    "language-preferences":"Language Preference",
-    "theme-preference":"Theme Preference",
-    "save-settings":"Save settings",
-    "accept-all":"Accept all"
+    "login": "Login",
+    "homepage": "Home",
+    "contacts": "Contacts",
+    "cookie-title": "Cookie settings",
+    "cookie-usage-title": "Cookie usage",
+    "cookie-usage": "We use cookies to ensure the basic functionalities of the website and to enhance your online experience. You can choose for each category to opt-in/out whenever you want.",
+    "required-cookie": "Essential Cookies (required)",
+    "language-preferences": "Language Preference",
+    "theme-preference": "Theme Preference",
+    "save-settings": "Save settings",
+    "accept-all": "Accept all"
 }
