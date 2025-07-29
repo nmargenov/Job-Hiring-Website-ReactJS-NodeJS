@@ -2,6 +2,7 @@ import { useConsent } from "../../contexts/CookieConsentContext"
 import { useTranslation } from "react-i18next";
 
 import styles from "./cookieConsentContext.module.css";
+import { ToggleSwitch } from "../shared/ToggleSwitch/ToggleSwitch";
 
 export const CookieConsentModal = () => {
     const { prefs, setPreference, savePreferences, showModal, acceptAll } = useConsent();
@@ -25,27 +26,19 @@ export const CookieConsentModal = () => {
                         <li>
                             <label>
                                 {t('required-cookie')}
-                                <input type="checkbox" checked disabled />
+                                <ToggleSwitch check={true} disabled={true}/>
                             </label>
                         </li>
                         <li>
                             <label>
                                 {t('language-preferences')}
-                                <input
-                                    type="checkbox"
-                                    checked={prefs.language}
-                                    onChange={() => setPreference('language', !prefs.language)}
-                                />
+                                <ToggleSwitch check={prefs.language}  action={() => setPreference('language', !prefs.language)}/>
                             </label>
                         </li>
                         <li>
                             <label>
                                 {t('theme-preference')}
-                                <input
-                                    type="checkbox"
-                                    checked={prefs.theme}
-                                    onChange={() => setPreference('theme', !prefs.theme)}
-                                />
+                                <ToggleSwitch check={prefs.theme}  action={() => setPreference('theme', !prefs.theme)}/>
                             </label>
                         </li>
                     </ul>
