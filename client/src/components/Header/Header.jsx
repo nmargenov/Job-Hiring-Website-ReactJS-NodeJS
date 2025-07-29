@@ -1,20 +1,15 @@
 import { useState } from 'react';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faList, faClose, faHome, faPhone, faCookie } from "@fortawesome/free-solid-svg-icons"
-import { NavItem } from './navItem/NavItem';
+import { faList, faClose } from "@fortawesome/free-solid-svg-icons"
 import { useTranslation } from 'react-i18next';
-import { useConsent } from '../../contexts/CookieConsentContext';
-import { useTheme } from "../../contexts/ThemeContext";
+
+import { Nav } from './Nav/Nav';
 
 import styles from './header.module.css';
-import { ToggleSwitch } from '../shared/ToggleSwitch/ToggleSwitch';
-
 
 export const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const { prefs, setShowModal } = useConsent();
-    const { changeTheme } = useTheme();
 
     const { t } = useTranslation();
 
@@ -27,32 +22,7 @@ export const Header = () => {
             toggleOpen();
         }
     }
-
-    const { i18n } = useTranslation();
-
-    const switchLang = (lng) => {
-        i18n.changeLanguage(lng);
-        if (prefs.language === true) {
-            document.cookie = `i18next=${lng}; path=/; max-age=31536000`;
-        }
-    };
-
-    function onLanguageClick(e, lang) {
-        if (e.key === 'Enter') {
-            switchLang(lang);
-        }
-    }
-
-    function onThemeClick(e, theme){
-        if (e.key === 'Enter') {
-            changeTheme(theme);
-        }
-    }
-
-    function onCookieClick() {
-        setShowModal(true);
-    }
-
+   
     return (
         <header className={styles['header']}>
             <div className={styles['logo']}>
@@ -69,27 +39,9 @@ export const Header = () => {
             {isOpen &&
                 <>
                     <div onClick={toggleOpen} className={styles['nav-div']}></div>
-                    <nav className={styles['nav']}>
-                        <div className={styles['section']}>
-                            <Link onClick={toggleOpen} to={"/login"} className={styles['login-button']}>{t("login")}</Link>
-                        </div>
-                        <div className={styles['section']}>
-                            <NavItem destination={'/'} icon={faHome} text={t("homepage")} onClick={toggleOpen} />
-                            <NavItem destination={'/contacts'} icon={faPhone} text={t("contacts")} onClick={toggleOpen} />
-                            <NavItem onClick={onCookieClick} icon={faCookie} text={t("cookie-title")} />
-                        </div>
-                        <div className={styles['section']}>
-                            <a onKeyDown={(e) => { onLanguageClick(e, "en") }} tabIndex={0} className={styles['language-option']} onClick={() => switchLang('en')}>English</a>
-                            <a onKeyDown={(e) => { onLanguageClick(e, "bg") }} tabIndex={0} className={styles['language-option']} onClick={() => switchLang('bg')}>Български</a>
-                        </div>
-                        <div className={styles['section']}>
-                            <a onKeyDown={(e) => { onThemeClick(e, "en") }} tabIndex={0} className={styles['language-option']} onClick={() => changeTheme('light')}>{t("light-theme")}</a>
-                            <a onKeyDown={(e) => { onThemeClick(e, "bg") }} tabIndex={0} className={styles['language-option']} onClick={() => changeTheme('dark')}>{t("dark-theme")}</a>
-                        </div>
-                    </nav>
-
+                    <Nav toggleOpen={toggleOpen}/>
                 </>
             }
         </header>
-    );
+    )
 };

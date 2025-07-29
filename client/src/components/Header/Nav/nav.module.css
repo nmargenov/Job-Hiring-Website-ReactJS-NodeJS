@@ -1,0 +1,88 @@
+a {
+    text-decoration: none;
+}
+
+.login-button {
+    padding: 20px 0px;
+    width: 80px;
+    text-align: center;
+    border-radius: 50px;
+    background-color: #d40080;
+    color: white;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+.login-button:hover,
+.login-button:focus {
+    opacity: 0.8;
+}
+
+.login-button:active {
+    opacity: 0.5;
+} 
+
+svg {
+    color: #999;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+
+svg:focus {
+    outline: 2px solid #333;
+}
+
+.nav-div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    background-color: black;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--header-color);
+    width: 300px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid lightgray;
+}
+
+.nav>.section:first-of-type {
+    align-items: end;
+    padding: 10px;
+}
+
+.nav>.section:nth-last-of-type(-n+2) {
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: 10px 0;
+}
+
+.language-option {
+    color: var(--text-color);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.language-option:hover {
+    background-color: var(--hover-background);
+    border-radius: 50px;
+}
+
+.language-option:active {
+    background-color: var(--active-background);
+}
