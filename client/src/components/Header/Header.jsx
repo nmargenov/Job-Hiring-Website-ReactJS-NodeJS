@@ -45,8 +45,6 @@ export const Header = () => {
 
     return (
         <header className={styles['header']}>
-            {theme === "light" && <span>light</span>}
-            {theme === "dark" && <span>dark</span>}
             <div className={styles['logo']}>
                 <Link to={"/"}><img src='/images/logo.png' alt="" /></Link>
                 <div className={styles['blue-box']}></div>

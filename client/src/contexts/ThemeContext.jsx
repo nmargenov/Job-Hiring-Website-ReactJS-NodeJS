@@ -3,7 +3,6 @@ import { getCookie, setCookie } from "../utils/cookies";
 
 const ThemeContext = createContext({
     theme: 'light',
-    setTheme: () => { },
     changeTheme: (value) => { }
 });
 
@@ -34,10 +33,11 @@ export const ThemeProvider = ({ children }) => {
         if (saved) {
             setTheme(saved);
         };
-    }, [prefs]);
+        document.documentElement.setAttribute('data-theme', theme);
+    }, [theme]);
 
     return (
-        <ThemeContext.Provider value={{ theme, setTheme, changeTheme }}>
+        <ThemeContext.Provider value={{ theme, changeTheme }}>
             {children}
         </ThemeContext.Provider>
     );

@@ -26,7 +26,7 @@
     flex-direction: column;
     align-items: center;
     max-width: 700px;
-    background-color: white;
+    background-color: var(--header-color);
     box-shadow: 0 0 5px black;
 }
 
@@ -48,7 +48,7 @@
     display: flex;
     font-size: 18px;
     justify-content: space-between;
-    color: #253b48;
+    color: var(--cookies-modal-color);
 }
 
 .cookie-modal input[type="checkbox"] {
@@ -68,7 +68,7 @@
 .cookie-modal .title {
     font-weight: bold;
     font-size: 20px;
-    color: #253b48;
+    color: var(--cookies-modal-color);
 }
 
 .cookie-modal .usage-div {
@@ -84,7 +84,7 @@
 .cookie-modal .usage-title {
     font-weight: bold;
     font-size: 18px;
-    color: #253b48;
+    color: var(--cookies-modal-color);
 }
 
 .cookie-modal .buttons-div {
@@ -97,7 +97,7 @@
 .cookie-modal .accept-all-button {
     border: none;
     padding: 15px 20px;
-    background-color: #253b48;
+    background-color: var(--cookies-modal-color);
     border-radius: 8px;
     color: white;
     font-weight: bold;
@@ -124,7 +124,7 @@
 
 @media (max-width: 768px) {
 
-    .cookie-modal .buttons-div{
+    .cookie-modal .buttons-div {
         flex-direction: column-reverse;
         gap: 10px;
     }
