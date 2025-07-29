@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { getCookie, setCookie } from '../utils/cookies';
+import { getCookie, setCookie,deleteDeclinedCookies } from '../utils/cookies';
 
 // Default preferences
 const defaultPrefs = {
@@ -40,6 +40,15 @@ export const ConsentProvider = ({ children }) => {
   const savePreferences = () => {
     setCookie('cookie_preferences', JSON.stringify(prefs));
     setShowModal(false);
+    
+    const declined = [];
+
+    if (!prefs.language) declined.push('i18next');
+    if (!prefs.theme) declined.push('theme');
+    
+    if (declined.length > 0) {
+      deleteDeclinedCookies(declined);
+    }
     window.location.reload();
   };
 
