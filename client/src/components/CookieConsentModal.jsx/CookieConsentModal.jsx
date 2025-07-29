@@ -24,13 +24,13 @@ export const CookieConsentModal = () => {
                     <ul>
                         <li>
                             <label>
-                                Essential Cookies (required)
+                                {t('required-cookie')}
                                 <input type="checkbox" checked disabled />
                             </label>
                         </li>
                         <li>
                             <label>
-                                Language Preference
+                                {t('language-preferences')}
                                 <input
                                     type="checkbox"
                                     checked={prefs.language}
@@ -40,7 +40,7 @@ export const CookieConsentModal = () => {
                         </li>
                         <li>
                             <label>
-                                Theme Preference
+                                {t('theme-preference')}
                                 <input
                                     type="checkbox"
                                     checked={prefs.theme}
@@ -51,8 +51,8 @@ export const CookieConsentModal = () => {
                     </ul>
                 </div>
                 <div className={styles["buttons-div"]}>
-                    <button className={styles["save-settings-button"]} onClick={savePreferences}>Save settings</button>
-                    <button className={styles["accept-all-button"]} onClick={acceptAll}>Accept all</button>
+                    <button className={styles["save-settings-button"]} onClick={savePreferences}>{t('save-settings')}</button>
+                    <button className={styles["accept-all-button"]} onClick={acceptAll}>{t('accept-all')}</button>
                 </div>
             </div>
         </div>
