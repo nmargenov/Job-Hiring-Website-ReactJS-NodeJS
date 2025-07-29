@@ -59,7 +59,7 @@ export const ConsentProvider = ({ children }) => {
       theme: true,
     }
     setPrefs(acceptedPrefs);
-    setCookie('cookie_preferences', JSON.stringify(prefs));
+    setCookie('cookie_preferences', JSON.stringify(acceptedPrefs));
     setShowModal(false);
     window.location.reload();
   }
