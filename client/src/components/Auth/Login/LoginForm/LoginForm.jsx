@@ -2,6 +2,7 @@ import { t } from 'i18next';
 import styles from './loginForm.module.css';
 import { useForm } from '../../../../hooks/useForm';
 import { isValidEmail } from '../../../../utils/regex';
+import { login } from '../../../../services/authService';
 
 export const LoginForm = () => {
 
@@ -14,6 +15,16 @@ export const LoginForm = () => {
     function onSubmit(e) {
         onSubmitHandler(e);
         setIsLoading(true);
+        login(values.email)
+            .then((data)=>{
+                console.log(data);
+                setIsLoading(false);
+                setErrorMsg('');
+            })
+            .catch((err)=>{
+                setIsLoading(false);
+                setErrorMsg(err.message);
+            })
     }
 
     return (
