@@ -4,7 +4,7 @@ import { useForm } from '../../../../hooks/useForm';
 import { isValidEmail } from '../../../../utils/regex';
 import { login } from '../../../../services/authService';
 
-export const LoginForm = () => {
+export const LoginForm = ({ref}) => {
 
     const initialValues = {
         email: ''
@@ -41,6 +41,7 @@ export const LoginForm = () => {
                     required
                     minLength="3"
                     maxLength="40"
+                    ref={ref}
                     className={`${values.email.length > 0 && !isValidEmail(values.email) ? styles.invalid : ""}`}
                     value={values.email}
                     onChange={onInputChange}
