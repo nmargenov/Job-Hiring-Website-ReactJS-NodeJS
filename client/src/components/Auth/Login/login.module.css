@@ -46,7 +46,9 @@
     color: var(--login-form-svg);
 }
 
-
+.login-icon span{
+    max-width: 220px;
+}
 
 @media (max-width: 992px) {
     .login-icon{

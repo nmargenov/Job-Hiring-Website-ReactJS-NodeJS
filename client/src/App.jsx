@@ -1,5 +1,6 @@
 import './App.css'
 import { Login } from './components/Auth/Login/Login'
+import { VerifyLoginCode } from './components/Auth/VerifyLoginCode/VerifyLoginCode'
 import { CookieConsentModal } from './components/CookieConsentModal.jsx/CookieConsentModal'
 import { Header } from './components/Header/Header'
 import { ConsentProvider } from './contexts/CookieConsentContext'
@@ -18,6 +19,7 @@ function App() {
             <main>
               <Routes>
                 <Route path='/login' element={<Login />} />
+                <Route path="/verification-code" element={<VerifyLoginCode />} />
               </Routes>
             </main>
           </div>

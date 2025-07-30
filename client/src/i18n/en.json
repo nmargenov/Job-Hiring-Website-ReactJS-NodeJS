@@ -17,5 +17,12 @@
     "login-span2": "<strong>Introducing passwordless login!</strong> You no longer need a password—logging into Jobs is now easier and more secure.",
     "login-span3": "<strong>How does it work?</strong> Instead of relying on a traditional password, when you log in from a new browser, you’ll receive a code via email. Simply enter the code, and you’re in!",
     "login-span4": "<strong>Why is it easier and more secure?</strong> You no longer need to create and remember complex passwords, nor worry about reusing the same password on different sites.",
-    "email": "Email"
+    "email": "Email",
+    "code-verification-title": "Login code verification",
+    "login-verify-span1": "You no longer need a password. A 6-digit code has been sent to your email.",
+    "login-verify-span2": "We sent a code to:",
+    "login-verify-span3": "Do not close this page until you receive the code (depending on your email provider, it may take 5–10 minutes).",
+    "login-verify-span4": "The code is valid for 10 minutes after it is generated.",
+    "login-verify-span5": "Just enter the code here and you're all set:",
+    "code":"Code"
 }

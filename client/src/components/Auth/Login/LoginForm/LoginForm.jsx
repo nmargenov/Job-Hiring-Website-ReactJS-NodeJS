@@ -3,8 +3,11 @@ import styles from './loginForm.module.css';
 import { useForm } from '../../../../hooks/useForm';
 import { isValidEmail } from '../../../../utils/regex';
 import { login } from '../../../../services/authService';
+import { useNavigate } from 'react-router-dom';
 
-export const LoginForm = ({ref}) => {
+export const LoginForm = ({ ref }) => {
+
+    const navigate = useNavigate();
 
     const initialValues = {
         email: ''
@@ -16,12 +19,13 @@ export const LoginForm = ({ref}) => {
         onSubmitHandler(e);
         setIsLoading(true);
         login(values.email)
-            .then((data)=>{
+            .then((data) => {
                 console.log(data);
                 setIsLoading(false);
                 setErrorMsg('');
+                navigate(`/verification-code?id=${data}`);
             })
-            .catch((err)=>{
+            .catch((err) => {
                 setIsLoading(false);
                 setErrorMsg(err.message);
             })
@@ -50,7 +54,7 @@ export const LoginForm = ({ref}) => {
                 <label className={`${values.email.length > 0 && !isValidEmail(values.email) ? styles['invalid-label'] : ""}`} htmlFor="email">{t('email')}</label>
             </div>
             <div className={styles['submit-div']}>
-                <input type="submit" value={t('login')} disabled={isLoading || (values.email.length >= 0 && !isValidEmail(values.email))}/>
+                <input type="submit" value={t('login')} disabled={isLoading || (values.email.length >= 0 && !isValidEmail(values.email))} />
             </div>
         </form>
     )

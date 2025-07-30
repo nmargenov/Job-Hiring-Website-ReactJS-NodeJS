@@ -5,7 +5,8 @@
     gap: 20px;
 }
 
-.form input[type="email"] {
+.form input[type="email"],
+.form input[type="number"] {
     width: 100%;
     padding: 20px 15px;
     border-radius: 5px;
@@ -15,6 +16,18 @@
     border: 2px solid gray;
     color: var(--login-form-text);
     background-color: var(--login-form-color);
+}
+
+/* Chrome, Safari, Edge, Opera */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 .form .input-container {
