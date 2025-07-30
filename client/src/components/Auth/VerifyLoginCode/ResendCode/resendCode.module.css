@@ -9,12 +9,12 @@
     row-gap: 20px;
 }
 
-.resend-div div:first-of-type p:first-of-type{
+.resend-div div:first-of-type p:first-of-type {
     margin-bottom: 10px;
 }
 
 
-.resend-div div:first-of-type p:last-of-type{
+.resend-div div:first-of-type p:last-of-type {
     margin: 15px 0;
 }
 
@@ -26,19 +26,26 @@
     overflow: hidden;
 }
 
-.error-msg{
-    color:red;
+.error-msg {
+    color: red;
 }
 
-.success-msg{
-    color:green;
+.success-msg {
+    color: green;
 }
 
-.hidden-div{
+.hidden-div {
     display: none;
 }
 
-.show-span{
+.show-span {
     color: #3474d3;
     cursor: pointer;
+    margin-top: 10px;
+}
+
+@media (max-width: 480px) {
+    .msg-div span {
+        font-size: 14px;
+    }
 }

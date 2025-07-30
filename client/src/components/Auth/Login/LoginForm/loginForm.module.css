@@ -132,3 +132,9 @@ input[type="email"]:disabled {
     background-color: var(--login-form-color);
     color: var(--code-design-button);
 }
+
+@media (max-width: 768px) {
+    .buttons-div{
+        justify-content: space-between;
+    }
+}

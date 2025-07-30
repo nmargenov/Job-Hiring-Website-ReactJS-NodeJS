@@ -31,7 +31,6 @@ export const verifyCode = (email, code) => {
     if (!code) {
         return Promise.reject(new Error(t('required-code')));
     }
-
     const url = BASE_URL + paths.verifyCode;
     return post(url, { email, code });
 }
