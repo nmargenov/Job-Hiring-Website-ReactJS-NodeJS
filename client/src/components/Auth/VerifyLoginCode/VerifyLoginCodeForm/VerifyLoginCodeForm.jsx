@@ -3,9 +3,12 @@ import styles from '../../Login/LoginForm/loginForm.module.css';
 import { useForm } from '../../../../hooks/useForm';
 import { verifyCode } from '../../../../services/authService';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../../contexts/AuthContext';
 
 export const VerifyLoginCodeForm = ({ ref, email, isLoading, setIsLoading }) => {
 
+    const { loginAuthContext } = useAuth();
+    
     const navigate = useNavigate();
 
     const initialValues = {
@@ -17,13 +20,11 @@ export const VerifyLoginCodeForm = ({ ref, email, isLoading, setIsLoading }) => 
     function onSubmit(e) {
         onSubmitHandler(e);
         setIsLoading(true);
-        console.log(email);
-        console.log(values.code);
         verifyCode(email, values.code)
             .then((data) => {
                 setIsLoading(false);
                 setErrorMsg("");
-                console.log(data);
+                loginAuthContext(data);
             })
             .catch((err) => {
                 setIsLoading();
