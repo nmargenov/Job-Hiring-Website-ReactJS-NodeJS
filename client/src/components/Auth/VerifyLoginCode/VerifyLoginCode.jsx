@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
 import { VerifyLoginCodeForm } from "./VerifyLoginCodeForm/VerifyLoginCodeForm";
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getEmailByID } from "../../../services/authService";
 import { ResendCode } from "./ResendCode/ResendCode";
 
@@ -18,6 +18,8 @@ export const VerifyLoginCode = () => {
 
     const inputRef = useRef(null);
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         const id = searchParams.get('id');
         if (id) {
@@ -26,8 +28,10 @@ export const VerifyLoginCode = () => {
                     setEmail(data.email);
                 })
                 .catch((err) => {
-                    console.log(err);
+                    navigate('/login');
                 });
+        } else {
+            navigate('/login');
         }
     }, []);
 
@@ -61,7 +65,7 @@ export const VerifyLoginCode = () => {
                     </li>
                 </ul>
                 <VerifyLoginCodeForm isLoading={isFormSubmitted} setIsLoading={setIsFormSubmitted} ref={inputRef} email={email} />
-                <ResendCode isLoading={isFormSubmitted} setIsLoading={setIsFormSubmitted} email={email}/>
+                <ResendCode isLoading={isFormSubmitted} setIsLoading={setIsFormSubmitted} email={email} />
             </div>
         </div>
     )
