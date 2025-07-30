@@ -36,5 +36,6 @@
     "send-again-code": "Resend code",
     "code-sent": "Code sent successfully",
     "required-email": "Email is required",
-    "required-code": "Code is required"
+    "required-code": "Code is required",
+    "logout": "Logout"
 }

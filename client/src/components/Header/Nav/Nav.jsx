@@ -3,11 +3,13 @@ import { useConsent } from '../../../contexts/CookieConsentContext';
 import { useTheme } from "../../../contexts/ThemeContext";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faPhone, faCookie, faClose, } from "@fortawesome/free-solid-svg-icons"
+import { faHome, faPhone, faCookie, faClose, faSignOut, } from "@fortawesome/free-solid-svg-icons"
 
 import { NavItem } from '../navItem/NavItem';
 
 import styles from './nav.module.css';
+import { useAuth } from '../../../contexts/AuthContext';
+
 
 
 export const Nav = ({ toggleOpen, onKey, isOpen }) => {
@@ -17,6 +19,8 @@ export const Nav = ({ toggleOpen, onKey, isOpen }) => {
     const { i18n } = useTranslation();
     const { t } = useTranslation();
 
+
+    const { user, isAuthenticated, logoutAuthContext } = useAuth();
 
     const switchLang = (lng) => {
         i18n.changeLanguage(lng);
@@ -42,17 +46,25 @@ export const Nav = ({ toggleOpen, onKey, isOpen }) => {
         toggleOpen();
     }
 
+    function onLogoutClick() {
+        logoutAuthContext();
+        toggleOpen();
+    }
+
     return (
         <nav className={styles['nav']}>
             <div className={styles['section']}>
                 <FontAwesomeIcon tabIndex={0}
                     onClick={toggleOpen} onKeyDown={(e) => { onKey(e) }} icon={faClose} />
-                <Link onClick={toggleOpen} to={"/login"} className={styles['login-button']}>{t("login")}</Link>
+                {!isAuthenticated &&
+                    <Link onClick={toggleOpen} to={"/login"} className={styles['login-button']}>{t("login")}</Link>
+                }
             </div>
             <div className={styles['section']}>
                 <NavItem destination={'/'} icon={faHome} text={t("homepage")} onClick={toggleOpen} />
                 <NavItem destination={'/contacts'} icon={faPhone} text={t("contacts")} onClick={toggleOpen} />
                 <NavItem onClick={onCookieClick} icon={faCookie} text={t("cookie-title")} />
+                {isAuthenticated && <NavItem onClick={onLogoutClick} icon={faSignOut} text={t("logout")} />}
             </div>
             <div className={styles['section']}>
                 <a onKeyDown={(e) => { onLanguageClick(e, "en") }} tabIndex={0} className={styles['language-option']} onClick={() => switchLang('en')}>English</a>

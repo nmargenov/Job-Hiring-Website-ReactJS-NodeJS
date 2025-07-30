@@ -25,6 +25,7 @@ export const VerifyLoginCodeForm = ({ ref, email, isLoading, setIsLoading }) => 
                 setIsLoading(false);
                 setErrorMsg("");
                 loginAuthContext(data);
+                navigate('/');
             })
             .catch((err) => {
                 setIsLoading();
