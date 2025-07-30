@@ -24,5 +24,6 @@
     "login-verify-span3": "Do not close this page until you receive the code (depending on your email provider, it may take 5–10 minutes).",
     "login-verify-span4": "The code is valid for 10 minutes after it is generated.",
     "login-verify-span5": "Just enter the code here and you're all set:",
-    "code":"Code"
+    "code":"Code",
+    "cancel":"Cancel"
 }

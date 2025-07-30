@@ -6,9 +6,10 @@
     --hover-background: rgb(230, 230, 230);
     --active-background: rgb(216, 216, 216);
     --svg-color: #999;
-    --login-form-color:white;
+    --login-form-color: white;
     --login-form-text: #343436;
     --login-form-svg: #999999;
+    --code-cancel-btn: #d40080;
 }
 
 :root[data-theme='dark'] {
@@ -19,9 +20,10 @@
     --hover-background: rgb(37, 37, 37);
     --active-background: rgb(14, 14, 14);
     --svg-color: #ffffff;
-    --login-form-color:#343436;
+    --login-form-color: #343436;
     --login-form-text: white;
     --login-form-svg: rgb(202, 202, 202);
+    --code-cancel-btn: white;
 }
 
 body {

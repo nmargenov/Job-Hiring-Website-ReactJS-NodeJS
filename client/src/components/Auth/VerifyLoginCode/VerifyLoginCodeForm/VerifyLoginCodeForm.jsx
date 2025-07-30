@@ -18,12 +18,12 @@ export const VerifyLoginCodeForm = ({ ref, email }) => {
         onSubmitHandler(e);
         setIsLoading(true);
         verifyCode(email, values.code)
-            .then((data)=>{
+            .then((data) => {
                 setIsLoading(false);
                 setErrorMsg("");
                 console.log(data);
             })
-            .catch((err)=>{
+            .catch((err) => {
                 setIsLoading();
                 setErrorMsg(err.message);
             })
@@ -32,9 +32,12 @@ export const VerifyLoginCodeForm = ({ ref, email }) => {
     function verifyMaxLength(e) {
         const newValue = e.target.value;
 
-        if (newValue.length <= 6) {
-            onInputChange(e);
-        }
+        e.target.value = newValue.slice(0, 6);
+        onInputChange(e);
+    }
+
+    function onCancelClick(){
+        navigate('/login');
     }
 
     return (
@@ -57,7 +60,8 @@ export const VerifyLoginCodeForm = ({ ref, email }) => {
                 />
                 <label className={`${values.code.length > 0 && values.code.length < 6 ? styles['invalid-label'] : ""}`} htmlFor="email">{t('code')}</label>
             </div>
-            <div className={styles['submit-div']}>
+            <div className={styles['buttons-div']}>
+                <input onClick={onCancelClick} className={styles['cancel-btn']} type="button" value={t('cancel')} disabled={isLoading} />
                 <input type="submit" value={t('login')} disabled={isLoading || (values.code.length >= 0 && values.code.length < 6)} />
             </div>
         </form>
