@@ -3,13 +3,31 @@ import { useTranslation } from "react-i18next";
 import styles from "../Login/login.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { VerifyLoginCodeForm } from "./VerifyLoginCodeForm/VerifyLoginCodeForm";
+import { useSearchParams } from 'react-router-dom';
+import { getEmailByID } from "../../../services/authService";
 
 export const VerifyLoginCode = () => {
     const { t } = useTranslation();
+    const [searchParams] = useSearchParams();
+
+    const [email,setEmail] = useState('');
 
     const inputRef = useRef(null);
+
+    useEffect(() => {
+        const id = searchParams.get('id');
+        if (id) {
+            getEmailByID(id)
+                .then((data)=>{
+                    setEmail(data.email);
+                })
+                .catch((err)=>{
+                    console.log(err);
+                });
+        }
+    }, []);
 
     const handleFocus = () => {
         inputRef.current?.focus();
@@ -28,7 +46,7 @@ export const VerifyLoginCode = () => {
                         <p> {t("login-verify-span1")} </p>
                     </li>
                     <li>
-                        <p> {t("login-verify-span2")} </p>
+                        <p> {t("login-verify-span2")} <strong>{email}</strong> </p>
                     </li>
                     <li>
                         <p> {t("login-verify-span3")} </p>
@@ -39,7 +57,7 @@ export const VerifyLoginCode = () => {
                     <li>
                         <p> {t("login-verify-span5")} </p>
                     </li>
-                    <VerifyLoginCodeForm/>
+                    <VerifyLoginCodeForm />
                 </ul>
             </div>
         </div>

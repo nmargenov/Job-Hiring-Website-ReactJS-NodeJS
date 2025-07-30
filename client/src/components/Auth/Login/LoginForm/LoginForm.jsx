@@ -20,7 +20,6 @@ export const LoginForm = ({ ref }) => {
         setIsLoading(true);
         login(values.email)
             .then((data) => {
-                console.log(data);
                 setIsLoading(false);
                 setErrorMsg('');
                 navigate(`/verification-code?id=${data}`);
