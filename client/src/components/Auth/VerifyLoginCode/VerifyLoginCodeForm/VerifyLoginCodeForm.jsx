@@ -4,7 +4,7 @@ import { useForm } from '../../../../hooks/useForm';
 import { verifyCode } from '../../../../services/authService';
 import { useNavigate } from 'react-router-dom';
 
-export const VerifyLoginCodeForm = ({ ref, email }) => {
+export const VerifyLoginCodeForm = ({ ref, email, isLoading, setIsLoading }) => {
 
     const navigate = useNavigate();
 
@@ -12,11 +12,13 @@ export const VerifyLoginCodeForm = ({ ref, email }) => {
         code: ''
     }
 
-    const { values, onInputChange, onSubmitHandler, isLoading, setIsLoading, errorMsg, setErrorMsg } = useForm(initialValues);
+    const { values, onInputChange, onSubmitHandler, errorMsg, setErrorMsg } = useForm(initialValues);
 
     function onSubmit(e) {
         onSubmitHandler(e);
         setIsLoading(true);
+        console.log(email);
+        console.log(values.code);
         verifyCode(email, values.code)
             .then((data) => {
                 setIsLoading(false);
@@ -61,7 +63,7 @@ export const VerifyLoginCodeForm = ({ ref, email }) => {
                 <label className={`${values.code.length > 0 && values.code.length < 6 ? styles['invalid-label'] : ""}`} htmlFor="email">{t('code')}</label>
             </div>
             <div className={styles['buttons-div']}>
-                <input onClick={onCancelClick} className={styles['cancel-btn']} type="button" value={t('cancel')} disabled={isLoading} />
+                <input onClick={onCancelClick} className={styles['design-button']} type="button" value={t('cancel')} disabled={isLoading} />
                 <input type="submit" value={t('login')} disabled={isLoading || (values.code.length >= 0 && values.code.length < 6)} />
             </div>
         </form>

@@ -9,7 +9,7 @@
     --login-form-color: white;
     --login-form-text: #343436;
     --login-form-svg: #999999;
-    --code-cancel-btn: #d40080;
+    --code-design-button: #d40080;
 }
 
 :root[data-theme='dark'] {
@@ -23,7 +23,7 @@
     --login-form-color: #343436;
     --login-form-text: white;
     --login-form-svg: rgb(202, 202, 202);
-    --code-cancel-btn: white;
+    --code-design-button: white;
 }
 
 body {

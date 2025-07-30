@@ -7,12 +7,14 @@ import { useEffect, useRef, useState } from "react";
 import { VerifyLoginCodeForm } from "./VerifyLoginCodeForm/VerifyLoginCodeForm";
 import { useSearchParams } from 'react-router-dom';
 import { getEmailByID } from "../../../services/authService";
+import { ResendCode } from "./ResendCode/ResendCode";
 
 export const VerifyLoginCode = () => {
     const { t } = useTranslation();
     const [searchParams] = useSearchParams();
 
-    const [email,setEmail] = useState('');
+    const [email, setEmail] = useState('');
+    const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
     const inputRef = useRef(null);
 
@@ -20,10 +22,10 @@ export const VerifyLoginCode = () => {
         const id = searchParams.get('id');
         if (id) {
             getEmailByID(id)
-                .then((data)=>{
+                .then((data) => {
                     setEmail(data.email);
                 })
-                .catch((err)=>{
+                .catch((err) => {
                     console.log(err);
                 });
         }
@@ -57,8 +59,9 @@ export const VerifyLoginCode = () => {
                     <li>
                         <p> {t("login-verify-span5")} </p>
                     </li>
-                    <VerifyLoginCodeForm ref={inputRef} email={email}/>
                 </ul>
+                <VerifyLoginCodeForm isLoading={isFormSubmitted} setIsLoading={setIsFormSubmitted} ref={inputRef} email={email} />
+                <ResendCode isLoading={isFormSubmitted} setIsLoading={setIsFormSubmitted}/>
             </div>
         </div>
     )

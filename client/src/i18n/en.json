@@ -24,6 +24,14 @@
     "login-verify-span3": "Do not close this page until you receive the code (depending on your email provider, it may take 5–10 minutes).",
     "login-verify-span4": "The code is valid for 10 minutes after it is generated.",
     "login-verify-span5": "Just enter the code here and you're all set:",
-    "code":"Code",
-    "cancel":"Cancel"
+    "code": "Code",
+    "cancel": "Cancel",
+    "didnt-recieve-code-span": "Not receiving a code?",
+    "didnt-recieve-code-1": "If you are not receiving a code:",
+    "didnt-recieve-code-2": "Check above to ensure that you have entered your email address correctly.",
+    "didnt-recieve-code-3": "Make sure you are not entering a different email address than the one linked to your account.",
+    "didnt-recieve-code-4": "Wait 5–10 minutes (depending on your email provider, the email may be delayed).",
+    "didnt-recieve-code-5": "Check your \"Spam\" folder. To ensure reliable and timely delivery of the confirmation email, if it has been marked as \"Spam,\" depending on your email provider, mark the email as \"Not Spam\" or add the email address to your \"Safe Senders\" list and/or your contacts. For instructions on how to do this, refer to your email provider's help page or contact them.",
+    "didnt-recieve-code-6": "If you still do not receive the code, use the button below to resend it.",
+    "send-again-code": "Resend code"
 }

@@ -1,0 +1,44 @@
+.resend-div ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.resend-div {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.resend-div div:first-of-type p:first-of-type{
+    margin-bottom: 10px;
+}
+
+
+.resend-div div:first-of-type p:last-of-type{
+    margin: 15px 0;
+}
+
+.msg-div {
+    display: flex;
+    text-align: center;
+    height: 40px;
+    margin: 10px 0 -10px 0;
+    overflow: hidden;
+}
+
+.error-msg{
+    color:red;
+}
+
+.success-msg{
+    color:green;
+}
+
+.hidden-div{
+    display: none;
+}
+
+.show-span{
+    color: #3474d3;
+    cursor: pointer;
+}
