@@ -1,10 +1,10 @@
 import { t } from 'i18next';
 import styles from '../../Login/LoginForm/loginForm.module.css';
 import { useForm } from '../../../../hooks/useForm';
-import {  } from '../../../../services/authService';
+import { verifyCode } from '../../../../services/authService';
 import { useNavigate } from 'react-router-dom';
 
-export const VerifyLoginCodeForm = ({ ref }) => {
+export const VerifyLoginCodeForm = ({ ref, email }) => {
 
     const navigate = useNavigate();
 
@@ -17,6 +17,16 @@ export const VerifyLoginCodeForm = ({ ref }) => {
     function onSubmit(e) {
         onSubmitHandler(e);
         setIsLoading(true);
+        verifyCode(email, values.code)
+            .then((data)=>{
+                setIsLoading(false);
+                setErrorMsg("");
+                console.log(data);
+            })
+            .catch((err)=>{
+                setIsLoading();
+                setErrorMsg(err.message);
+            })
     }
 
     function verifyMaxLength(e) {

@@ -57,7 +57,7 @@ export const VerifyLoginCode = () => {
                     <li>
                         <p> {t("login-verify-span5")} </p>
                     </li>
-                    <VerifyLoginCodeForm />
+                    <VerifyLoginCodeForm email={email}/>
                 </ul>
             </div>
         </div>
