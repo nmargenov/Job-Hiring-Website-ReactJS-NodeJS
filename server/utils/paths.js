@@ -5,6 +5,7 @@ exports.PATHS={
     admin:"/api/admin",
     login: '/login',
     verifyLoginCode: '/login/code',
+    getCodeInfoById: "/login/code/:codeID",
     verifyEmailCode: '/email/code',
     email: "/email",
     setupProfile: '/profile/setup',

@@ -1,4 +1,4 @@
-const { setupProfile, sendLoginCode, verifyLoginCode, sendEmailCode, verifyEmailCode, changeProfile } = require('../managers/userManager');
+const { setupProfile, sendLoginCode, verifyLoginCode, sendEmailCode, verifyEmailCode, changeProfile, getCodeInfo } = require('../managers/userManager');
 const { mustBeGuest, mustBeAuth } = require('../middlewares/authMiddleware');
 const { MustNotBeSetup, MustBeSetup } = require('../middlewares/isSetupMiddleware');
 const { formatErrorMessage } = require('../utils/errorMessage');
@@ -75,12 +75,23 @@ router.patch(PATHS.userID, mustBeAuth, MustBeSetup, async (req, res) => {
         const firstName = req.body?.firstName?.trim();
         const lastName = req.body?.lastName?.trim();
         const phone = req.body?.phone?.trim();
-        const token = await changeProfile(userID,firstName,lastName,phone);
+        const token = await changeProfile(userID, firstName, lastName, phone);
         res.status(200).json(token);
     } catch (err) {
         const error = formatErrorMessage(err);
         res.status(400).send({ message: error });
     }
-})
+});
+
+router.get(PATHS.getCodeInfoById, mustBeGuest, async (req, res) => {
+    try {
+        const codeID = req.params?.codeID?.trim();
+        const email = await getCodeInfo(codeID);
+        res.status(200).json(email);
+    } catch (err) {
+        const error = formatErrorMessage(err);
+        res.status(400).send({ message: error })
+    }
+});
 
 module.exports = router;

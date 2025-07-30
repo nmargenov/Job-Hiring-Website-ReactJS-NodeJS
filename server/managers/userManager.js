@@ -164,4 +164,14 @@ exports.changeProfile = async (userID, firstName, lastName, phone) => {
     user = await user.save();
 
     return returnToken(user);
-}
+};
+
+exports.getCodeInfo = async (codeID) =>{
+    let email = await LoginCode.findById(codeID).select('email');
+    
+    if(!email){
+        throw new error(MESSAGES.invalidEmail);
+    }
+
+    return email;
+};
