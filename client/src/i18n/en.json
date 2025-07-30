@@ -33,5 +33,6 @@
     "didnt-recieve-code-4": "Wait 5–10 minutes (depending on your email provider, the email may be delayed).",
     "didnt-recieve-code-5": "Check your \"Spam\" folder. To ensure reliable and timely delivery of the confirmation email, if it has been marked as \"Spam,\" depending on your email provider, mark the email as \"Not Spam\" or add the email address to your \"Safe Senders\" list and/or your contacts. For instructions on how to do this, refer to your email provider's help page or contact them.",
     "didnt-recieve-code-6": "If you still do not receive the code, use the button below to resend it.",
-    "send-again-code": "Resend code"
+    "send-again-code": "Resend code",
+    "code-sent":"Code sent successfully!"
 }

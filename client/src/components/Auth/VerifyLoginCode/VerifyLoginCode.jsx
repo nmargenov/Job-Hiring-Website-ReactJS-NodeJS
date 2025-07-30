@@ -61,7 +61,7 @@ export const VerifyLoginCode = () => {
                     </li>
                 </ul>
                 <VerifyLoginCodeForm isLoading={isFormSubmitted} setIsLoading={setIsFormSubmitted} ref={inputRef} email={email} />
-                <ResendCode isLoading={isFormSubmitted} setIsLoading={setIsFormSubmitted}/>
+                <ResendCode isLoading={isFormSubmitted} setIsLoading={setIsFormSubmitted} email={email}/>
             </div>
         </div>
     )

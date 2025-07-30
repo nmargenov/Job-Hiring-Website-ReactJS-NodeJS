@@ -2,8 +2,9 @@ import { useTranslation } from 'react-i18next';
 import styles from './resendCode.module.css';
 import stylesButton from "../../Login/LoginForm/loginForm.module.css";
 import { useState } from 'react';
+import { login } from '../../../../services/authService';
 
-export const ResendCode = ({ isLoading, setIsLoading }) => {
+export const ResendCode = ({ isLoading, setIsLoading, email }) => {
     const { t } = useTranslation();
 
     const [message, setMessage] = useState("");
@@ -11,7 +12,17 @@ export const ResendCode = ({ isLoading, setIsLoading }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     function onResendClick() {
-        
+        setIsLoading(true);
+        login(email)
+            .then((data)=>{
+                setError(false);
+                setMessage(t('code-sent'));
+                setIsLoading(false);
+            }).catch((err)=>{
+                setError(true);
+                setMessage(err.message)
+                setIsLoading(false);
+            });
     }
 
     function onShowClick(){
