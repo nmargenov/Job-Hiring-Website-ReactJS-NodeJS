@@ -20,11 +20,11 @@ a {
 
 .login-button:active {
     opacity: 0.5;
-} 
+}
 
 nav .section:first-of-type svg {
     border: 3px solid var(--header-color);
-    
+
 }
 
 nav .section:first-of-type svg:focus {
@@ -85,5 +85,44 @@ nav .section:first-of-type svg:focus {
 }
 
 .language-option:active {
+    background-color: var(--active-background);
+}
+
+.nav .user-info {
+    display: flex;
+    padding: 10px;
+    border-bottom: 1px solid lightgray;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.nav .user-info .image-div {
+    /* min-width: 65px;
+    min-height: 65px;
+    max-width: 65px;
+    max-height: 65px; */
+    width: 65px;
+    height: 65px;
+    border-radius: 100%;
+}
+
+.nav .user-info .image-div img {
+    width: 65px;
+    height: 65px;
+    border-radius: 100%;
+    object-fit: cover;
+}
+
+.nav .user-info span{
+    width: 100%;
+    overflow: hidden;
+}
+
+.nav .user-info:hover{
+    background-color: var(--hover-background);
+}
+
+.nav .user-info:active{
     background-color: var(--active-background);
 }

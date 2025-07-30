@@ -33,6 +33,7 @@ exports.returnToken = async (user) => {
         payload = {
             _id: user._id,
             firstName: user.firstName,
+            lastName: user.lastName,
             role: user.role,
             isSetup: user.isSetup,
             hasApplied: user.hasBusinessApplication
