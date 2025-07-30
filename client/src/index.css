@@ -10,6 +10,7 @@
     --login-form-text: #343436;
     --login-form-svg: #999999;
     --code-design-button: #d40080;
+    --loader-color:rgb(63, 63, 63);
 }
 
 :root[data-theme='dark'] {
@@ -24,6 +25,7 @@
     --login-form-text: white;
     --login-form-svg: rgb(202, 202, 202);
     --code-design-button: white;
+    --loader-color:white;
 }
 
 body {

@@ -8,6 +8,8 @@ import { VerifyLoginCodeForm } from "./VerifyLoginCodeForm/VerifyLoginCodeForm";
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getEmailByID } from "../../../services/authService";
 import { ResendCode } from "./ResendCode/ResendCode";
+import { Loader } from "../../shared/Loader/Loader";
+
 
 export const VerifyLoginCode = () => {
     const { t } = useTranslation();
@@ -15,6 +17,7 @@ export const VerifyLoginCode = () => {
 
     const [email, setEmail] = useState('');
     const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+    const [isPageLoading, setIsPageLoading] = useState(false);
 
     const inputRef = useRef(null);
 
@@ -23,11 +26,14 @@ export const VerifyLoginCode = () => {
     useEffect(() => {
         const id = searchParams.get('id');
         if (id) {
+            setIsPageLoading(true);
             getEmailByID(id)
                 .then((data) => {
+                    setIsPageLoading(false);
                     setEmail(data.email);
                 })
                 .catch((err) => {
+                    setIsPageLoading(false);
                     navigate('/login');
                 });
         } else {
@@ -41,32 +47,36 @@ export const VerifyLoginCode = () => {
 
     return (
         <div className={styles['main-login']}>
-            <div className={styles['login-icon']}>
-                <FontAwesomeIcon onClick={handleFocus} icon={faLock} />
-                <span>{t('code-verification-title')}</span>
-            </div>
-            <div className={styles["login-div"]}>
-                <h2>{t('code-verification-title')}</h2>
-                <ul>
-                    <li>
-                        <p> {t("login-verify-span1")} </p>
-                    </li>
-                    <li>
-                        <p> {t("login-verify-span2")} <strong>{email}</strong> </p>
-                    </li>
-                    <li>
-                        <p> {t("login-verify-span3")} </p>
-                    </li>
-                    <li>
-                        <p> {t("login-verify-span4")} </p>
-                    </li>
-                    <li>
-                        <p> {t("login-verify-span5")} </p>
-                    </li>
-                </ul>
-                <VerifyLoginCodeForm isLoading={isFormSubmitted} setIsLoading={setIsFormSubmitted} ref={inputRef} email={email} />
-                <ResendCode isLoading={isFormSubmitted} setIsLoading={setIsFormSubmitted} email={email} />
-            </div>
+            {isPageLoading && <Loader />}
+
+            {!isPageLoading && <>
+                <div className={styles['login-icon']}>
+                    <FontAwesomeIcon onClick={handleFocus} icon={faLock} />
+                    <span>{t('code-verification-title')}</span>
+                </div>
+                <div className={styles["login-div"]}>
+                    <h2>{t('code-verification-title')}</h2>
+                    <ul>
+                        <li>
+                            <p> {t("login-verify-span1")} </p>
+                        </li>
+                        <li>
+                            <p> {t("login-verify-span2")} <strong>{email}</strong> </p>
+                        </li>
+                        <li>
+                            <p> {t("login-verify-span3")} </p>
+                        </li>
+                        <li>
+                            <p> {t("login-verify-span4")} </p>
+                        </li>
+                        <li>
+                            <p> {t("login-verify-span5")} </p>
+                        </li>
+                    </ul>
+                    <VerifyLoginCodeForm isLoading={isFormSubmitted} setIsLoading={setIsFormSubmitted} ref={inputRef} email={email} />
+                    <ResendCode isLoading={isFormSubmitted} setIsLoading={setIsFormSubmitted} email={email} />
+                </div>
+            </>}
         </div>
     )
 }
