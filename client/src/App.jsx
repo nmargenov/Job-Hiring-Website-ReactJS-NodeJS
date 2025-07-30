@@ -8,6 +8,12 @@ import { ConsentProvider } from './contexts/CookieConsentContext'
 import { ThemeProvider } from './contexts/ThemeContext'
 import { Route, Routes } from 'react-router-dom'
 import { MustBeGuestGuard } from './guards/MustBeGuestGuard'
+import { SetupProfile } from './components/SetupProfile/SetupProfile'
+import { MustBeLoggedAndNotSetup } from './guards/MustBeLoggedAndNotSetup'
+import { MustBeSetupIfLogged } from './guards/MustBeSetupIflogged'
+import { Home } from './components/Home/Home'
+import { MyAccount } from './components/Auth/MyAccount/MyAccount'
+import { MustBeSetupAndLogged } from './guards/MustBeSetupAndLogged'
 
 function App() {
 
@@ -21,6 +27,16 @@ function App() {
               <Header />
               <main>
                 <Routes>
+                  <Route path="/" element={
+                    <MustBeSetupIfLogged>
+                      <Home />
+                    </MustBeSetupIfLogged>
+                  } />
+                  <Route path="/profile" element={
+                    <MustBeSetupAndLogged>
+                      <MyAccount />
+                    </MustBeSetupAndLogged>
+                  } />
                   <Route path='/login' element={
                     <MustBeGuestGuard>
                       <Login />
@@ -29,6 +45,11 @@ function App() {
                     <MustBeGuestGuard>
                       <VerifyLoginCode />
                     </MustBeGuestGuard>} />
+                  <Route path="/profile-setup" element={
+                    <MustBeLoggedAndNotSetup>
+                      <SetupProfile />
+                    </MustBeLoggedAndNotSetup>
+                  } />
                 </Routes>
               </main>
             </div>

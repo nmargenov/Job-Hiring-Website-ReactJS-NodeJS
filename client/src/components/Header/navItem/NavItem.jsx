@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export const NavItem = ({ icon, text, onClick, destination }) => {
     function onKey(e) {
         if (e.key === 'Enter') {
-            toggleOpen();
+            onClick()
         }
     }
     return (

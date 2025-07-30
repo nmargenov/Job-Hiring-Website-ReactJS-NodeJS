@@ -53,8 +53,8 @@ export const Nav = ({ toggleOpen, onKey, isOpen }) => {
     }
 
     function onProfileClick() {
-        navigate('/profile');
         toggleOpen();
+        navigate('/profile');
     }
 
     return (
@@ -78,7 +78,8 @@ export const Nav = ({ toggleOpen, onKey, isOpen }) => {
             }
             <div className={styles['section']}>
                 <NavItem destination={'/'} icon={faHome} text={t("homepage")} onClick={toggleOpen} />
-                {isAuthenticated && <NavItem onClick={onProfileClick} icon={faUser} text={t("account")} />}
+                {isAuthenticated && user.isSetup && 
+                <NavItem icon={faUser} destination={'/profile'} onClick={toggleOpen} text={t("account")} />}
                 <NavItem destination={'/contacts'} icon={faPhone} text={t("contacts")} onClick={toggleOpen} />
                 <NavItem onClick={onCookieClick} icon={faCookie} text={t("cookie-title")} />
                 {isAuthenticated && <NavItem onClick={onLogoutClick} icon={faSignOut} text={t("logout")} />}
