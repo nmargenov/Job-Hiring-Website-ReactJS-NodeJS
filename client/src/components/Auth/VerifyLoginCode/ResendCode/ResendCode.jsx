@@ -29,9 +29,15 @@ export const ResendCode = ({ isLoading, setIsLoading, email }) => {
         setIsOpen(!isOpen);
     }
 
+    function onKey(e) {
+        if (e.key === 'Enter') {
+            onShowClick();
+        }
+    }
+
     return (
         <div className={styles['resend-div']}>
-            <span className={styles['show-span']} onClick={onShowClick}>{t('didnt-recieve-code-span')}</span>
+            <span tabIndex={0} onKeyDown={(e)=>{onKey(e)}} className={styles['show-span']} onClick={onShowClick}>{t('didnt-recieve-code-span')}</span>
             <div className={`${isOpen ? styles[""] : styles["hidden-div"]}`}>
                 <p>{t('didnt-recieve-code-1')}</p>
                 <ul>

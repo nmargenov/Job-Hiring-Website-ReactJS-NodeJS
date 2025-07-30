@@ -68,6 +68,13 @@ a {
     background-color: black;
 }
 
+.right-div svg{
+    border: 3px solid var(--header-color);
+}
+
+.right-div svg:focus {
+    border: 3px solid white;
+}
 
 
 @media (max-width: 768px) {

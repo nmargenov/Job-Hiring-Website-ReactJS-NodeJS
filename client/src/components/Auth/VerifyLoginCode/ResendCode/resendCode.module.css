@@ -42,6 +42,7 @@
     color: #3474d3;
     cursor: pointer;
     margin-top: 10px;
+    width: fit-content;
 }
 
 @media (max-width: 480px) {
