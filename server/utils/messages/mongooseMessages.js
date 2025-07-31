@@ -10,7 +10,7 @@ exports.MESSAGES = {
         },
         phone: {
             required: "Phone number is required",
-            validatorMessage: "Phone must start with +<countrycode> or 0 and contain at least 6 digits",
+            validatorMessage: "Phone must start with +<countrycode> or 0 and be between 6 and 20 digits",
         },
         firstName: {
             required: "First name is required",

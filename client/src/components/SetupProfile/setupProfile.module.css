@@ -16,3 +16,14 @@
     width: 100%;
     gap: 20px;
 }
+
+.phone-div{
+    display: flex;
+    align-items:end;
+    gap: 5px;
+    width: 100%;
+}
+
+.phone-div .input-div{
+    width: 100%;
+}
