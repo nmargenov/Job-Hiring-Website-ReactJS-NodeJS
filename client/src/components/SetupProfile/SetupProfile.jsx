@@ -22,16 +22,28 @@ export const SetupProfile = () => {
     function onSubmit(e) {
         onSubmitHandler(e);
         console.log(values);
+        setIsLoading(true);
     }
 
     function viewFirstName() { setView('firstName'); }
     function viewLastName() { setView('lastName'); }
     function viewPhone() { setView('phone'); }
 
+    const disabledFirstName = isLoading || values.firstName.length <= 3 || values.firstName.length > 30;
+    const disabledLastName = isLoading || values.lastName.length <= 5 || values.lastName.length > 30;
+    const disabledPhone = isLoading || values.phone.length < 5 || values.phone.length > 15;
+
+    const disabledSubmit =
+        isLoading ||
+        disabledFirstName ||
+        disabledLastName ||
+        disabledPhone;
+
+
     return (
         <div className={styles['setup-profile-div']}>
             <Form onSubmit={onSubmit} showSubmit={false}>
-                {view === 'firstName' && <>
+                {view === 'firstName' &&
                     <FormInput
                         formName={'firstName'}
                         value={values.firstName}
@@ -43,13 +55,8 @@ export const SetupProfile = () => {
                         onSubmit={onSubmit}
                         validate={(values.firstName.length > 0 && values.firstName.length <= 3) || values.firstName.length > 30}
                     />
-                    <SetupProfileActions view={view}
-                        errorMsg={errorMsg}
-                        viewFirstName={viewFirstName}
-                        viewLastName={viewLastName}
-                        viewPhone={viewPhone} />
-                </>}
-                {view === 'lastName' && <>
+                }
+                {view === 'lastName' &&
                     <FormInput
                         formName={'lastName'}
                         value={values.lastName}
@@ -60,14 +67,8 @@ export const SetupProfile = () => {
                         maxLength={'50'}
                         onSubmit={onSubmit}
                         validate={(values.lastName.length > 0 && values.lastName.length <= 5) || values.lastName.length > 30}
-                    />
-                    <SetupProfileActions view={view}
-                        errorMsg={errorMsg}
-                        viewFirstName={viewFirstName}
-                        viewLastName={viewLastName}
-                        viewPhone={viewPhone} />
-                </>}
-                {view === "phone" && <>
+                    />}
+                {view === "phone" &&
                     <FormInput
                         formName={'phone'}
                         value={values.phone}
@@ -78,13 +79,18 @@ export const SetupProfile = () => {
                         maxLength={'50'}
                         validate={(values.phone.length > 0 && values.phone.length < 5) || values.phone.length > 15}
                     />
-                    <SetupProfileActions view={view}
-                        errorMsg={errorMsg}
-                        viewFirstName={viewFirstName}
-                        viewLastName={viewLastName}
-                        viewPhone={viewPhone} />
-                </>
                 }
+                <SetupProfileActions view={view}
+                    errorMsg={errorMsg}
+                    viewFirstName={viewFirstName}
+                    viewLastName={viewLastName}
+                    viewPhone={viewPhone}
+                    isLoading={isLoading}
+                    disabledFirstName={disabledFirstName}
+                    disabledLastName={disabledLastName}
+                    disabledPhone={disabledPhone}
+                    submitDisabled={disabledSubmit}
+                />
             </Form>
         </div>
     )
