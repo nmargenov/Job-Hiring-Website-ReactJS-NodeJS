@@ -29,8 +29,9 @@ export const SetupProfile = () => {
     function viewLastName() { setView('lastName'); }
     function viewPhone() { setView('phone'); }
 
-    const disabledFirstName = isLoading || values.firstName.length <= 3 || values.firstName.length > 30;
-    const disabledLastName = isLoading || values.lastName.length <= 5 || values.lastName.length > 30;
+
+    const disabledFirstName = isLoading || values.firstName.length < 3 || values.firstName.length > 30;
+    const disabledLastName = isLoading || values.lastName.length < 5 || values.lastName.length > 30;
     const disabledPhone = isLoading || values.phone.length < 5 || values.phone.length > 15;
 
     const disabledSubmit =
@@ -38,6 +39,13 @@ export const SetupProfile = () => {
         disabledFirstName ||
         disabledLastName ||
         disabledPhone;
+
+    function onKeyDown(e, view) {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            setView(view);
+        }
+    }
 
 
     return (
@@ -53,7 +61,8 @@ export const SetupProfile = () => {
                         minLength={'3'}
                         maxLength={'30'}
                         onSubmit={onSubmit}
-                        validate={(values.firstName.length > 0 && values.firstName.length <= 3) || values.firstName.length > 30}
+                        onKey={(e) => { onKeyDown(e,"lastName") }}
+                        validate={(values.firstName.length > 0 && values.firstName.length < 3) || values.firstName.length > 30}
                     />
                 }
                 {view === 'lastName' &&
@@ -66,7 +75,8 @@ export const SetupProfile = () => {
                         minLength={'3'}
                         maxLength={'50'}
                         onSubmit={onSubmit}
-                        validate={(values.lastName.length > 0 && values.lastName.length <= 5) || values.lastName.length > 30}
+                        onKey={(e) => { onKeyDown(e,"phone") }}
+                        validate={(values.lastName.length > 0 && values.lastName.length < 5) || values.lastName.length > 30}
                     />}
                 {view === "phone" &&
                     <FormInput
