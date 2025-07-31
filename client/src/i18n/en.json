@@ -38,5 +38,12 @@
     "required-email": "Email is required",
     "required-code": "Code is required",
     "logout": "Logout",
-    "account":"My account"
+    "account": "My account",
+    "firstName": "Name",
+    "lastName": "Surname",
+    "phone": "Phone",
+    "back": "Back",
+    "forward":"Continue",
+    "save":"Save"
+
 }
