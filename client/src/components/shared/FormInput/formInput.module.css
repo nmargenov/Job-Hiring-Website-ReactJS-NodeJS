@@ -47,11 +47,6 @@ input[type=number] {
     font-size: 12px;
 }
 
-.submit-div {
-    display: flex;
-    justify-content: center;
-}
-
 input[type="submit"] {
     padding: 20px;
     text-align: center;
@@ -96,38 +91,3 @@ input[type="email"]:disabled {
     color: rgb(255, 28, 28) !important;
 }
 
-.error-msg-div {
-    color: rgb(255, 28, 28);
-    display: flex;
-    text-align: center;
-    margin-top: 10px;
-    height: 35px;
-    margin-bottom: -20px;
-    overflow: hidden;
-}
-
-.buttons-div {
-    display: flex;
-    justify-content: end;
-    gap: 30px;
-}
-
-.design-button {
-    padding: 20px;
-    text-align: center;
-    border-radius: 50px;
-    border: 1px solid var(--code-design-button);
-    color: white;
-    font-family: sans-serif;
-    font-weight: bold;
-    font-size: 18px;
-    cursor: pointer;
-    background-color: var(--login-form-color);
-    color: var(--code-design-button);
-}
-
-@media (max-width: 768px) {
-    .buttons-div{
-        justify-content: space-between;
-    }
-}

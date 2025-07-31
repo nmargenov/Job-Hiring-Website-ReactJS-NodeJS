@@ -54,10 +54,6 @@ input[type=number] {
     font-size: 12px;
 }
 
-.submit-div {
-    display: flex;
-    justify-content: center;
-}
 
 input[type="submit"] {
     padding: 20px;

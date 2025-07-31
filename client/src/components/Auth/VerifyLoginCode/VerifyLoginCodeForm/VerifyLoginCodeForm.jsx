@@ -4,11 +4,13 @@ import { useForm } from '../../../../hooks/useForm';
 import { verifyCode } from '../../../../services/authService';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../../contexts/AuthContext';
+import { Form } from '../../../shared/Form/Form';
+import { FormInput } from '../../../shared/FormInput/FormInput';
 
 export const VerifyLoginCodeForm = ({ ref, email, isLoading, setIsLoading }) => {
 
     const { loginAuthContext } = useAuth();
-    
+
     const navigate = useNavigate();
 
     const initialValues = {
@@ -20,6 +22,7 @@ export const VerifyLoginCodeForm = ({ ref, email, isLoading, setIsLoading }) => 
     function onSubmit(e) {
         onSubmitHandler(e);
         setIsLoading(true);
+       
         verifyCode(email, values.code)
             .then((data) => {
                 setIsLoading(false);
@@ -40,34 +43,28 @@ export const VerifyLoginCodeForm = ({ ref, email, isLoading, setIsLoading }) => 
         onInputChange(e);
     }
 
-    function onCancelClick(){
+    function onCancelClick() {
         navigate('/login');
     }
 
     return (
-        <form className={styles['form']} onSubmit={onSubmit}>
-            <div className={styles['error-msg-div']}>
-                <span>{errorMsg}</span>
-            </div>
-            <div className={styles['input-container']}>
-                <input
-                    type="number"
-                    name="code"
-                    placeholder=''
-                    autoCapitalize="none"
-                    required
+        <Form onSubmit={onSubmit}
+            errorMsg={errorMsg}
+            buttons={
+                <>
+                    <input onClick={onCancelClick} className={styles['design-button']} type="button" value={t('cancel')} disabled={isLoading} />
+                    <input type="submit" value={t('login')} disabled={isLoading || (values.code.length >= 0 && values.code.length < 6)} />
+                </>
+            }>
+                <FormInput
+                    type={'number'}
+                    formName={'code'}
                     ref={ref}
-                    className={`${values.code.length > 0 && values.code.length < 6 ? styles.invalid : ""}`}
+                    validate={values.code.length > 0 && values.code.length < 6}
                     value={values.code}
-                    onChange={verifyMaxLength}
-                    disabled={isLoading}
+                    onInputChange={verifyMaxLength}
+                    isLoading={isLoading}
                 />
-                <label className={`${values.code.length > 0 && values.code.length < 6 ? styles['invalid-label'] : ""}`} htmlFor="email">{t('code')}</label>
-            </div>
-            <div className={styles['buttons-div']}>
-                <input onClick={onCancelClick} className={styles['design-button']} type="button" value={t('cancel')} disabled={isLoading} />
-                <input type="submit" value={t('login')} disabled={isLoading || (values.code.length >= 0 && values.code.length < 6)} />
-            </div>
-        </form>
+        </Form >
     )
 }
