@@ -45,3 +45,17 @@
         justify-content: space-between;
     }
 }
+
+@media (max-width: 480px) {
+    .submit-div{
+        flex-direction: column-reverse;
+    }
+
+    .buttons-div{
+        justify-content: end;
+    }
+
+    .buttons-div:has(:nth-child(2)){
+        justify-content: space-between;
+    }
+}

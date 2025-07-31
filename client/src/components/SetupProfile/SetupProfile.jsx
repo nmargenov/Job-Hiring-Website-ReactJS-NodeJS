@@ -22,7 +22,7 @@ export const SetupProfile = () => {
     function onSubmit(e) {
         onSubmitHandler(e);
         console.log(values);
-        setIsLoading(true);
+        setErrorMsg('Phone must start with +<countrycode> or 0 and contain at least 6 digits')
     }
 
     function viewFirstName() { setView('firstName'); }

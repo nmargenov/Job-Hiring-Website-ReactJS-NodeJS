@@ -1,7 +1,9 @@
 .submit-div {
     display: flex;
     justify-content: space-between;
+    gap:5px;
 }
+
 .buttons-div {
     display: flex;
     justify-content: end;
@@ -22,6 +24,18 @@
     color: var(--code-design-button);
 }
 
+
+.error-msg-div {
+    color: rgb(255, 28, 28);
+    display: flex;
+    text-align: center;
+    margin-top: 10px;
+    height: 60px;
+    margin-bottom: -20px;
+    overflow: hidden;
+}
+
+
 .design-button:hover,
 .design-button:focus {
     opacity: 0.8;
@@ -34,4 +48,10 @@
 .design-button:disabled {
     opacity: 0.2;
     cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+    .submit-div{
+        flex-direction: column-reverse;
+    }
 }
