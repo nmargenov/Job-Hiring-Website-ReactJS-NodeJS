@@ -12,8 +12,8 @@ import { SetupProfile } from './components/SetupProfile/SetupProfile'
 import { MustBeLoggedAndNotSetup } from './guards/MustBeLoggedAndNotSetup'
 import { MustBeSetupIfLogged } from './guards/MustBeSetupIflogged'
 import { Home } from './components/Home/Home'
-import { MyAccount } from './components/Auth/MyAccount/MyAccount'
 import { MustBeSetupAndLogged } from './guards/MustBeSetupAndLogged'
+import { MyAccount } from './components/MyAccount/MyAccount'
 
 function App() {
 
