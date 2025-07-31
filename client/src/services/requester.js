@@ -19,7 +19,7 @@ const requester = async (method, url, data) =>{
     
     const token = getCookie('authToken');
     if(token){
-        options.header = {
+        options.headers = {
             ...options.headers,
             'x-authorization':token
         }

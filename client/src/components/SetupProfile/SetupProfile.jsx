@@ -6,15 +6,23 @@ import { Form } from '../shared/Form/Form';
 import { useTranslation } from "react-i18next";
 import { SetupProfileActions } from './SetupProfileActions/SetupProfileActions';
 import { CountryCodeDropdown } from './CountryCodeDropdown/CountryCodeDropdown';
+import { verifyProfile } from '../../services/userService';
+import { useAuth } from '../../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export const SetupProfile = () => {
     const { t } = useTranslation();
-
+    const { loginAuthContext } = useAuth();
+    
+    const navigate = useNavigate();
+    
     const initialValues = {
         firstName: "",
         lastName: "",
         phone: "",
     }
+    
+    const { values, errorMsg, setErrorMsg, onInputChange, isLoading, setIsLoading, onSubmitHandler } = useForm(initialValues);
 
     const countries = [
         { name: "Bulgaria", code: "+359", flag: "bg" },
@@ -28,15 +36,23 @@ export const SetupProfile = () => {
 
     const [selected, setSelected] = useState(countries[0]);
 
-    const { values, errorMsg, setErrorMsg, onInputChange, isLoading, setIsLoading, onSubmitHandler } = useForm(initialValues);
-
     const [view, setView] = useState('firstName');
 
     function onSubmit(e) {
         onSubmitHandler(e);
-        console.log(values);
-        console.log(selected.code);
-        setErrorMsg('Phone must start with +<countrycode> or 0 and be between 6 and 20 digits')
+        const number = selected.code + values.phone;
+        setIsLoading(true);
+        verifyProfile(values.firstName, values.lastName, number)
+            .then((data) => {
+                loginAuthContext(data);
+                setIsLoading(false);
+                setErrorMsg('');
+                navigate('/');
+            })
+            .catch((err) => {
+                setIsLoading(false);
+                setErrorMsg(err.message);
+            });
     }
 
     function viewFirstName() { setView('firstName'); }
@@ -61,9 +77,9 @@ export const SetupProfile = () => {
         }
     }
 
-
     return (
         <div className={styles['setup-profile-div']}>
+            <big>{t('finish-setup')}</big>
             <Form onSubmit={onSubmit} showSubmit={false}>
                 {view === 'firstName' &&
                     <FormInput

@@ -4,8 +4,8 @@ import { get, post } from "./requester";
 
 const paths = {
     login: '/users/login',
-    getEmail: '/users/login/code/:codeID',
-    verifyCode: '/users/login/code'
+    getEmail: '/users/login-code/:codeID',
+    verifyCode: '/users/login-code'
 }
 
 export const login = (email) => {
