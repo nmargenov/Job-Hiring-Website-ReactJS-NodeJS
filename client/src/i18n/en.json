@@ -48,5 +48,7 @@
     "finish-setup": "Complete your profile to continue",
     "change-email": "Change email",
     "change-name": "Edit name",
-    "change-phone": "Edit phone number"
+    "change-phone": "Edit phone number",
+    "my-files":"My files",
+    "applies":"Applies"
 }

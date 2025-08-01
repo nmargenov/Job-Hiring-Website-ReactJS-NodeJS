@@ -19,9 +19,9 @@ function App() {
 
   return (
     <>
-      <ConsentProvider>
-        <ThemeProvider>
-          <AuthProvider>
+      <AuthProvider>
+        <ConsentProvider>
+          <ThemeProvider>
             <CookieConsentModal />
             <div className="page">
               <Header />
@@ -53,9 +53,9 @@ function App() {
                 </Routes>
               </main>
             </div>
-          </AuthProvider>
-        </ThemeProvider>
-      </ConsentProvider>
+          </ThemeProvider>
+        </ConsentProvider>
+      </AuthProvider>
 
     </>
   )

@@ -15,3 +15,17 @@
     flex-direction: column;
     gap:10px;
 }
+
+.boxes{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+@media (max-width: 480px) {
+
+    .boxes{
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+}
