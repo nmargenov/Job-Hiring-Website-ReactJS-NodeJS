@@ -84,7 +84,7 @@ input[type="email"]:disabled {
 }
 
 .invalid {
-    border: 1px solid rgb(255, 28, 28) !important;
+    border: 2px solid rgb(255, 28, 28) !important;
 }
 
 .invalid-label {

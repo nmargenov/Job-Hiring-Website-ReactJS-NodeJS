@@ -50,5 +50,7 @@
     "change-name": "Edit name",
     "change-phone": "Edit phone number",
     "my-files":"My files",
-    "applies":"Applies"
+    "applies":"Applies",
+    "edit-name":"Edit name",
+    "edit-name-text":"Important! Changing the name in your account will update the name in all of your applications."
 }

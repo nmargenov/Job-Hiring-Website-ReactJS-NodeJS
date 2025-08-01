@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const LoginCode = require("../models/LoginCode");
 const EmailCode = require("../models/EmailCode");
+const mongoose = require('mongoose');
 
 const transporter = require("../config/nodemailerConfig");
 const { emailRegex } = require("../utils/regex");
@@ -150,12 +151,19 @@ exports.setupProfile = async (userID, firstName, lastName, phone) => {
     return returnToken(user);
 };
 
-exports.changeProfile = async (userID, firstName, lastName, phone) => {
+exports.changeProfile = async (userID, loggedInUser, firstName, lastName, phone) => {
 
     let user = await User.findById(userID);
     if (!user) throw new Error(MESSAGES.userNotFound);
 
-    let toUpdate = {};
+    let profileID = user._id;
+    if (profileID instanceof mongoose.Types.ObjectId) {
+        profileID = profileID.toHexString(); //checks if ownerID is of type ObjectId and transforms it to string
+    }
+    
+    if (profileID !== loggedInUser) {
+        throw new Error(MESSAGES.unauthorized); //checks if the owner is the logged in user
+    }
 
     if (firstName) user.firstName = firstName;
     if (lastName) user.lastName = lastName;
@@ -184,6 +192,7 @@ exports.getProfile = async (userID) => {
     }
     const toReturn = {}
     if (user.role === 'admin' || user.role === "seeker") {
+        toReturn._id = user._id;
         toReturn.firstName = user.firstName;
         toReturn.lastName = user.lastName;
         toReturn.phone = user.phone;

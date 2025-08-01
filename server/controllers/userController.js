@@ -71,11 +71,12 @@ router.post(PATHS.setupProfile, mustBeAuth, MustNotBeSetup, async (req, res) => 
 
 router.patch(PATHS.userID, mustBeAuth, MustBeSetup, async (req, res) => {
     try {
-        const userID = req.user._id;
+        const loggedInUser = req.user._id;
+        const userID = req.params.userID;
         const firstName = req.body?.firstName?.trim();
         const lastName = req.body?.lastName?.trim();
         const phone = req.body?.phone?.trim();
-        const token = await changeProfile(userID, firstName, lastName, phone);
+        const token = await changeProfile(userID, loggedInUser, firstName, lastName, phone);
         res.status(200).json(token);
     } catch (err) {
         const error = formatErrorMessage(err);

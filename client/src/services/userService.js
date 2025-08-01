@@ -1,10 +1,11 @@
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 import { t } from "i18next";
-import { get, post } from "./requester";
+import { get, patch, post } from "./requester";
 
 const paths = {
     setupProfile: "/users/profile-setup",
-    profile:'/users/profile'
+    profile: '/users/profile',
+    userID: "/users/:userID"
 }
 
 export const verifyProfile = (firstName, lastName, phone) => {
@@ -15,4 +16,9 @@ export const verifyProfile = (firstName, lastName, phone) => {
 export const getProfile = () => {
     const url = BASE_URL + paths.profile;
     return get(url);
+}
+
+export const updateName = (userID, firstName, lastName) => {
+    const url = BASE_URL + paths.userID.replace(':userID', userID);
+    return patch(url, { firstName, lastName });
 }

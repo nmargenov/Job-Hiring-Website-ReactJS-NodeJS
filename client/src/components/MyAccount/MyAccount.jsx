@@ -11,37 +11,43 @@ import { useAuth } from "../../contexts/AuthContext";
 export const MyAccount = () => {
     const [isPageLoading, setIsPageLoading] = useState(true);
     const [userBackend, setUserBackend] = useState(null);
+    const [isEditName, setIsEditName] = useState(false);
+
 
     const { user } = useAuth();
 
     useEffect(() => {
         const id = user._id;
+        setIsPageLoading(true);
         getProfile(id)
             .then((data) => {
                 setUserBackend(data);
                 setIsPageLoading(false);
             }).catch((err) => {
-                console.log(err);
             })
-    }, []);
+    }, [user]);
+
+    function onNameClick() {
+        setIsEditName(true);
+    }
 
     return (
         <>
             {isPageLoading && <Loader />}
-            {/* <EditName /> */}
-            {!isPageLoading &&
-                <div className={styles['account-div']}>
+            {!isPageLoading && <>
+                {isEditName && <EditName setIsEditName={setIsEditName} user={userBackend} />}
+                {!isEditName && <div className={styles['account-div']}>
                     <UserInfo user={userBackend} />
                     <div className={styles['fields']}>
                         <Field icon={'mail'} text={'change-email'} />
-                        <Field icon={'edit'} text={'change-name'} />
+                        <Field onClick={onNameClick} icon={'edit'} text={'change-name'} />
                         <Field icon={'phone'} text={'change-phone'} />
                     </div>
                     <div className={styles['boxes']}>
                         <Box icon={'folder_shared'} text={'my-files'} />
                         <Box icon={'playlist_add_check'} text={'applies'} />
                     </div>
-                </div>}
+                </div>}</>}
         </>
     )
 }

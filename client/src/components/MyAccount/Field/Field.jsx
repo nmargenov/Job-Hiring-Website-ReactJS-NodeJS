@@ -1,11 +1,11 @@
 import styles from "./field.module.css";
 import { useTranslation } from 'react-i18next'
 
-export const Field = ({ icon, text }) => {
+export const Field = ({ icon, text, onClick }) => {
     const { t } = useTranslation();
 
     return (
-        <div tabIndex={0} className={styles['field']}>
+        <div onClick={onClick} tabIndex={0} className={styles['field']}>
             <div className={styles['left-div']}>
                 <i className="material-icons">{icon}</i>
                 <span>{t(text)}</span>
