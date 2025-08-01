@@ -3,7 +3,7 @@ import { faCamera } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./userInfo.module.css";
 
-export const UserInfo = () => {
+export const UserInfo = ({user}) => {
     return (
         <div className={styles['user-info-div']}>
             <div className={styles["image-div"]}>
@@ -11,9 +11,9 @@ export const UserInfo = () => {
                 <FontAwesomeIcon tabIndex={0} className={styles['camera']} icon={faCamera} />
             </div>
             <div className={styles["user-info-text"]}>
-                <span className={styles['name']}>Nikolay margenov</span>
-                <span className={styles['email']}>nikolay_margenov@yahoo.com</span>
-                <span className={styles['phone']}>+359 884000403</span>
+                <span className={styles['name']}>{user.firstName} {user.lastName}</span>
+                <span className={styles['email']}>{user.email}</span>
+                <span className={styles['phone']}>{user.phone}</span>
             </div>
         </div>
     )
