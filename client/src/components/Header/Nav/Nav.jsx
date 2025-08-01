@@ -85,12 +85,12 @@ export const Nav = ({ toggleOpen, onKey, isOpen }) => {
                 {isAuthenticated && <NavItem onClick={onLogoutClick} icon={faSignOut} text={t("logout")} />}
             </div>
             <div className={styles['section']}>
-                <a onKeyDown={(e) => { onLanguageClick(e, "en") }} tabIndex={0} className={styles['language-option']} onClick={() => switchLang('en')}>English</a>
-                <a onKeyDown={(e) => { onLanguageClick(e, "bg") }} tabIndex={0} className={styles['language-option']} onClick={() => switchLang('bg')}>Български</a>
+                <a role='button' onKeyDown={(e) => { onLanguageClick(e, "en") }} tabIndex={0} className={styles['language-option']} onClick={() => switchLang('en')}>English</a>
+                <a role='button' onKeyDown={(e) => { onLanguageClick(e, "bg") }} tabIndex={0} className={styles['language-option']} onClick={() => switchLang('bg')}>Български</a>
             </div>
             <div className={styles['section']}>
-                <a onKeyDown={(e) => { onThemeClick(e, "en") }} tabIndex={0} className={styles['language-option']} onClick={() => changeTheme('light')}>{t("light-theme")}</a>
-                <a onKeyDown={(e) => { onThemeClick(e, "bg") }} tabIndex={0} className={styles['language-option']} onClick={() => changeTheme('dark')}>{t("dark-theme")}</a>
+                <a role='button' onKeyDown={(e) => { onThemeClick(e, "light") }} tabIndex={0} className={styles['language-option']} onClick={() => changeTheme('light')}>{t("light-theme")}</a>
+                <a role='button' onKeyDown={(e) => { onThemeClick(e, "dark") }} tabIndex={0} className={styles['language-option']} onClick={() => changeTheme('dark')}>{t("dark-theme")}</a>
             </div>
         </nav>
     )
