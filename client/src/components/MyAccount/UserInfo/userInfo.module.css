@@ -23,7 +23,8 @@
     border-radius: 100%;
 }
 
-.camera:hover{
+.camera:hover,
+.camera:focus-visible{
     background-color: #afafaf;
 }
 

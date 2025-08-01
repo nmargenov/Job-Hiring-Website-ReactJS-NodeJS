@@ -1,0 +1,26 @@
+.field{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.left-div{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.field{
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.field:focus-visible,
+.field:hover{
+    background-color: var(--hover-background);
+}
+
+.field:active{
+    background-color: var(--active-background);
+}

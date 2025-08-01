@@ -43,7 +43,10 @@
     "lastName": "Surname",
     "phone": "Phone",
     "back": "Back",
-    "forward":"Continue",
-    "save":"Save",
-    "finish-setup":"Complete your profile to continue"
+    "forward": "Continue",
+    "save": "Save",
+    "finish-setup": "Complete your profile to continue",
+    "change-email": "Change email",
+    "change-name": "Edit name",
+    "change-phone": "Edit phone number"
 }
