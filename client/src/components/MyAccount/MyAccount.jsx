@@ -1,5 +1,10 @@
+import styles from "./myAccount.module.css";
+import { UserInfo } from "./UserInfo/UserInfo";
+
 export const MyAccount = () =>{
     return (
-        <h1>My account</h1>
+        <div className={styles['account-div']}>
+            <UserInfo/>
+        </div>
     )
 }
