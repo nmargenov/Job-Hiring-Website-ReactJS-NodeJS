@@ -88,7 +88,7 @@ exports.sendLoginCode = async (email) => {
     await antispamCode(LoginCode, email);
 
     const dbEntry = await createDatabaseEntry(LoginCode, email, code, expiresAt);
-    
+
     await sendEmail(email, 'Login code', `Your login code is: ${code} and is valid for 10 minutes.`);
 
     return dbEntry._id;
@@ -151,27 +151,45 @@ exports.setupProfile = async (userID, firstName, lastName, phone) => {
 };
 
 exports.changeProfile = async (userID, firstName, lastName, phone) => {
-    
+
     let user = await User.findById(userID);
-    if(!user) throw new Error(MESSAGES.userNotFound);
+    if (!user) throw new Error(MESSAGES.userNotFound);
 
     let toUpdate = {};
 
-    if(firstName) user.firstName = firstName;
-    if(lastName) user.lastName = lastName;
-    if(phone) user.phone = phone;
+    if (firstName) user.firstName = firstName;
+    if (lastName) user.lastName = lastName;
+    if (phone) user.phone = phone;
 
     user = await user.save();
 
     return returnToken(user);
 };
 
-exports.getCodeInfo = async (codeID) =>{
+exports.getCodeInfo = async (codeID) => {
     let email = await LoginCode.findById(codeID).select('email');
-    
-    if(!email){
-        throw new error(MESSAGES.invalidEmail);
+
+    if (!email) {
+        throw new Error(MESSAGES.invalidEmail);
     }
 
     return email;
 };
+
+exports.getProfile = async (userID) => {
+    let user = await User.findById(userID);
+
+    if (!user) {
+        throw new Error();
+    }
+    const toReturn = {}
+    if (user.role === 'admin' || user.role === "seeker") {
+        toReturn.firstName = user.firstName;
+        toReturn.lastName = user.lastName;
+        toReturn.phone = user.phone;
+        toReturn.role = user.role;
+        toReturn.email = user.email;
+    }
+
+    return toReturn;
+}

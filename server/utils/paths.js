@@ -9,6 +9,7 @@ exports.PATHS={
     verifyEmailCode: '/email-code',
     email: "/email",
     setupProfile: '/profile-setup',
+    profile:'/profile',
     businessApply: "/",
     userID: "/:userID",
     archiveJob: "/:jobID/archive",

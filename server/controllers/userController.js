@@ -1,4 +1,4 @@
-const { setupProfile, sendLoginCode, verifyLoginCode, sendEmailCode, verifyEmailCode, changeProfile, getCodeInfo } = require('../managers/userManager');
+const { setupProfile, sendLoginCode, verifyLoginCode, sendEmailCode, verifyEmailCode, changeProfile, getCodeInfo, getProfile } = require('../managers/userManager');
 const { mustBeGuest, mustBeAuth } = require('../middlewares/authMiddleware');
 const { MustNotBeSetup, MustBeSetup } = require('../middlewares/isSetupMiddleware');
 const { formatErrorMessage } = require('../utils/errorMessage');
@@ -88,6 +88,17 @@ router.get(PATHS.getCodeInfoById, mustBeGuest, async (req, res) => {
         const codeID = req.params?.codeID?.trim();
         const email = await getCodeInfo(codeID);
         res.status(200).json(email);
+    } catch (err) {
+        const error = formatErrorMessage(err);
+        res.status(400).send({ message: error })
+    }
+});
+
+router.get(PATHS.profile, mustBeAuth, MustBeSetup, async (req, res) => {
+    try {
+        const id = req.user._id;
+        const user = await getProfile(id);
+        res.status(200).json(user);
     } catch (err) {
         const error = formatErrorMessage(err);
         res.status(400).send({ message: error })
