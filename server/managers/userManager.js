@@ -130,7 +130,7 @@ exports.verifyLoginCode = async (email, code) => {
 
 }
 
-exports.setupProfile = async (userID, firstName, lastName, phone) => {
+exports.setupProfile = async (userID, firstName, lastName, phone, countryCode) => {
 
     const user = await User.findById(userID);
     if (!user) {
@@ -144,6 +144,7 @@ exports.setupProfile = async (userID, firstName, lastName, phone) => {
     user.firstName = firstName;
     user.lastName = lastName;
     user.phone = phone;
+    if(countryCode) user.countryCode = countryCode;
     user.isSetup = true;
 
     await user.save(); //Will throw if firstName, lastName, or phone are invalid
@@ -151,7 +152,7 @@ exports.setupProfile = async (userID, firstName, lastName, phone) => {
     return returnToken(user);
 };
 
-exports.changeProfile = async (userID, loggedInUser, firstName, lastName, phone) => {
+exports.changeProfile = async (userID, loggedInUser, firstName, lastName, phone, countryCode) => {
 
     let user = await User.findById(userID);
     if (!user) throw new Error(MESSAGES.userNotFound);
@@ -168,6 +169,7 @@ exports.changeProfile = async (userID, loggedInUser, firstName, lastName, phone)
     if (firstName) user.firstName = firstName;
     if (lastName) user.lastName = lastName;
     if (phone) user.phone = phone;
+    if (countryCode) user.countryCode = countryCode;
 
     user = await user.save();
 
@@ -195,6 +197,7 @@ exports.getProfile = async (userID) => {
         toReturn._id = user._id;
         toReturn.firstName = user.firstName;
         toReturn.lastName = user.lastName;
+        toReturn.countryCode = user.countryCode;
         toReturn.phone = user.phone;
         toReturn.role = user.role;
         toReturn.email = user.email;

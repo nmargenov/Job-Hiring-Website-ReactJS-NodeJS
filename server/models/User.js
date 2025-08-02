@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const { emailRegex, phoneRegex } = require("../utils/regex");
+const { emailRegex, phoneRegex, countryCodeRegex } = require("../utils/regex");
 const { MESSAGES } = require("../utils/messages/mongooseMessages");
 
 const userSchema = new mongoose.Schema({
@@ -19,6 +19,16 @@ const userSchema = new mongoose.Schema({
         required: [true, MESSAGES.userModel.role.required],
         enum: ["seeker", "hirer", "admin"],
         default: 'seeker'
+    },
+    countryCode: {
+        type: String,
+        default: '',
+        validate: {
+            validator: function (v) {
+                return countryCodeRegex.test(v);
+            },
+            message: MESSAGES.userModel.countryCode.validatorMessage
+        }
     },
     phone: {
         type: String,

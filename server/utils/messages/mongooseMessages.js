@@ -8,6 +8,9 @@ exports.MESSAGES = {
         role: {
             required: "Role is required",
         },
+        countryCode: {
+            validatorMessage: `Invalid country code! It should start with "+" followed by 1 to 3 digits.`
+        },
         phone: {
             required: "Phone number is required",
             validatorMessage: "Phone must start with +<countrycode> or 0 and be between 6 and 20 digits",
