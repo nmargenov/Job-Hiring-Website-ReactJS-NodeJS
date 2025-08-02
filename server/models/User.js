@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
         default: '',
         validate: {
             validator: function (v) {
-                return countryCodeRegex.test(v);
+                return v === null || v === '' || countryCodeRegex.test(v);
             },
             message: MESSAGES.userModel.countryCode.validatorMessage
         }

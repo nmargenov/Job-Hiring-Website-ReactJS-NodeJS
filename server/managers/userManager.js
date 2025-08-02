@@ -170,6 +170,7 @@ exports.changeProfile = async (userID, loggedInUser, firstName, lastName, phone,
     if (lastName) user.lastName = lastName;
     if (phone) user.phone = phone;
     if (countryCode) user.countryCode = countryCode;
+    if (!countryCode) user.countryCode = '';
 
     user = await user.save();
 

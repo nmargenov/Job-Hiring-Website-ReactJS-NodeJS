@@ -60,8 +60,9 @@ router.post(PATHS.setupProfile, mustBeAuth, MustNotBeSetup, async (req, res) => 
         const firstName = req.body?.firstName?.trim();
         const lastName = req.body?.lastName?.trim();
         const phone = req.body?.phone?.trim();
+        const countryCode = req.body?.countryCode?.trim();
         const userID = req.user._id;
-        const token = await setupProfile(userID, firstName, lastName, phone);
+        const token = await setupProfile(userID, firstName, lastName, phone, countryCode);
         res.status(200).json(token);
     } catch (err) {
         const error = formatErrorMessage(err);
@@ -76,7 +77,8 @@ router.patch(PATHS.userID, mustBeAuth, MustBeSetup, async (req, res) => {
         const firstName = req.body?.firstName?.trim();
         const lastName = req.body?.lastName?.trim();
         const phone = req.body?.phone?.trim();
-        const token = await changeProfile(userID, loggedInUser, firstName, lastName, phone);
+        const countryCode = req.body?.countryCode?.trim();
+        const token = await changeProfile(userID, loggedInUser, firstName, lastName, phone, countryCode);
         res.status(200).json(token);
     } catch (err) {
         const error = formatErrorMessage(err);

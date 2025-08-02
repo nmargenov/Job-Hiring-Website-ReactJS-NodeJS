@@ -1,4 +1,4 @@
-.edit-name-div {
+.edit-div {
     max-width: 550px;
     width: 100%;
     padding: 24px;
@@ -35,10 +35,21 @@
     cursor: not-allowed;
 }
 
-.edit-name-div big{
+.edit-div big{
     font-size: 28px;
 }
 
-.edit-name-div .description{
+.edit-div .description{
     font-size: 16px;
+}
+
+.phone-div{
+    display: flex;
+    align-items:end;
+    gap: 5px;
+    width: 100%;
+}
+
+.phone-div .input-div{
+    width: 100%;
 }

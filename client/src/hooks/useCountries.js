@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-export const useContries = () =>{
+export const useCountries = () =>{
     const { t } = useTranslation();
     
     const countries = [
@@ -11,7 +11,7 @@ export const useContries = () =>{
         { name: t('france'), code: "+33", flag: "fr" },
         { name: t('italy'), code: "+39", flag: "it" },
         { name: t('spain'), code: "+34", flag: "es" },
-        { name: t('other'), code: "+", },
+        { name: t('other'), code: "", },
     ];
 
     return {

@@ -4,7 +4,7 @@ import { useForm } from '../../../hooks/useForm';
 import { updateName } from '../../../services/userService';
 import { Form } from '../../shared/Form/Form';
 import { FormInput } from '../../shared/FormInput/FormInput';
-import styles from './editName.module.css';
+import styles from '../shared/edit.module.css';
 
 export const EditName = ({ user, setIsEditName }) => {
 
@@ -40,7 +40,7 @@ export const EditName = ({ user, setIsEditName }) => {
             values.lastName.length > 30));
     return (
         <>
-            <div className={styles['edit-name-div']}>
+            <div className={styles['edit-div']}>
                 <Form
                     errorMsg={errorMsg}
                     onSubmit={onSubmit}

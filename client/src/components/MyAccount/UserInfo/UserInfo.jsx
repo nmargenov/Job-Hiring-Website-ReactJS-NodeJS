@@ -13,7 +13,7 @@ export const UserInfo = ({user}) => {
             <div className={styles["user-info-text"]}>
                 <span className={styles['name']}>{user.firstName} {user.lastName}</span>
                 <span className={styles['email']}>{user.email}</span>
-                <span className={styles['phone']}>{user.phone}</span>
+                <span className={styles['phone']}>{user.countryCode && user.countryCode} {user.phone}</span>
             </div>
         </div>
     )

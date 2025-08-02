@@ -8,9 +8,9 @@ const paths = {
     userID: "/users/:userID"
 }
 
-export const verifyProfile = (firstName, lastName, phone) => {
+export const verifyProfile = (firstName, lastName, phone, countryCode) => {
     const url = BASE_URL + paths.setupProfile;
-    return post(url, { firstName, lastName, phone });
+    return post(url, { firstName, lastName, phone, countryCode });
 }
 
 export const getProfile = () => {
@@ -21,4 +21,9 @@ export const getProfile = () => {
 export const updateName = (userID, firstName, lastName) => {
     const url = BASE_URL + paths.userID.replace(':userID', userID);
     return patch(url, { firstName, lastName });
+}
+
+export const updatePhone = (userID, phone, countryCode) => {
+    const url = BASE_URL + paths.userID.replace(':userID', userID);
+    return patch(url, { phone, countryCode });
 }

@@ -9,13 +9,13 @@ import { CountryCodeDropdown } from '../shared/CountryCodeDropdown/CountryCodeDr
 import { verifyProfile } from '../../services/userService';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { useContries } from '../../hooks/useCountries';
+import { useCountries } from '../../hooks/useCountries';
 
 export const SetupProfile = () => {
     const { t } = useTranslation();
     const { loginAuthContext } = useAuth();
 
-    const { countries } = useContries();
+    const { countries } = useCountries();
 
     const navigate = useNavigate();
 
@@ -33,11 +33,8 @@ export const SetupProfile = () => {
 
     function onSubmit(e) {
         onSubmitHandler(e);
-        const number = selected.code + values.phone;
-        console.log(values.phone);
-        console.log(number);
         setIsLoading(true);
-        verifyProfile(values.firstName, values.lastName, number)
+        verifyProfile(values.firstName, values.lastName, values.phone, selected.code)
             .then((data) => {
                 loginAuthContext(data);
                 setIsLoading(false);

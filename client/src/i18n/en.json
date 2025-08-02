@@ -60,5 +60,7 @@
     "france": "France",
     "italy": "Italy",
     "spain": "Spain",
-    "other": "Other"
+    "other": "Other",
+    "edit-phone":"Edit phone",
+    "edit-phone-text":"Important: Changing the phone number in your account will also update the phone number in all your applications"
 }
