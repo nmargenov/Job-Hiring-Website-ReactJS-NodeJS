@@ -1,22 +1,23 @@
-.user-info-div{
+.user-info-div {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
 }
 
-.image-div{
+.image-div {
     width: 150px;
     height: 150px;
     position: relative;
 }
 
-.camera{
+
+.camera {
     position: absolute;
     bottom: 0;
-    right:0;
+    right: 0;
     background-color: #c5c5c5;
-    color:white;
+    color: white;
     width: 24px;
     height: 24px;
     padding: 14px;
@@ -24,28 +25,36 @@
 }
 
 .camera:hover,
-.camera:focus-visible{
+.camera:focus-visible {
     background-color: #afafaf;
 }
 
-.camera:active{
+.camera:active {
     background-color: #8f8f8f;
 }
 
-.profile-image{
+.profile-image {
     width: 150px;
     height: 150px;
-    object-fit:cover;
+    object-fit: cover;
     border-radius: 100%;
 }
 
-.name{
+.name {
     font-size: 22px;
 }
 
-.user-info-text{
+.user-info-text {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 5px;
+    width: 100%;;
+}
+
+.user-info-text span {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: break-word;
+    text-align: center;
 }
