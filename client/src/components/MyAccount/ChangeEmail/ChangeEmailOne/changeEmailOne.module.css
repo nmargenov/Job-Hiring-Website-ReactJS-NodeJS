@@ -1,0 +1,69 @@
+.email-one{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.email-one big{
+    font-size: 28px;
+}
+
+.buttons-div {
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+}
+
+.email-one ul{
+    margin-top: -15px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+}
+
+.design-button {
+    padding: 20px;
+    text-align: center;
+    border-radius: 50px;
+    border: 1px solid var(--code-design-button);
+    color: white;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: var(--login-form-color);
+    color: var(--code-design-button);
+}
+
+
+.error-msg-div {
+    color: rgb(255, 28, 28);
+    display: flex;
+    text-align: center;
+    margin-top: 10px;
+    height: 60px;
+    margin-bottom: -20px;
+    overflow: hidden;
+}
+
+
+.design-button:hover,
+.design-button:focus {
+    opacity: 0.8;
+}
+
+.design-button:active {
+    opacity: 0.5;
+}
+
+.design-button:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+    .buttons-div{
+        flex-direction: column-reverse;
+    }
+}

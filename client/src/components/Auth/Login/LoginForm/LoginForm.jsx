@@ -36,7 +36,7 @@ export const LoginForm = ({ ref }) => {
         <Form onSubmit={onSubmit}
             errorMsg={errorMsg}
             buttons={
-                <input type="submit" value={t('login')} disabled={(values.email.length >= 0 && !isValidEmail(values.email))} />
+                <input type="submit" value={t('login')} disabled={(isLoading || (values.email.length >= 0 && !isValidEmail(values.email)))} />
             }
         >
             <FormInput

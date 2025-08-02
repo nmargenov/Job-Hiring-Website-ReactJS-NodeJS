@@ -8,6 +8,7 @@ import { Loader } from "../shared/Loader/Loader";
 import { getProfile } from "../../services/userService";
 import { useAuth } from "../../contexts/AuthContext";
 import { EditPhone } from "./EditPhone/EditPhone";
+import { ChangeEmail } from "./ChangeEmail/ChangeEmail";
 
 export const MyAccount = () => {
     const [isPageLoading, setIsPageLoading] = useState(true);
@@ -15,6 +16,7 @@ export const MyAccount = () => {
 
     const [isEditName, setIsEditName] = useState(false);
     const [isEditPhone, setIsEditPhone] = useState(false);
+    const [isEditEmail, setIsEditEmail] = useState(false);
 
 
     const { user } = useAuth();
@@ -38,17 +40,21 @@ export const MyAccount = () => {
         setIsEditPhone(true);
     }
 
+    function onEmailClick(){
+        setIsEditEmail(true);
+    }
 
     return (
         <>
             {isPageLoading && <Loader />}
             {!isPageLoading && <>
+                {isEditEmail && <ChangeEmail setIsEditEmail={setIsEditEmail} user={userBackend}/>}
                 {isEditPhone && <EditPhone setIsEditPhone={setIsEditPhone} user={userBackend} />}
                 {isEditName && <EditName setIsEditName={setIsEditName} user={userBackend} />}
-                {(!isEditName && !isEditPhone) && <div className={styles['account-div']}>
+                {(!isEditName && !isEditPhone && !isEditEmail) && <div className={styles['account-div']}>
                     <UserInfo user={userBackend} />
                     <div className={styles['fields']}>
-                        <Field icon={'mail'} text={'change-email'} />
+                        <Field onClick={onEmailClick} icon={'mail'} text={'change-email'} />
                         <Field onClick={onNameClick} icon={'edit'} text={'change-name'} />
                         <Field onClick={onPhoneClick} icon={'phone'} text={'change-phone'} />
                     </div>
