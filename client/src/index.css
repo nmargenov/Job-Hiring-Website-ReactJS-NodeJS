@@ -46,3 +46,11 @@ svg {
     cursor: pointer;
 }
 
+.global-spinner{
+    width: 100%;
+    height: 100vh;
+    justify-self: center;
+    align-items: center;
+    display: flex;
+    padding-left: 45%;
+}
