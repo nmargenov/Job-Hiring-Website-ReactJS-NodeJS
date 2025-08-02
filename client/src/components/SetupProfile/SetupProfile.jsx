@@ -5,34 +5,27 @@ import { FormInput } from '../shared/FormInput/FormInput';
 import { Form } from '../shared/Form/Form';
 import { useTranslation } from "react-i18next";
 import { SetupProfileActions } from './SetupProfileActions/SetupProfileActions';
-import { CountryCodeDropdown } from './CountryCodeDropdown/CountryCodeDropdown';
+import { CountryCodeDropdown } from '../shared/CountryCodeDropdown/CountryCodeDropdown';
 import { verifyProfile } from '../../services/userService';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { useContries } from '../../hooks/useCountries';
 
 export const SetupProfile = () => {
     const { t } = useTranslation();
     const { loginAuthContext } = useAuth();
-    
+
+    const { countries } = useContries();
+
     const navigate = useNavigate();
-    
+
     const initialValues = {
         firstName: "",
         lastName: "",
         phone: "",
     }
-    
-    const { values, errorMsg, setErrorMsg, onInputChange, isLoading, setIsLoading, onSubmitHandler } = useForm(initialValues);
 
-    const countries = [
-        { name: "Bulgaria", code: "+359", flag: "bg" },
-        { name: "United States", code: "+1", flag: "us" },
-        { name: "United Kingdom", code: "+44", flag: "gb" },
-        { name: "Germany", code: "+49", flag: "de" },
-        { name: "France", code: "+33", flag: "fr" },
-        { name: "Italy", code: "+39", flag: "it" },
-        { name: "Spain", code: "+34", flag: "es" },
-    ];
+    const { values, errorMsg, setErrorMsg, onInputChange, isLoading, setIsLoading, onSubmitHandler } = useForm(initialValues);
 
     const [selected, setSelected] = useState(countries[0]);
 
@@ -41,6 +34,8 @@ export const SetupProfile = () => {
     function onSubmit(e) {
         onSubmitHandler(e);
         const number = selected.code + values.phone;
+        console.log(values.phone);
+        console.log(number);
         setIsLoading(true);
         verifyProfile(values.firstName, values.lastName, number)
             .then((data) => {

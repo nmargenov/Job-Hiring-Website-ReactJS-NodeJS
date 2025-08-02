@@ -49,8 +49,16 @@
     "change-email": "Change email",
     "change-name": "Edit name",
     "change-phone": "Edit phone number",
-    "my-files":"My files",
-    "applies":"Applies",
-    "edit-name":"Edit name",
-    "edit-name-text":"Important! Changing the name in your account will update the name in all of your applications."
+    "my-files": "My files",
+    "applies": "Applies",
+    "edit-name": "Edit name",
+    "edit-name-text": "Important! Changing the name in your account will update the name in all of your applications.",
+    "bulgaria": "Bulgaria",
+    "united-states": "United States",
+    "united-kingdom": "United Kingdom",
+    "germany": "Germany",
+    "france": "France",
+    "italy": "Italy",
+    "spain": "Spain",
+    "other": "Other"
 }

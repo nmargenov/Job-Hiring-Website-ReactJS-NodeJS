@@ -11,6 +11,7 @@ import { useAuth } from "../../contexts/AuthContext";
 export const MyAccount = () => {
     const [isPageLoading, setIsPageLoading] = useState(true);
     const [userBackend, setUserBackend] = useState(null);
+    
     const [isEditName, setIsEditName] = useState(false);
 
 
