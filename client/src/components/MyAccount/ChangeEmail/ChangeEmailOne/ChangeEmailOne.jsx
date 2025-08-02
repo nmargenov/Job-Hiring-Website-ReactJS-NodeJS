@@ -20,12 +20,12 @@ export const ChangeEmailOne = ({ user, goBack, setState, setEmail }) => {
         onSubmitHandler(e);
         setIsLoading(true);
         generateChangeEmailCode(values.newEmail)
-            .then((data)=>{
+            .then((data) => {
                 setState('second');
                 setIsLoading(false);
                 setEmail(values.newEmail);
                 setErrorMsg('');
-            }).catch((err)=>{
+            }).catch((err) => {
                 setIsLoading(false);
                 setErrorMsg(err.message);
             })

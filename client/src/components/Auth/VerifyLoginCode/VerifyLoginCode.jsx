@@ -7,9 +7,8 @@ import { useEffect, useRef, useState } from "react";
 import { VerifyLoginCodeForm } from "./VerifyLoginCodeForm/VerifyLoginCodeForm";
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getEmailByID } from "../../../services/authService";
-import { ResendCode } from "./ResendCode/ResendCode";
 import { Loader } from "../../shared/Loader/Loader";
-
+import { ResendCode } from "../../shared/ResendCode/ResendCode";
 
 export const VerifyLoginCode = () => {
     const { t } = useTranslation();
@@ -74,7 +73,7 @@ export const VerifyLoginCode = () => {
                         </li>
                     </ul>
                     <VerifyLoginCodeForm isLoading={isFormSubmitted} setIsLoading={setIsFormSubmitted} ref={inputRef} email={email} />
-                    <ResendCode isLoading={isFormSubmitted} setIsLoading={setIsFormSubmitted} email={email} />
+                    <ResendCode typeOfCode={'login'} isLoading={isFormSubmitted} setIsLoading={setIsFormSubmitted} email={email} />
                 </div>
             </>}
         </div>
