@@ -1,0 +1,95 @@
+.preview-picture-div {
+    max-width: 600px;
+    background-color: var();
+    width: 90%;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    background-color: var(--header-color);
+    align-items: center;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.image-div {
+    max-width: 350px;
+    width: 100%;
+}
+
+.image-div img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.opacity {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    height: 100vh;
+    padding: 20px !important;
+}
+
+.buttons-div{
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    justify-content: end;
+}
+
+.save-button {
+    padding: 20px;
+    text-align: center;
+    border-radius: 50px;
+    background-color: #d40080;
+    color: white;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+}
+
+.cancel-button {
+    padding: 20px;
+    text-align: center;
+    border-radius: 50px;
+    border: 1px solid var(--code-design-button);
+    color: white;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: var(--login-form-color);
+    color: var(--code-design-button);
+}
+
+.save-button:hover,
+.save-button:focus,
+.cancel-button:hover,
+.cancel-button:focus {
+    opacity: 0.8;
+}
+
+.save-button:active,
+.cancel-button:active {
+    opacity: 0.5;
+}
+
+.save-button:disabled,
+.cancel-button:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .buttons-div {
+        justify-content: space-between;
+    }
+}

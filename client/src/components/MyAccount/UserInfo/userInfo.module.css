@@ -11,28 +11,6 @@
     position: relative;
 }
 
-
-.camera {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    background-color: #c5c5c5;
-    color: white;
-    width: 24px;
-    height: 24px;
-    padding: 14px;
-    border-radius: 100%;
-}
-
-.camera:hover,
-.camera:focus-visible {
-    background-color: #afafaf;
-}
-
-.camera:active {
-    background-color: #8f8f8f;
-}
-
 .profile-image {
     width: 150px;
     height: 150px;

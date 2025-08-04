@@ -72,5 +72,11 @@
     "change-email-two-1": "You no longer need a password. A 7-digit code has been sent to your old email.",
     "change-email-two-2": "Your new email is:",
     "change-email-two-3": "To continue, please enter the code you received:",
-    "apply-business":"Apply for business account"
+    "apply-business": "Apply for business account",
+    "photo-text": "Here you can add or update the photo in your account. It is recommended to use a passport-style photo.",
+    "delete-photo": "Delete current photo",
+    "change-photo": "Change current photo",
+    "accept-delete-text": "Are you sure you want to delete your current photo?",
+    "yes": "Yes",
+    "no": "No"
 }

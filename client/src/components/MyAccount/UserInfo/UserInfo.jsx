@@ -1,6 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCamera } from "@fortawesome/free-solid-svg-icons";
-
+import { ProfilePictureUpload } from "./profilePictureUpload/ProfilePictureUpload";
 import styles from "./userInfo.module.css";
 
 export const UserInfo = ({user}) => {
@@ -8,7 +6,7 @@ export const UserInfo = ({user}) => {
         <div className={styles['user-info-div']}>
             <div className={styles["image-div"]}>
                 <img className={styles['profile-image']} src="https://t4.ftcdn.net/jpg/02/45/56/35/360_F_245563558_XH9Pe5LJI2kr7VQuzQKAjAbz9PAyejG1.jpg" alt="profile-picture" />
-                <FontAwesomeIcon tabIndex={0} className={styles['camera']} icon={faCamera} />
+                <ProfilePictureUpload user={user}/> 
             </div>
             <div className={styles["user-info-text"]}>
                 {(!user.isApproved && user.role !== 'hirer') && <span className={styles['name']}>{user.firstName} {user.lastName}</span>}
