@@ -11,7 +11,8 @@ export const UserInfo = ({user}) => {
                 <FontAwesomeIcon tabIndex={0} className={styles['camera']} icon={faCamera} />
             </div>
             <div className={styles["user-info-text"]}>
-                <span className={styles['name']}>{user.firstName} {user.lastName}</span>
+                {(!user.isApproved && user.role !== 'hirer') && <span className={styles['name']}>{user.firstName} {user.lastName}</span>}
+                {(user.isApproved && user.role === 'hirer') && <span className={styles['name']}>{user.business.businessName}</span>}
                 <span className={styles['email']}>{user.email}</span>
                 <span className={styles['phone']}>{user.countryCode && user.countryCode} {user.phone}</span>
             </div>

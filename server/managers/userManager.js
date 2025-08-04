@@ -144,7 +144,7 @@ exports.setupProfile = async (userID, firstName, lastName, phone, countryCode) =
     user.firstName = firstName;
     user.lastName = lastName;
     user.phone = phone;
-    if(countryCode) user.countryCode = countryCode;
+    if (countryCode) user.countryCode = countryCode;
     user.isSetup = true;
 
     await user.save(); //Will throw if firstName, lastName, or phone are invalid
@@ -161,7 +161,7 @@ exports.changeProfile = async (userID, loggedInUser, firstName, lastName, phone,
     if (profileID instanceof mongoose.Types.ObjectId) {
         profileID = profileID.toHexString(); //checks if ownerID is of type ObjectId and transforms it to string
     }
-    
+
     if (profileID !== loggedInUser) {
         throw new Error(MESSAGES.unauthorized); //checks if the owner is the logged in user
     }
@@ -188,21 +188,19 @@ exports.getCodeInfo = async (codeID) => {
 };
 
 exports.getProfile = async (userID) => {
-    let user = await User.findById(userID);
+    let user = await User.findById(userID).populate('business');
 
     if (!user) {
         throw new Error();
     }
-    const toReturn = {}
-    if (user.role === 'admin' || user.role === "seeker") {
-        toReturn._id = user._id;
-        toReturn.firstName = user.firstName;
-        toReturn.lastName = user.lastName;
-        toReturn.countryCode = user.countryCode;
-        toReturn.phone = user.phone;
-        toReturn.role = user.role;
-        toReturn.email = user.email;
-    }
 
-    return toReturn;
+    // if()
+    // const toReturn = {}
+    // toReturn._id = user._id;
+    // toReturn.countryCode = user.countryCode;
+    // toReturn.phone = user.phone;
+    // toReturn.role = user.role;
+    // toReturn.email = user.email;
+    // to
+    return user;
 }

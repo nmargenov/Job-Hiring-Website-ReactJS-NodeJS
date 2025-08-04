@@ -71,5 +71,6 @@
     "newEmail": "New email",
     "change-email-two-1": "You no longer need a password. A 7-digit code has been sent to your old email.",
     "change-email-two-2": "Your new email is:",
-    "change-email-two-3": "To continue, please enter the code you received:"
+    "change-email-two-3": "To continue, please enter the code you received:",
+    "apply-business":"Apply for business account"
 }

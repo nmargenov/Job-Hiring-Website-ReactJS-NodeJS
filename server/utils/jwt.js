@@ -3,24 +3,24 @@ const User = require("../models/User");
 
 const SECRET = process.env.SECRET;
 
-const sign = (payload, secret, options) =>{
-    return new Promise((resolve,reject)=>{
-        jsonwebtoken.sign(payload,secret,options,(err,token)=>{
-            if(err){
+const sign = (payload, secret, options) => {
+    return new Promise((resolve, reject) => {
+        jsonwebtoken.sign(payload, secret, options, (err, token) => {
+            if (err) {
                 return reject(err);
-            } else{
+            } else {
                 resolve(token)
             }
         });
     });
 };
 
-exports.verify = (payload, secret)=>{
-    return new Promise((resolve,reject)=>{
-        jsonwebtoken.verify(payload,secret,(err,token)=>{
-            if(err){
+exports.verify = (payload, secret) => {
+    return new Promise((resolve, reject) => {
+        jsonwebtoken.verify(payload, secret, (err, token) => {
+            if (err) {
                 return reject(err);
-            }else{
+            } else {
                 resolve(token);
             }
         });
@@ -28,26 +28,19 @@ exports.verify = (payload, secret)=>{
 }
 
 exports.returnToken = async (user) => {
-    let payload = {};
+    let payload = {
+        _id: user._id,
+        role: user.role,
+        isSetup: user.isSetup,
+    };
     if (!user.isApproved) {
-        payload = {
-            _id: user._id,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            role: user.role,
-            isSetup: user.isSetup,
-            hasApplied: user.hasBusinessApplication
-        };
-    } else {
+        payload['firstName'] = user.firstName;
+        payload['lastName'] = user.lastName;
+    }
+    else {
         const userBusiness = await User.findById(user._id).populate('business');
-        payload = {
-            _id: user._id,
-            businessID: userBusiness._id,
-            businessName: userBusiness.business.businessName,
-            role: user.role,
-            isSetup: user.isSetup,
-            isApproved: user.isApproved
-        }
+        payload['businessID'] = userBusiness._id
+        payload['businessName'] = userBusiness.business.businessName;
     }
 
     return await sign(payload, SECRET, { expiresIn: '7d' });

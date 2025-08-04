@@ -17,6 +17,7 @@ export const MyAccount = () => {
     const [isEditName, setIsEditName] = useState(false);
     const [isEditPhone, setIsEditPhone] = useState(false);
     const [isEditEmail, setIsEditEmail] = useState(false);
+    const [isBusinessApply, setIsBusinessApply] = useState(false);
 
 
     const { user } = useAuth();
@@ -26,6 +27,7 @@ export const MyAccount = () => {
         setIsPageLoading(true);
         getProfile(id)
             .then((data) => {
+                console.log(data);
                 setUserBackend(data);
                 setIsPageLoading(false);
             }).catch((err) => {
@@ -40,23 +42,28 @@ export const MyAccount = () => {
         setIsEditPhone(true);
     }
 
-    function onEmailClick(){
+    function onEmailClick() {
         setIsEditEmail(true);
+    }
+
+    function onBusinessApplyClick(){
+        setIsBusinessApply(true);
     }
 
     return (
         <>
             {isPageLoading && <Loader />}
             {!isPageLoading && <>
-                {isEditEmail && <ChangeEmail setIsEditEmail={setIsEditEmail} user={userBackend}/>}
+                {isEditEmail && <ChangeEmail setIsEditEmail={setIsEditEmail} user={userBackend} />}
                 {isEditPhone && <EditPhone setIsEditPhone={setIsEditPhone} user={userBackend} />}
                 {isEditName && <EditName setIsEditName={setIsEditName} user={userBackend} />}
-                {(!isEditName && !isEditPhone && !isEditEmail) && <div className={styles['account-div']}>
+                {(!isEditName && !isEditPhone && !isEditEmail && !isBusinessApply) && <div className={styles['account-div']}>
                     <UserInfo user={userBackend} />
                     <div className={styles['fields']}>
                         <Field onClick={onEmailClick} icon={'mail'} text={'change-email'} />
-                        <Field onClick={onNameClick} icon={'edit'} text={'change-name'} />
+                        {(!userBackend.isApproved && userBackend.role !== 'hirer') && <Field onClick={onNameClick} icon={'edit'} text={'change-name'} />}
                         <Field onClick={onPhoneClick} icon={'phone'} text={'change-phone'} />
+                        {(!userBackend.isApproved && userBackend.role !== 'hirer') && <Field onClick={onBusinessApplyClick} icon={'business'} text={'apply-business'} />}
                     </div>
                     <div className={styles['boxes']}>
                         <Box icon={'folder_shared'} text={'my-files'} />

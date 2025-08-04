@@ -21,6 +21,7 @@ export const AuthProvider = ({ children }) => {
         const cookieToken = getCookie('authToken');
         if (cookieToken) {
             const decodedToken = jwtDecode(cookieToken);
+            console.log(decodedToken);
             setUser(decodedToken);
         }
         setLoading(false);
