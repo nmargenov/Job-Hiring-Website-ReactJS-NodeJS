@@ -9,6 +9,7 @@ lerna-debug.log*
 
 server/src/profilePictures/*
 !server/src/profilePictures/.gitkeep
+keyFile.json
 
 todo
 # Diagnostic reports (https://nodejs.org/api/report.html)

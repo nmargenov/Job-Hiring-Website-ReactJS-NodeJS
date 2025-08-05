@@ -28,7 +28,6 @@ exports.verify = (payload, secret) => {
 }
 
 exports.returnToken = async (user) => {
-    console.log(user);
     let payload = {
         _id: user._id,
         role: user.role,

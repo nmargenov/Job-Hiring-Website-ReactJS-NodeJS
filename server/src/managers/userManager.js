@@ -8,6 +8,7 @@ const transporter = require("../config/nodemailerConfig");
 const { emailRegex } = require("../utils/regex");
 const { returnToken } = require("../utils/jwt");
 const { MESSAGES } = require('../utils/messages/Messages');
+const { deleteImageFromCloud } = require("./imageManager");
 
 function generateCode() {
     const code = Math.floor(100000 + Math.random() * 900000).toString(); //6 digits code
@@ -201,6 +202,7 @@ exports.setProfilePicture = async (userID, image) => {
     const user = await User.findById(userID);
 
     deleteOldPicture(user);
+    deleteImageFromCloud(user.profilePicture)
     user.profilePicture = image;
     const newUser = await user.save();
 
@@ -208,6 +210,9 @@ exports.setProfilePicture = async (userID, image) => {
 };
 
 const deleteOldPicture = async (user) => {
+    if(process.env.STORAGE === 'Cloud'){
+        return;
+    }
     if (user.profilePicture) {
         const path = user.profilePicture.replace(/\\/g, '/');
         fs.access(path, (err) => {

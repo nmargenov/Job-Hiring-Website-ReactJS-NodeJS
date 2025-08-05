@@ -1,15 +1,12 @@
+import { checkPhotoURL } from "../../../utils/checkPhotoURL";
 import { ProfilePictureUpload } from "./profilePictureUpload/ProfilePictureUpload";
 import styles from "./userInfo.module.css";
-const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 export const UserInfo = ({ user }) => {
-    console.log(BASE_URL)
-    const url = BASE_URL +"/"+ user.profilePicture;
-    console.log(url);
     return (
         <div className={styles['user-info-div']}>
             <div className={styles["image-div"]}>
-                <img className={styles['profile-image']} src={user.profilePicture ? url : 'https://t4.ftcdn.net/jpg/02/45/56/35/360_F_245563558_XH9Pe5LJI2kr7VQuzQKAjAbz9PAyejG1.jpg'} alt="profile-picture" />
+                <img className={styles['profile-image']} src={user.profilePicture ? checkPhotoURL(user.profilePicture) : 'https://t4.ftcdn.net/jpg/02/45/56/35/360_F_245563558_XH9Pe5LJI2kr7VQuzQKAjAbz9PAyejG1.jpg'} alt="profile-picture" />
                 <ProfilePictureUpload user={user} />
             </div>
             <div className={styles["user-info-text"]}>

@@ -5,6 +5,7 @@ const { MESSAGES } = require("../utils/messages/mongooseMessages");
 
 const userSchema = new mongoose.Schema({
     profilePicture:{
+        default:null,
         type:String,
     },
     email: {
