@@ -8,6 +8,7 @@ const paths = {
     userID: "/users/:userID",
     email: "/users/email",
     verifyEmailCode: "/users/email-code",
+    profilePicture: "/users/profile-picture"
 }
 
 export const verifyProfile = (firstName, lastName, phone, countryCode) => {
@@ -38,4 +39,9 @@ export const generateChangeEmailCode = (newEmail) => {
 export const verifyEmailChange = (code) => {
     const url = BASE_URL + paths.verifyEmailCode;
     return post(url, { code });
+}
+
+export const setProfilePicture = (profilePicture) => {
+    const url = BASE_URL + paths.profilePicture;
+    return post(url, profilePicture);
 }

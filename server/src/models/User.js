@@ -4,6 +4,9 @@ const { emailRegex, phoneRegex, countryCodeRegex } = require("../utils/regex");
 const { MESSAGES } = require("../utils/messages/mongooseMessages");
 
 const userSchema = new mongoose.Schema({
+    profilePicture:{
+        type:String,
+    },
     email: {
         type: String,
         required: [true, MESSAGES.email.required],

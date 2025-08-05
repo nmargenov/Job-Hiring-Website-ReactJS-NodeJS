@@ -88,6 +88,7 @@
     cursor: not-allowed;
 }
 
+
 @media (max-width: 768px) {
     .buttons-div {
         justify-content: space-between;

@@ -17,4 +17,5 @@ exports.PATHS={
     adminBusiness:"/:businessID",
     acceptBusiness:"/:businessID/accept",
     declineBusiness:"/:businessID/decline",
+    profilePicture:"/profile-picture",
 }

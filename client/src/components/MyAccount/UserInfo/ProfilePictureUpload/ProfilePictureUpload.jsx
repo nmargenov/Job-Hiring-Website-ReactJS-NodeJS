@@ -26,6 +26,7 @@ export const ProfilePictureUpload = ({ user }) => {
         reader.onload = () => {
             setPreview(reader.result)
         };
+        e.target.value = '';
     }
 
     function onClose() {
@@ -34,15 +35,14 @@ export const ProfilePictureUpload = ({ user }) => {
     }
 
     function onCameraClick() {
-        // if (!user.profilePicture) {
-        //     fileInputRef.current.click()
-        // } else {
-        //     setAction(true);
-        // }
-        setAction(true)
+        if (!user.profilePicture) {
+            fileInputRef.current.click()
+        } else {
+            setAction(true);
+        }
     }
 
-    function onPhotoDecline(){
+    function onPhotoDecline() {
         setAction(false);
     }
 
@@ -73,38 +73,38 @@ export const ProfilePictureUpload = ({ user }) => {
 
     return (
         <>
-            <FontAwesomeIcon onClick={onCameraClick} onKeyDown={(e)=>{handleKeyPress(e,onCameraClick)}} tabIndex={0} className={styles['camera']} icon={faCamera} />
+            <FontAwesomeIcon onClick={onCameraClick} onKeyDown={(e) => { handleKeyPress(e, onCameraClick) }} tabIndex={0} className={styles['camera']} icon={faCamera} />
             {(showAcceptDelete || action) && <div onClick={onModalClick} className={styles['modal']}></div>}
             {showAcceptDelete && <div className={styles['actions']}>
-                <div className={styles['close-div']}><i onKeyDown={(e)=>{handleKeyPress(e,onDeleteDecline)}} tabIndex={0} onClick={onDeleteDecline} className="material-icons">close</i></div>
+                <div className={styles['close-div']}><i onKeyDown={(e) => { handleKeyPress(e, onDeleteDecline) }} tabIndex={0} onClick={onDeleteDecline} className="material-icons">close</i></div>
                 <span className={styles['text']}>{t('accept-delete-text')}</span>
                 <div className={styles['buttons']}>
-                    <div tabIndex={0} onKeyDown={(e)=>{handleKeyPress(e,onDeleteDecline)}} onClick={onDeleteDecline}>
+                    <div tabIndex={0} onKeyDown={(e) => { handleKeyPress(e, onDeleteDecline) }} onClick={onDeleteDecline}>
                         <i className="material-icons">close</i>
                         <span>{t('no')}</span>
                     </div>
-                    <div tabIndex={0} onKeyDown={(e)=>{handleKeyPress(e,onDeleteDecline)}} onClick={onDeleteDecline}>
+                    <div tabIndex={0} onKeyDown={(e) => { handleKeyPress(e, onDeleteDecline) }} onClick={onDeleteDecline}>
                         <i className="material-icons">delete</i>
                         <span>{t('yes')}</span>
                     </div>
                 </div>
             </div>}
             {action && <div className={styles['actions']}>
-                <div className={styles['close-div']}><i onKeyDown={(e)=>{handleKeyPress(e,onPhotoDecline)}} tabIndex={0} onClick={onPhotoDecline} className="material-icons">close</i></div>
+                <div className={styles['close-div']}><i onKeyDown={(e) => { handleKeyPress(e, onPhotoDecline) }} tabIndex={0} onClick={onPhotoDecline} className="material-icons">close</i></div>
                 <span className={styles['text']}>{t('photo-text')}</span>
                 <div className={styles['buttons']}>
-                    <div tabIndex={0} onKeyDown={(e)=>{handleKeyPress(e,onDeleteClick)}} onClick={onDeleteClick}>
+                    <div tabIndex={0} onKeyDown={(e) => { handleKeyPress(e, onDeleteClick) }} onClick={onDeleteClick}>
                         <i className="material-icons">delete</i>
                         <span>{t('delete-photo')}</span>
                     </div>
-                    <div tabIndex={0} onKeyDown={(e)=>{handleKeyPress(e,onUploadClick)}} onClick={onUploadClick}>
+                    <div tabIndex={0} onKeyDown={(e) => { handleKeyPress(e, onUploadClick) }} onClick={onUploadClick}>
                         <i className="material-icons">photo_camera</i>
                         <span>{t('change-photo')}</span>
                     </div>
                 </div>
             </div>}
             <input onChange={onFileInputChange} ref={fileInputRef} type='file' accept='image/*'></input>
-            {preview && <PreviewPicture onClose={onClose} preview={preview} />}
+            {preview && <PreviewPicture file={selectedFile} onClose={onClose} preview={preview} />}
         </>
     )
 }

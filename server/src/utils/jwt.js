@@ -28,10 +28,12 @@ exports.verify = (payload, secret) => {
 }
 
 exports.returnToken = async (user) => {
+    console.log(user);
     let payload = {
         _id: user._id,
         role: user.role,
         isSetup: user.isSetup,
+        profilePicture: user.profilePicture
     };
     if (!user.isApproved) {
         payload['firstName'] = user.firstName;

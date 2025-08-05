@@ -38,7 +38,6 @@ export const ConsentProvider = ({ children }) => {
         deleteCookies(defaultPrefs);
       }
     } catch (err) {
-      console.log("Error with cookies: " + err);
       savePreferences(defaultPrefs);
     }
   }, []);

@@ -2,6 +2,7 @@ const User = require("../models/User");
 const LoginCode = require("../models/LoginCode");
 const EmailCode = require("../models/EmailCode");
 const mongoose = require('mongoose');
+const fs = require('fs');
 
 const transporter = require("../config/nodemailerConfig");
 const { emailRegex } = require("../utils/regex");
@@ -193,14 +194,29 @@ exports.getProfile = async (userID) => {
     if (!user) {
         throw new Error();
     }
-
-    // if()
-    // const toReturn = {}
-    // toReturn._id = user._id;
-    // toReturn.countryCode = user.countryCode;
-    // toReturn.phone = user.phone;
-    // toReturn.role = user.role;
-    // toReturn.email = user.email;
-    // to
     return user;
+};
+
+exports.setProfilePicture = async (userID, image) => {
+    const user = await User.findById(userID);
+
+    deleteOldPicture(user);
+    user.profilePicture = image;
+    const newUser = await user.save();
+
+    return returnToken(newUser);
+};
+
+const deleteOldPicture = async (user) => {
+    if (user.profilePicture) {
+        const path = user.profilePicture.replace(/\\/g, '/');
+        fs.access(path, (err) => {
+            if (err) {
+                return null;
+            } else {
+                fs.unlink(path, (err) => {});
+            }
+        });
+    }
 }
+
