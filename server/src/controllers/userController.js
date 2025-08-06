@@ -1,5 +1,5 @@
 const { getProfilePicture } = require('../managers/imageManager');
-const { setupProfile, sendLoginCode, verifyLoginCode, sendEmailCode, verifyEmailCode, changeProfile, getCodeInfo, getProfile, setProfilePicture } = require('../managers/userManager');
+const { setupProfile, sendLoginCode, verifyLoginCode, sendEmailCode, verifyEmailCode, changeProfile, getCodeInfo, getProfile, setProfilePicture, deleteExistingProfilePicture } = require('../managers/userManager');
 const { mustBeGuest, mustBeAuth } = require('../middlewares/authMiddleware');
 const { MustNotBeSetup, MustBeSetup } = require('../middlewares/isSetupMiddleware');
 const { formatErrorMessage } = require('../utils/errorMessage');
@@ -112,13 +112,24 @@ router.get(PATHS.profile, mustBeAuth, MustBeSetup, async (req, res) => {
 router.post(PATHS.profilePicture, mustBeAuth, MustBeSetup, async (req, res) => {
     try {
         const id = req.user._id;
-        const data = await getProfilePicture(req,res);
-        const token = await setProfilePicture(id,data.image);
+        const data = await getProfilePicture(req, res);
+        const token = await setProfilePicture(id, data.image);
         res.status(200).json(token);
     } catch (err) {
         const error = formatErrorMessage(err);
-        console.log(error);
-        res.status(400).send({ message: error })
+        res.status(400).send({ message: error });
+    }
+});
+
+router.delete(PATHS.profilePicture, mustBeAuth, MustBeSetup, async (req, res) => {
+    try {
+        const id = req.user._id;
+        const token = await deleteExistingProfilePicture(id);
+        res.status(200).json(token);
+    } catch (err) {
+        const error = formatErrorMessage(err);
+        console.log(err);
+        res.status(400).send({ message: error });
     }
 });
 

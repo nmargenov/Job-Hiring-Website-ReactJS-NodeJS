@@ -99,6 +99,9 @@ exports.deleteImageFromCloud = async (objectPath) => {
     if(process.env.STORAGE !== 'Cloud'){
         return;
     }
+    if(objectPath == "" || !objectPath){
+        return; 
+    }
     const storage = new Storage({
         projectId: projectId,
         keyFilename: keyFilePath,

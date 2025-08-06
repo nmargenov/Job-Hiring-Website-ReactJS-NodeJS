@@ -209,8 +209,20 @@ exports.setProfilePicture = async (userID, image) => {
     return returnToken(newUser);
 };
 
+exports.deleteExistingProfilePicture = async (userID) => {
+    const user = await User.findById(userID);
+
+    deleteOldPicture(user);
+    deleteImageFromCloud(user.profilePicture);
+
+    user.profilePicture = null;
+    const newUser = await user.save();
+
+    return returnToken(newUser);
+}
+
 const deleteOldPicture = async (user) => {
-    if(process.env.STORAGE === 'Cloud'){
+    if (process.env.STORAGE === 'Cloud') {
         return;
     }
     if (user.profilePicture) {
@@ -219,7 +231,7 @@ const deleteOldPicture = async (user) => {
             if (err) {
                 return null;
             } else {
-                fs.unlink(path, (err) => {});
+                fs.unlink(path, (err) => { });
             }
         });
     }

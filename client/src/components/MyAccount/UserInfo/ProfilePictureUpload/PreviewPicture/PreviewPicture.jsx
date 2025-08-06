@@ -18,7 +18,6 @@ export const PreviewPicture = ({ preview, onClose, file }) => {
         formData.append('profilePicture', file);
         setProfilePicture(formData)
             .then((data) => {
-                console.log(data);
                 loginAuthContext(data);
             }).catch((err) => {
 

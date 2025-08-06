@@ -4,6 +4,8 @@ import styles from "./profilePictureUpload.module.css";
 import { useRef, useState } from "react";
 import { PreviewPicture } from "./PreviewPicture/PreviewPicture";
 import { useTranslation } from "react-i18next";
+import { deleteProfilePicture } from "../../../../services/userService";
+import { useAuth } from '../../../../contexts/AuthContext'
 
 export const ProfilePictureUpload = ({ user }) => {
 
@@ -15,6 +17,7 @@ export const ProfilePictureUpload = ({ user }) => {
     const [showAcceptDelete, setShowAcceptDelete] = useState(false);
 
     const fileInputRef = useRef();
+    const { loginAuthContext } = useAuth();
 
     function onFileInputChange(e) {
         const file = e.target.files[0];
@@ -65,6 +68,15 @@ export const ProfilePictureUpload = ({ user }) => {
         setAction(false);
     }
 
+    function onDeleteAccept() {
+        deleteProfilePicture()
+            .then((data) => {
+                loginAuthContext(data);
+            }).catch((err) => {
+
+            })
+    }
+
     const handleKeyPress = (e, onClick) => {
         if (e.key === "Enter") {
             onClick(event);
@@ -83,7 +95,7 @@ export const ProfilePictureUpload = ({ user }) => {
                         <i className="material-icons">close</i>
                         <span>{t('no')}</span>
                     </div>
-                    <div tabIndex={0} onKeyDown={(e) => { handleKeyPress(e, onDeleteDecline) }} onClick={onDeleteDecline}>
+                    <div tabIndex={0} onKeyDown={(e) => { handleKeyPress(e, onDeleteAccept) }} onClick={onDeleteAccept}>
                         <i className="material-icons">delete</i>
                         <span>{t('yes')}</span>
                     </div>

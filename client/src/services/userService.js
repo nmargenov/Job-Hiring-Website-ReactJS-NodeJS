@@ -1,6 +1,6 @@
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 import { t } from "i18next";
-import { get, patch, post } from "./requester";
+import { del, get, patch, post } from "./requester";
 
 const paths = {
     setupProfile: "/users/profile-setup",
@@ -44,4 +44,9 @@ export const verifyEmailChange = (code) => {
 export const setProfilePicture = (profilePicture) => {
     const url = BASE_URL + paths.profilePicture;
     return post(url, profilePicture);
+}
+
+export const deleteProfilePicture = () => {
+    const url = BASE_URL + paths.profilePicture;
+    return del(url);
 }
