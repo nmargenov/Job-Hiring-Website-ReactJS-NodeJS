@@ -21,6 +21,14 @@ const keyFilePath = tmpobj.name;
 
 fs.writeFileSync(keyFilePath, JSON.stringify(keyFileContent));
 
+const imageFilter = (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+        cb(null, true);
+    } else {
+        cb(new Error('Only image files are allowed'), false);
+    }
+};
+
 const createMulterUpload = (storageConfig) => {
     const storage = new Storage({
         projectId: storageConfig.projectId,
@@ -46,7 +54,7 @@ const createMulterUpload = (storageConfig) => {
         },
     });
 
-    return multer({ storage: storageEngine });
+    return multer({ storage: storageEngine, fileFilter: imageFilter });
 };
 
 const profileUpload = createMulterUpload({
@@ -56,13 +64,6 @@ const profileUpload = createMulterUpload({
 }).single('profilePicture');
 
 
-const imageFilter = (req, file, cb) => {
-    if (file.mimetype.startsWith('image/')) {
-        cb(null, true);
-    } else {
-        cb(new Error('Only image files are allowed'), false);
-    }
-};
 
 const profilePictureStorage = multer.diskStorage({
     destination: (req, file, cb) => {
