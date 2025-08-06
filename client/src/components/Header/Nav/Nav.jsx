@@ -9,6 +9,7 @@ import { NavItem } from '../navItem/NavItem';
 
 import styles from './nav.module.css';
 import { useAuth } from '../../../contexts/AuthContext';
+import { checkPhotoURL } from '../../../utils/checkPhotoURL';
 
 
 
@@ -68,7 +69,7 @@ export const Nav = ({ toggleOpen, onKey, isOpen }) => {
             </div>
             {isAuthenticated && user.isSetup &&
                 <div onClick={onProfileClick} className={styles["user-info"]}>
-                    <div className={styles['image-div']}><img src="https://t4.ftcdn.net/jpg/02/45/56/35/360_F_245563558_XH9Pe5LJI2kr7VQuzQKAjAbz9PAyejG1.jpg" alt="" /></div>
+                    <div className={styles['image-div']}><img src={user.profilePicture ? checkPhotoURL(user.profilePicture) : '/images/default.jpg'} alt="profile-picture" /></div>
                     { (user.role === "seeker" || user.role === "admin") &&
                         <span>{user.firstName} {user.lastName}</span>
                     }

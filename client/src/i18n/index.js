@@ -10,7 +10,6 @@ try {
 
 } catch (err) {
     prefs = {language:false}
-    console.log("Invalid JSON: " + err);
 }
 
 import translationEN from './en.json';

@@ -6,7 +6,7 @@ export const UserInfo = ({ user }) => {
     return (
         <div className={styles['user-info-div']}>
             <div className={styles["image-div"]}>
-                <img className={styles['profile-image']} src={user.profilePicture ? checkPhotoURL(user.profilePicture) : 'https://t4.ftcdn.net/jpg/02/45/56/35/360_F_245563558_XH9Pe5LJI2kr7VQuzQKAjAbz9PAyejG1.jpg'} alt="profile-picture" />
+                <img className={styles['profile-image']} src={user.profilePicture ? checkPhotoURL(user.profilePicture) : '/images/default.jpg'} alt="profile-picture" />
                 <ProfilePictureUpload user={user} />
             </div>
             <div className={styles["user-info-text"]}>

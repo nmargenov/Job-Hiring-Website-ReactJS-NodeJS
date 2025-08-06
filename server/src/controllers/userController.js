@@ -128,7 +128,6 @@ router.delete(PATHS.profilePicture, mustBeAuth, MustBeSetup, async (req, res) =>
         res.status(200).json(token);
     } catch (err) {
         const error = formatErrorMessage(err);
-        console.log(err);
         res.status(400).send({ message: error });
     }
 });

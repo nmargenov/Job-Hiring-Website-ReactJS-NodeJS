@@ -8,7 +8,6 @@ exports.expressConfig = (app) => {
     app.use(express.urlencoded({ extended: false }));
     app.use(express.json());
     app.use(cors());
-    console.log(path.join(__dirname, '../profilePictures'))
     app.use('/api/src/profilePictures', express.static(path.join(__dirname, '../profilePictures')));
     app.use(auth);
 }

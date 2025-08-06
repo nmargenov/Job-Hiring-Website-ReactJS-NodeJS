@@ -27,7 +27,6 @@ export const MyAccount = () => {
         setIsPageLoading(true);
         getProfile(id)
             .then((data) => {
-                console.log(data);
                 setUserBackend(data);
                 setIsPageLoading(false);
             }).catch((err) => {
