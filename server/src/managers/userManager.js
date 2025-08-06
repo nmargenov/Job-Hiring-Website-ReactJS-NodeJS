@@ -8,7 +8,7 @@ const transporter = require("../config/nodemailerConfig");
 const { emailRegex } = require("../utils/regex");
 const { returnToken } = require("../utils/jwt");
 const { MESSAGES } = require('../utils/messages/Messages');
-const { deleteImageFromCloud } = require("./imageManager");
+const { deleteImageFromCloud, getFile } = require("./imageManager");
 
 function generateCode() {
     const code = Math.floor(100000 + Math.random() * 900000).toString(); //6 digits code
@@ -237,6 +237,20 @@ const deleteOldPicture = async (user) => {
     }
 }
 
-exports.saveFile = (userID, path) =>{
-    return null;
+exports.saveFile = async (userID, req, res) => {
+    const user = await User.findById(userID);
+    if (!user) {
+        throw new Error(MESSAGES.userNotFound);
+    }
+
+    if (user.files?.length >= 4) {
+        throw new Error("Max files are 4");
+    }
+    const data = await getFile(req, res);
+
+    user.files = [...(user.files || []), { originalName: data.fileName, url: data.filePath }];
+
+    const newUser = await user.save();
+
+    return returnToken(newUser);
 }

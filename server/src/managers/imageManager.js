@@ -62,7 +62,8 @@ const createMulterUpload = (storageConfig, filter) => {
         keyFilename: keyFilePath,
         acl: 'publicRead',
         filename: (req, file, cb) => {
-            cb(null, storageConfig.directory + Date.now() + file.originalname);
+            const safeFileName = Date.now() + encodeURIComponent(file.originalname);
+            cb(null, storageConfig.directory + safeFileName);
         },
     });
 
@@ -130,7 +131,7 @@ exports.getFile = async (req, res) => {
         const uploadPromise = promisify(pdfUploadLocal);
         await uploadPromise(req, res);
         if (req.file) {
-            return { file: req.file.path };
+            return { filePath: req.file.path, fileName: req.file.originalname };
         }
         return null;
     } else if (storage === 'Cloud') {
@@ -138,7 +139,7 @@ exports.getFile = async (req, res) => {
         await uploadPromise(req, res);
         const publicUrl = `https://storage.googleapis.com/${bucket}/files/${req.file.filename}`;
 
-        return { file: publicUrl }
+        return { filePath: publicUrl, fileName: req.file.originalname }
     }
     return null;
 }

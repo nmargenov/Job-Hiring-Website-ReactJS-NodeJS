@@ -3,10 +3,16 @@ const mongoose = require("mongoose");
 const { emailRegex, phoneRegex, countryCodeRegex } = require("../utils/regex");
 const { MESSAGES } = require("../utils/messages/mongooseMessages");
 
+const fileSchema = new mongoose.Schema({
+    originalName: { type: String, required: true },
+    url: { type: String, required: true },
+    uploadedAt: { type: Date, default: Date.now }
+});
+
 const userSchema = new mongoose.Schema({
-    profilePicture:{
-        default:null,
-        type:String,
+    profilePicture: {
+        default: null,
+        type: String,
     },
     email: {
         type: String,
@@ -90,8 +96,14 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
         required: [true, MESSAGES.userModel.isApproved.required]
+    },
+    files: {
+        type: [fileSchema],
+        default: null
     }
 }, { timestamps: true });
+
+
 
 const User = mongoose.model("User", userSchema);
 

@@ -135,8 +135,7 @@ router.delete(PATHS.profilePicture, mustBeAuth, MustBeSetup, async (req, res) =>
 router.post(PATHS.files, mustBeAuth, MustBeSetup, async (req, res) => {
     try {
         const id = req.user._id;
-        const data = await getFile(req, res);
-        const token = await saveFile(id, data.file);
+        const token = await saveFile(id,req,res);
         res.status(200).send({ message: 'yes' });
     } catch (err) {
         const error = formatErrorMessage(err);
