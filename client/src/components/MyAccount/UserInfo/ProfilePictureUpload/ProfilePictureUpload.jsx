@@ -122,7 +122,7 @@ export const ProfilePictureUpload = ({ user }) => {
                     </div>
                 </div>
             </div>}
-            <input onChange={onFileInputChange} ref={fileInputRef} type='file' accept='image/*'></input>
+            <input className={styles['file-input']} onChange={onFileInputChange} ref={fileInputRef} type='file' accept='image/*'></input>
             {preview && <PreviewPicture setIsLoading={setIsLoading} isLoading={isLoading} file={selectedFile} onClose={onClose} preview={preview} />}
         </>
     )

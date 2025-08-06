@@ -1,5 +1,4 @@
 const multer = require('multer');
-const path = require('path');
 const { promisify } = require('util')
 const { Storage } = require('@google-cloud/storage');
 const multerGoogleStorage = require('multer-cloud-storage');
@@ -28,8 +27,21 @@ const imageFilter = (req, file, cb) => {
         cb(new Error('Only image files are allowed'), false);
     }
 };
+const cvFilter = (req, file, cb) => {
+    const allowedTypes = [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    ];
 
-const createMulterUpload = (storageConfig) => {
+    if (allowedTypes.includes(file.mimetype)) {
+        cb(null, true);
+    } else {
+        cb(new Error('Only PDF, DOC, and DOCX files are allowed'), false);
+    }
+};
+
+const createMulterUpload = (storageConfig, filter) => {
     const storage = new Storage({
         projectId: storageConfig.projectId,
         credentials: {
@@ -54,15 +66,21 @@ const createMulterUpload = (storageConfig) => {
         },
     });
 
-    return multer({ storage: storageEngine, fileFilter: imageFilter });
+    return multer({ storage: storageEngine, fileFilter: filter });
 };
 
 const profileUpload = createMulterUpload({
     bucket: bucket,
     projectId: projectId,
     directory: 'profilePictures/',
-}).single('profilePicture');
+}, imageFilter).single('profilePicture');
 
+
+const pdfUpload = createMulterUpload({
+    bucket: bucket,
+    projectId: projectId,
+    directory: 'files/'
+}, cvFilter).single('file')
 
 
 const profilePictureStorage = multer.diskStorage({
@@ -74,8 +92,18 @@ const profilePictureStorage = multer.diskStorage({
     }
 });
 
+const pdfStorage = multer.diskStorage({
+    destination: (req, res, cb) => {
+        cb(null, 'src/files');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + file.originalname);
+    }
+});
+
 
 const profileUploadLocal = multer({ storage: profilePictureStorage, fileFilter: imageFilter }).single('profilePicture');
+const pdfUploadLocal = multer({ storage: pdfStorage, fileFilter: cvFilter }).single('file');
 
 exports.getProfilePicture = async (req, res) => {
     const storage = process.env.STORAGE;
@@ -96,24 +124,43 @@ exports.getProfilePicture = async (req, res) => {
     return null;
 };
 
+exports.getFile = async (req, res) => {
+    const storage = process.env.STORAGE;
+    if (storage === 'Local' || !storage) {
+        const uploadPromise = promisify(pdfUploadLocal);
+        await uploadPromise(req, res);
+        if (req.file) {
+            return { file: req.file.path };
+        }
+        return null;
+    } else if (storage === 'Cloud') {
+        const uploadPromise = promisify(pdfUpload);
+        await uploadPromise(req, res);
+        const publicUrl = `https://storage.googleapis.com/${bucket}/files/${req.file.filename}`;
+
+        return { file: publicUrl }
+    }
+    return null;
+}
+
 exports.deleteImageFromCloud = async (objectPath) => {
-    if(process.env.STORAGE !== 'Cloud'){
-        return;
-    }
-    if(objectPath == "" || !objectPath){
-        return; 
-    }
-    const storage = new Storage({
-        projectId: projectId,
-        keyFilename: keyFilePath,
-    });
-
-    const bucket = storage.bucket(process.env.BUCKET);
-
-    const bucketName = "jobs-photos-bucket";
-    const path = objectPath.replace(`https://storage.googleapis.com/${bucketName}/`, '');
-
     try {
+        if (process.env.STORAGE !== 'Cloud') {
+            return;
+        }
+        if (objectPath == "" || !objectPath) {
+            return;
+        }
+        const storage = new Storage({
+            projectId: projectId,
+            keyFilename: keyFilePath,
+        });
+
+        const bucket = storage.bucket(process.env.BUCKET);
+
+        const bucketName = "jobs-photos-bucket";
+        const path = objectPath.replace(`https://storage.googleapis.com/${bucketName}/`, '');
+
         await bucket.file(path).delete();
     } catch (error) {
     }

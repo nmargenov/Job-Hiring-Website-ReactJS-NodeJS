@@ -8,7 +8,8 @@ const paths = {
     userID: "/users/:userID",
     email: "/users/email",
     verifyEmailCode: "/users/email-code",
-    profilePicture: "/users/profile-picture"
+    profilePicture: "/users/profile-picture",
+    files: "/users/file"
 }
 
 export const verifyProfile = (firstName, lastName, phone, countryCode) => {
@@ -49,4 +50,9 @@ export const setProfilePicture = (profilePicture) => {
 export const deleteProfilePicture = () => {
     const url = BASE_URL + paths.profilePicture;
     return del(url);
+}
+
+export const saveFile = (file) => {
+    const url = BASE_URL + paths.files;
+    return post(url, file);
 }

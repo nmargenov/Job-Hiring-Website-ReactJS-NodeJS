@@ -19,7 +19,7 @@
     background-color: #8f8f8f;
 }
 
-input[type="file"]{
+.file-input{
     display: none;
 }
 

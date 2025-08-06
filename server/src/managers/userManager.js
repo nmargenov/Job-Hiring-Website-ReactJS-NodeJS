@@ -237,3 +237,6 @@ const deleteOldPicture = async (user) => {
     }
 }
 
+exports.saveFile = (userID, path) =>{
+    return null;
+}

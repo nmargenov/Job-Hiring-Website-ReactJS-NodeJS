@@ -9,6 +9,9 @@ lerna-debug.log*
 
 server/src/profilePictures/*
 !server/src/profilePictures/.gitkeep
+
+server/src/files/*
+!server/src/files/.gitkeep
 keyFile.json
 
 todo
