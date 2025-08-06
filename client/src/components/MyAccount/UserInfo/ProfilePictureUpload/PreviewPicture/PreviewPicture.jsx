@@ -5,22 +5,26 @@ import { useForm } from '../../../../../hooks/useForm';
 import { setProfilePicture } from '../../../../../services/userService';
 import { useAuth } from '../../../../../contexts/AuthContext'
 
-export const PreviewPicture = ({ preview, onClose, file }) => {
+export const PreviewPicture = ({ preview, onClose, file, setIsLoading, isLoading }) => {
     const { t } = useTranslation();
 
     const { loginAuthContext } = useAuth();
 
-    const { isLoading, setIsLoading, onSubmitHandler, errorMsg, setErrorMsg } = useForm(null);
+    const { onSubmitHandler, errorMsg, setErrorMsg } = useForm(null);
 
     function onSubmit(e) {
         onSubmitHandler(e);
+        setIsLoading(true);
         const formData = new FormData();
         formData.append('profilePicture', file);
         setProfilePicture(formData)
             .then((data) => {
+                setIsLoading(false);
+                setErrorMsg('');
                 loginAuthContext(data);
             }).catch((err) => {
-
+                setErrorMsg(err.message);
+                setIsLoading(false);
             });
     }
     return (
@@ -36,19 +40,12 @@ export const PreviewPicture = ({ preview, onClose, file }) => {
                     onSubmit={onSubmit}
                     buttons={
                         <>
-                            <button className={styles['cancel-button']} onClick={onClose}>
+                            <button disabled={isLoading} className={styles['cancel-button']} onClick={onClose}>
                                 {t('cancel')}
                             </button>
-                            <input type="submit" value={t('save')} />
+                            <input disabled={isLoading} type="submit" value={t('save')} />
                         </>
                     }>
-
-                    {/* <div className={styles['buttons-div']}>
-
-                    <button className={styles['save-button']}>
-                        {t('save')}
-                    </button>
-                </div> */}
                 </Form>
             </div>
         </>

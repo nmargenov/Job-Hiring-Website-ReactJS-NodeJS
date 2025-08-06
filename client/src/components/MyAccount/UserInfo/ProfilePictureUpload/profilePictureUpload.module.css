@@ -86,7 +86,13 @@ input[type="file"]{
     width: 100%;
     height: 100vh;
 }
+.disabled{
+    opacity: 0.5;
+}
 
+.disabled:hover{
+    background-color: var(--header-color) !important;
+}
 @media (max-width: 768px) {
     .actions{
         left: 0;

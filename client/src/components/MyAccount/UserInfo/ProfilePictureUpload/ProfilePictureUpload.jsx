@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import styles from "./profilePictureUpload.module.css";
 import { useRef, useState } from "react";
-import { PreviewPicture } from "./PreviewPicture/PreviewPicture";
+import { PreviewPicture } from "./PreviewPicture/PreviewPicture"
 import { useTranslation } from "react-i18next";
 import { deleteProfilePicture } from "../../../../services/userService";
 import { useAuth } from '../../../../contexts/AuthContext'
@@ -15,6 +15,7 @@ export const ProfilePictureUpload = ({ user }) => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [action, setAction] = useState(false);
     const [showAcceptDelete, setShowAcceptDelete] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const fileInputRef = useRef();
     const { loginAuthContext } = useAuth();
@@ -33,6 +34,8 @@ export const ProfilePictureUpload = ({ user }) => {
     }
 
     function onClose() {
+        if (isLoading) return;
+
         setPreview(null);
         setSelectedFile(null);
     }
@@ -60,15 +63,19 @@ export const ProfilePictureUpload = ({ user }) => {
     }
 
     function onDeleteDecline() {
+        if (isLoading) return;
         setShowAcceptDelete(false);
     }
 
     function onModalClick() {
+        if (isLoading) return;
         setShowAcceptDelete(false);
         setAction(false);
     }
 
     function onDeleteAccept() {
+        if (isLoading) return;
+        setIsLoading(true);
         deleteProfilePicture()
             .then((data) => {
                 loginAuthContext(data);
@@ -79,7 +86,7 @@ export const ProfilePictureUpload = ({ user }) => {
 
     const handleKeyPress = (e, onClick) => {
         if (e.key === "Enter") {
-            onClick(event);
+            onClick();
         }
     };
 
@@ -91,11 +98,11 @@ export const ProfilePictureUpload = ({ user }) => {
                 <div className={styles['close-div']}><i onKeyDown={(e) => { handleKeyPress(e, onDeleteDecline) }} tabIndex={0} onClick={onDeleteDecline} className="material-icons">close</i></div>
                 <span className={styles['text']}>{t('accept-delete-text')}</span>
                 <div className={styles['buttons']}>
-                    <div tabIndex={0} onKeyDown={(e) => { handleKeyPress(e, onDeleteDecline) }} onClick={onDeleteDecline}>
+                    <div className={styles[`${isLoading ? 'disabled' : ''}`]} tabIndex={0} onKeyDown={(e) => { handleKeyPress(e, onDeleteDecline) }} onClick={onDeleteDecline}>
                         <i className="material-icons">close</i>
                         <span>{t('no')}</span>
                     </div>
-                    <div tabIndex={0} onKeyDown={(e) => { handleKeyPress(e, onDeleteAccept) }} onClick={onDeleteAccept}>
+                    <div className={styles[`${isLoading ? 'disabled' : ''}`]} tabIndex={0} onKeyDown={(e) => { handleKeyPress(e, onDeleteAccept) }} onClick={onDeleteAccept}>
                         <i className="material-icons">delete</i>
                         <span>{t('yes')}</span>
                     </div>
@@ -116,7 +123,7 @@ export const ProfilePictureUpload = ({ user }) => {
                 </div>
             </div>}
             <input onChange={onFileInputChange} ref={fileInputRef} type='file' accept='image/*'></input>
-            {preview && <PreviewPicture file={selectedFile} onClose={onClose} preview={preview} />}
+            {preview && <PreviewPicture setIsLoading={setIsLoading} isLoading={isLoading} file={selectedFile} onClose={onClose} preview={preview} />}
         </>
     )
 }
