@@ -56,3 +56,8 @@ export const saveFile = (file) => {
     const url = BASE_URL + paths.files;
     return post(url, file);
 }
+
+export const getAllFiles = () => {
+    const url = BASE_URL + paths.files;
+    return get(url);
+}

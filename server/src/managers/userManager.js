@@ -244,13 +244,21 @@ exports.saveFile = async (userID, req, res) => {
     }
 
     if (user.files?.length >= 4) {
-        throw new Error("Max files are 4");
+        throw new Error(MESSAGES.maxFiles);
     }
     const data = await getFile(req, res);
-
-    user.files = [...(user.files || []), { originalName: data.fileName, url: data.filePath }];
+    user.files = [...(user.files || []), { originalName: data.fileName, url: data.filePath, type: data.type }];
 
     const newUser = await user.save();
 
-    return returnToken(newUser);
+    return newUser.files;
+}
+
+exports.getFiles = async (userID) => {
+    const user = await User.findById(userID);
+    if(!user){
+        throw new error(MESSAGES.userNotFound);
+    }
+
+    return user.files;
 }

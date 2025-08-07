@@ -6,7 +6,8 @@ const { MESSAGES } = require("../utils/messages/mongooseMessages");
 const fileSchema = new mongoose.Schema({
     originalName: { type: String, required: true },
     url: { type: String, required: true },
-    uploadedAt: { type: Date, default: Date.now }
+    uploadedAt: { type: Date, default: Date.now },
+    type: { type: String, required: true }
 });
 
 const userSchema = new mongoose.Schema({
@@ -99,7 +100,7 @@ const userSchema = new mongoose.Schema({
     },
     files: {
         type: [fileSchema],
-        default: null
+        default: null,
     }
 }, { timestamps: true });
 

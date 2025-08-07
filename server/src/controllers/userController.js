@@ -1,5 +1,5 @@
 const { getProfilePicture, getFile } = require('../managers/imageManager');
-const { setupProfile, sendLoginCode, verifyLoginCode, sendEmailCode, verifyEmailCode, changeProfile, getCodeInfo, getProfile, setProfilePicture, deleteExistingProfilePicture, saveFile } = require('../managers/userManager');
+const { setupProfile, sendLoginCode, verifyLoginCode, sendEmailCode, verifyEmailCode, changeProfile, getCodeInfo, getProfile, setProfilePicture, deleteExistingProfilePicture, saveFile, getFiles } = require('../managers/userManager');
 const { mustBeGuest, mustBeAuth } = require('../middlewares/authMiddleware');
 const { MustNotBeSetup, MustBeSetup } = require('../middlewares/isSetupMiddleware');
 const { formatErrorMessage } = require('../utils/errorMessage');
@@ -135,8 +135,19 @@ router.delete(PATHS.profilePicture, mustBeAuth, MustBeSetup, async (req, res) =>
 router.post(PATHS.files, mustBeAuth, MustBeSetup, async (req, res) => {
     try {
         const id = req.user._id;
-        const token = await saveFile(id,req,res);
-        res.status(200).send({ message: 'yes' });
+        const files = await saveFile(id, req, res);
+        res.status(200).json(files);
+    } catch (err) {
+        const error = formatErrorMessage(err);
+        res.status(400).send({ message: error });
+    }
+});
+
+router.get(PATHS.files, mustBeAuth, MustBeSetup, async (req, res) => {
+    try {
+        const id = req.user._id;
+        const files = await getFiles(id);
+        res.status(200).json(files);
     } catch (err) {
         const error = formatErrorMessage(err);
         res.status(400).send({ message: error });

@@ -9,6 +9,7 @@ import { getProfile } from "../../services/userService";
 import { useAuth } from "../../contexts/AuthContext";
 import { EditPhone } from "./EditPhone/EditPhone";
 import { ChangeEmail } from "./ChangeEmail/ChangeEmail";
+import { useNavigate } from "react-router-dom";
 
 export const MyAccount = () => {
     const [isPageLoading, setIsPageLoading] = useState(true);
@@ -19,6 +20,7 @@ export const MyAccount = () => {
     const [isEditEmail, setIsEditEmail] = useState(false);
     const [isBusinessApply, setIsBusinessApply] = useState(false);
 
+    const navigate = useNavigate();
 
     const { user } = useAuth();
 
@@ -45,9 +47,11 @@ export const MyAccount = () => {
         setIsEditEmail(true);
     }
 
-    function onBusinessApplyClick(){
+    function onBusinessApplyClick() {
         setIsBusinessApply(true);
     }
+
+
 
     return (
         <>
@@ -65,10 +69,11 @@ export const MyAccount = () => {
                         {(!userBackend.isApproved && userBackend.role !== 'hirer') && <Field onClick={onBusinessApplyClick} icon={'business'} text={'apply-business'} />}
                     </div>
                     <div className={styles['boxes']}>
-                        <Box icon={'folder_shared'} text={'my-files'} />
+                        <Box onClick={() => { navigate('/files') }} icon={'folder_shared'} length={userBackend.files?.length || '0'} text={'my-files'} />
                         <Box icon={'playlist_add_check'} text={'applies'} />
                     </div>
-                </div>}</>}
+                </div>}
+            </>}
         </>
     )
 }

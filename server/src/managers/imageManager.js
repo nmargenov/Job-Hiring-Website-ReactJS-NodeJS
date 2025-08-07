@@ -41,7 +41,7 @@ const cvFilter = (req, file, cb) => {
     }
 };
 
-const createMulterUpload = (storageConfig, filter) => {
+const createMulterUpload = (storageConfig, filter, limit) => {
     const storage = new Storage({
         projectId: storageConfig.projectId,
         credentials: {
@@ -62,12 +62,12 @@ const createMulterUpload = (storageConfig, filter) => {
         keyFilename: keyFilePath,
         acl: 'publicRead',
         filename: (req, file, cb) => {
-            const safeFileName = Date.now() + encodeURIComponent(file.originalname);
-            cb(null, storageConfig.directory + safeFileName);
-        },
+            const decodedName = Buffer.from(file.originalname, 'latin1').toString('utf8');
+            cb(null, storageConfig.directory + Date.now() + decodedName);
+        }
     });
 
-    return multer({ storage: storageEngine, fileFilter: filter });
+    return multer({ storage: storageEngine, fileFilter: filter, limits: limit });
 };
 
 const profileUpload = createMulterUpload({
@@ -81,7 +81,7 @@ const pdfUpload = createMulterUpload({
     bucket: bucket,
     projectId: projectId,
     directory: 'files/'
-}, cvFilter).single('file')
+}, cvFilter, { fileSize: 10 * 1024 * 1024 }).single('file')
 
 
 const profilePictureStorage = multer.diskStorage({
@@ -98,13 +98,13 @@ const pdfStorage = multer.diskStorage({
         cb(null, 'src/files');
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now() + file.originalname);
+        const decodedName = Buffer.from(file.originalname, 'latin1').toString('utf8');
+        cb(null, Date.now() + decodedName);
     }
 });
 
-
 const profileUploadLocal = multer({ storage: profilePictureStorage, fileFilter: imageFilter }).single('profilePicture');
-const pdfUploadLocal = multer({ storage: pdfStorage, fileFilter: cvFilter }).single('file');
+const pdfUploadLocal = multer({ storage: pdfStorage, fileFilter: cvFilter, limits: { fileSize: 10 * 1024 * 1024 } }).single('file');
 
 exports.getProfilePicture = async (req, res) => {
     const storage = process.env.STORAGE;
@@ -130,16 +130,19 @@ exports.getFile = async (req, res) => {
     if (storage === 'Local' || !storage) {
         const uploadPromise = promisify(pdfUploadLocal);
         await uploadPromise(req, res);
+        const decodedName = Buffer.from(req.file.originalname, 'latin1').toString('utf8');
+        const fileUrl = `${req.protocol}://${req.get('host')}/files/${req.file.filename}`;
         if (req.file) {
-            return { filePath: req.file.path, fileName: req.file.originalname };
+            return { filePath: fileUrl, fileName: decodedName, type: req.file.mimetype };
         }
         return null;
     } else if (storage === 'Cloud') {
         const uploadPromise = promisify(pdfUpload);
         await uploadPromise(req, res);
         const publicUrl = `https://storage.googleapis.com/${bucket}/files/${req.file.filename}`;
-
-        return { filePath: publicUrl, fileName: req.file.originalname }
+        const decodedName = Buffer.from(req.file.originalname, 'latin1').toString('utf8');
+        
+        return { filePath: publicUrl, fileName: decodedName, type: req.file.mimetype }
     }
     return null;
 }

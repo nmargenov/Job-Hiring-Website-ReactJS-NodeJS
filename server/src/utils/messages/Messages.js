@@ -13,4 +13,5 @@ exports.MESSAGES={
     mustNotBeFinishedSetup:"Account setup has already been completed",
     invalidJobId:"Invalid job id",
     alreadyArchived:"Job is already archived",
+    maxFiles:"You already have the maximum allowed files of 4"
 }

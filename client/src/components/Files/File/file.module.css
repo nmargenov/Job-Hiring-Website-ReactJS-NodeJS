@@ -1,0 +1,40 @@
+.file {
+    display: flex;
+    background-color: gray;
+    color:white;
+    padding: 10px;
+    border-radius: 5px;
+    align-items: center;
+    gap: 10px;
+    box-sizing: border-box;
+}
+
+.file .image-div {
+    width: 50px;
+}
+
+.file .image-div img {
+    width: 100%;
+}
+
+.file .information-div {
+    display: flex;
+    width: 100%;
+    word-break: break-all;
+    gap: 5px;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.information-div .date{
+    font-size: 14px;
+    color:lightgray;
+}
+
+.file .actions-div {
+    height: 100%;
+}
+
+.actions-div i {
+    cursor: pointer;
+}
