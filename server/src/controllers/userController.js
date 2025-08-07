@@ -1,5 +1,5 @@
 const { getProfilePicture, getFile } = require('../managers/imageManager');
-const { setupProfile, sendLoginCode, verifyLoginCode, sendEmailCode, verifyEmailCode, changeProfile, getCodeInfo, getProfile, setProfilePicture, deleteExistingProfilePicture, saveFile, getFiles } = require('../managers/userManager');
+const { setupProfile, sendLoginCode, verifyLoginCode, sendEmailCode, verifyEmailCode, changeProfile, getCodeInfo, getProfile, setProfilePicture, deleteExistingProfilePicture, saveFile, getFiles, deleteFile } = require('../managers/userManager');
 const { mustBeGuest, mustBeAuth } = require('../middlewares/authMiddleware');
 const { MustNotBeSetup, MustBeSetup } = require('../middlewares/isSetupMiddleware');
 const { formatErrorMessage } = require('../utils/errorMessage');
@@ -147,6 +147,19 @@ router.get(PATHS.files, mustBeAuth, MustBeSetup, async (req, res) => {
     try {
         const id = req.user._id;
         const files = await getFiles(id);
+        res.status(200).json(files);
+    } catch (err) {
+        const error = formatErrorMessage(err);
+        res.status(400).send({ message: error });
+    }
+});
+
+router.delete(PATHS.file, mustBeAuth, MustBeSetup, async (req, res) => {
+    try {
+        const userID = req.user._id;
+        const fileID = req.params?.fileID
+        console.log(fileID); 
+        const files = await deleteFile(userID,fileID,req);
         res.status(200).json(files);
     } catch (err) {
         const error = formatErrorMessage(err);

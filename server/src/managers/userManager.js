@@ -256,9 +256,42 @@ exports.saveFile = async (userID, req, res) => {
 
 exports.getFiles = async (userID) => {
     const user = await User.findById(userID);
-    if(!user){
+    if (!user) {
         throw new error(MESSAGES.userNotFound);
     }
 
     return user.files;
+}
+
+exports.deleteFile = async (userID, fileID, req) => {
+    const user = await User.findById(userID);
+    if (!user) {
+        throw new error(MESSAGES.userNotFound);
+    }
+
+    const file = user.files.find((file) => file._id == fileID);
+    if (!file) {
+        throw new Error('file not found');
+    }
+    deleteFileLocaly(file, req);
+
+    user.files = user.files.filter(f => f._id.toString() !== fileID);
+    const newUser = await user.save();
+
+    return newUser.files;
+}
+
+
+const deleteFileLocaly = async (file, req) => {
+    if (process.env.STORAGE === 'Cloud') {
+        return;
+    }
+    const path = file.url.replace(`${req.protocol}://${req.get('host')}/`, 'src/');
+    fs.access(path, (err) => {
+        if (err) {
+            return null;
+        } else {
+            fs.unlink(path, (err) => { });
+        }
+    });
 }

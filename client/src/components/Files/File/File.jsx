@@ -46,7 +46,9 @@ export const File = ({ file, showAction = true, setFiles }) => {
             .then((data) => {
                 setFiles(data);
                 setIsLoading(false);
-            }).catch((err) => { })
+            }).catch((err) => {
+                setIsLoading(false);
+            })
     }
 
     return (
@@ -66,7 +68,7 @@ export const File = ({ file, showAction = true, setFiles }) => {
                             <i onKeyDown={(e) => { handleKeyPress(e, onDeleteCancel) }} tabIndex={0} onClick={onDeleteCancel} className="material-icons secondary-text" role="button">cancel</i>
                             <i onKeyDown={(e) => { handleKeyPress(e, onDeleteAccept) }} tabIndex={0} onClick={onDeleteAccept} className="material-icons secondary-text" role="button">check</i>
                         </>}
-                    {isLoading &&<Loader smaller={true} />}
+                    {isLoading && <Loader smaller={true} />}
                 </div>}
         </div>
     )

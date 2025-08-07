@@ -29,7 +29,7 @@ export const Files = () => {
                 <div className={styles['actions-div']}>
                     <span>{t('my-files-description')}</span>
                     <div className={styles['button-div']}>
-                        <UploadFile setFiles={setFiles} />
+                        <UploadFile setFiles={setFiles}/>
                     </div>
                 </div>
                 {!files || files.length === 0 &&
@@ -40,7 +40,7 @@ export const Files = () => {
                 {files?.length > 0 && 
                 <div className={styles['files-div']}>
                     {files.map((file) => (
-                        <File key={file._id} file={file} />
+                        <File setFiles={setFiles} key={file._id} file={file} />
                     ))}
                 </div>}
             </div>}
