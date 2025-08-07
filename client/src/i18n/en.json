@@ -81,6 +81,6 @@
     "no": "No",
     "cv-change":"Change file",
     "cv-upload":"Upload file",
-    "my-files-description": "Here are the external CVs and files you have uploaded. These files will be used when applying for jobs"
-    
+    "my-files-description": "Here are the external CVs and files you have uploaded. These files will be used when applying for jobs",
+    "delete-file":"Are you sure you want to delete the file?"
 }

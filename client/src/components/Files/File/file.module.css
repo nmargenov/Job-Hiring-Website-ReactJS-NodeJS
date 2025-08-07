@@ -33,8 +33,13 @@
 
 .file .actions-div {
     height: 100%;
+    width: 65px;
+    display: flex;
+    justify-content: end;
 }
 
 .actions-div i {
     cursor: pointer;
+    height: fit-content;
 }
+

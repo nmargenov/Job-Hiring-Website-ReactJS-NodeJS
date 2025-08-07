@@ -48,7 +48,7 @@ export const UploadFile = ({ setFiles }) => {
             </>
             {selectedFile &&
                 <div className={styles['upload-div']}>
-                    <File showAction={false} file={selectedFile} />
+                    <File setFiles={setFiles} showAction={false} file={selectedFile} />
                     <Form
                         errorMsg={errorMsg}
                         buttons={

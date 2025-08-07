@@ -9,7 +9,8 @@ const paths = {
     email: "/users/email",
     verifyEmailCode: "/users/email-code",
     profilePicture: "/users/profile-picture",
-    files: "/users/file"
+    files: "/users/file",
+    fileID: "/users/file/:fileID",
 }
 
 export const verifyProfile = (firstName, lastName, phone, countryCode) => {
@@ -60,4 +61,9 @@ export const saveFile = (file) => {
 export const getAllFiles = () => {
     const url = BASE_URL + paths.files;
     return get(url);
+}
+
+export const deleteFile = (fileID) => {
+    const url = BASE_URL + paths.fileID.replace(':fileID', fileID);
+    return del(url);
 }
