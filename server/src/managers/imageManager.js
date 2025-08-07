@@ -141,7 +141,7 @@ exports.getFile = async (req, res) => {
         await uploadPromise(req, res);
         const publicUrl = `https://storage.googleapis.com/${bucket}/files/${req.file.filename}`;
         const decodedName = Buffer.from(req.file.originalname, 'latin1').toString('utf8');
-        
+
         return { filePath: publicUrl, fileName: decodedName, type: req.file.mimetype }
     }
     return null;

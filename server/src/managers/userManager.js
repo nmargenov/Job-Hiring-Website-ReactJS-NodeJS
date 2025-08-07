@@ -274,6 +274,7 @@ exports.deleteFile = async (userID, fileID, req) => {
         throw new Error('file not found');
     }
     deleteFileLocaly(file, req);
+    deleteImageFromCloud(file.url);
 
     user.files = user.files.filter(f => f._id.toString() !== fileID);
     const newUser = await user.save();
