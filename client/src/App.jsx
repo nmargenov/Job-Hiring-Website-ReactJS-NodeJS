@@ -15,6 +15,7 @@ import { Home } from './components/Home/Home'
 import { MustBeSetupAndLogged } from './guards/MustBeSetupAndLogged'
 import { MyAccount } from './components/MyAccount/MyAccount'
 import { Files } from './components/Files/Files'
+import { Apply } from './components/Business/Apply/Apply'
 
 function App() {
 
@@ -36,6 +37,11 @@ function App() {
                   <Route path="/profile" element={
                     <MustBeSetupAndLogged>
                       <MyAccount />
+                    </MustBeSetupAndLogged>
+                  } />
+                  <Route path="/business/apply" element={
+                    <MustBeSetupAndLogged>
+                      <Apply />
                     </MustBeSetupAndLogged>
                   } />
                   <Route path="/files" element={

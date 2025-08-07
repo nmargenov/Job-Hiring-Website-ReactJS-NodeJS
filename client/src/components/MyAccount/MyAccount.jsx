@@ -18,7 +18,6 @@ export const MyAccount = () => {
     const [isEditName, setIsEditName] = useState(false);
     const [isEditPhone, setIsEditPhone] = useState(false);
     const [isEditEmail, setIsEditEmail] = useState(false);
-    const [isBusinessApply, setIsBusinessApply] = useState(false);
 
     const navigate = useNavigate();
 
@@ -48,7 +47,7 @@ export const MyAccount = () => {
     }
 
     function onBusinessApplyClick() {
-        setIsBusinessApply(true);
+        navigate('/business/apply');
     }
 
 
@@ -60,7 +59,7 @@ export const MyAccount = () => {
                 {isEditEmail && <ChangeEmail setIsEditEmail={setIsEditEmail} user={userBackend} />}
                 {isEditPhone && <EditPhone setIsEditPhone={setIsEditPhone} user={userBackend} />}
                 {isEditName && <EditName setIsEditName={setIsEditName} user={userBackend} />}
-                {(!isEditName && !isEditPhone && !isEditEmail && !isBusinessApply) && <div className={styles['account-div']}>
+                {(!isEditName && !isEditPhone && !isEditEmail) && <div className={styles['account-div']}>
                     <UserInfo user={userBackend} />
                     <div className={styles['fields']}>
                         <Field onClick={onEmailClick} icon={'mail'} text={'change-email'} />
