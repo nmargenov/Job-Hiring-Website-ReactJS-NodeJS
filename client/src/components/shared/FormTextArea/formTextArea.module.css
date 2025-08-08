@@ -1,0 +1,52 @@
+textarea {
+    width: 100%;
+    padding: 20px 15px;
+    border-radius: 5px;
+    outline: none;
+    z-index: 1;
+    font-size: 16px;
+    border: 2px solid gray;
+    color: var(--login-form-text);
+    background-color: var(--login-form-color);
+    resize: none;
+    height: 300px;
+}
+
+textarea:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.textarea-container {
+    position: relative;
+    margin-top: 20px;
+}
+
+.textarea-container label {
+    position: absolute;
+    top: 20px;
+    left: 12px;
+    transform: translateY(-50%);
+    color: gray;
+    background-color: var(--login-form-color);
+    padding: 0 5px;
+    font-size: 16px;
+    pointer-events: none;
+    transition: 0.2s ease all;
+}
+
+/* Floating label behavior */
+.textarea-container textarea:focus + label,
+.textarea-container textarea:not(:placeholder-shown) + label {
+    top: 0;
+    font-size: 12px;
+}
+
+/* Validation styles */
+textarea.invalid {
+    border: 2px solid rgb(255, 28, 28) !important;
+}
+
+.textarea-container label.invalid-label {
+    color: rgb(255, 28, 28) !important;
+}

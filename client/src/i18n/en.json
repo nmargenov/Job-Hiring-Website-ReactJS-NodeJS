@@ -79,8 +79,12 @@
     "accept-delete-text": "Are you sure you want to delete your current photo?",
     "yes": "Yes",
     "no": "No",
-    "cv-change":"Change file",
-    "cv-upload":"Upload file",
+    "cv-change": "Change file",
+    "cv-upload": "Upload file",
     "my-files-description": "Here are the external CVs and files you have uploaded. These files will be used when applying for jobs",
-    "delete-file":"Are you sure you want to delete the file?"
+    "delete-file": "Are you sure you want to delete the file?",
+    "business-apply-description": "Enter the information below and wait for approval from an administrator",
+    "businessName": "Business Name",
+    "businessBio": "Business Description",
+    "employeesCount": "Number of Employees"
 }

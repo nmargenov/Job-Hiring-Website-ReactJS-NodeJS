@@ -50,8 +50,6 @@ export const MyAccount = () => {
         navigate('/business/apply');
     }
 
-
-
     return (
         <>
             {isPageLoading && <Loader />}
