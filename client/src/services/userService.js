@@ -1,5 +1,4 @@
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
-import { t } from "i18next";
 import { del, get, patch, post } from "./requester";
 
 const paths = {

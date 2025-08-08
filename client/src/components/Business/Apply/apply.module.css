@@ -12,6 +12,14 @@
     font-size: 32px;
 }
 
+.sucess-message-div{
+    color:green;
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    margin-bottom: -10px;
+}
+
 @media (max-width: 600px) {
     .apply-main-div h2 {
         font-size: 24px;
