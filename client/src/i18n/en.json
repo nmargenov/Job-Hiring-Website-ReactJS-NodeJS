@@ -90,5 +90,6 @@
     "already-submitted":"You've submitted your business application!",
     "notifications":"Notifications",
     "loading":"Loading",
-    "no-more":"No more notifications"
+    "no-more":"No more notifications",
+    "admin-panel":"Admin panel"
 }

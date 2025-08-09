@@ -63,7 +63,7 @@ export const MyAccount = () => {
                         <Field onClick={onEmailClick} icon={'mail'} text={'change-email'} />
                         {(!userBackend.isApproved && userBackend.role !== 'hirer') && <Field onClick={onNameClick} icon={'edit'} text={'change-name'} />}
                         <Field onClick={onPhoneClick} icon={'phone'} text={'change-phone'} />
-                        {(!userBackend.isApproved && userBackend.role !== 'hirer') && <Field onClick={onBusinessApplyClick} icon={'business'} text={'apply-business'} />}
+                        {(!userBackend.isApproved && userBackend.role === 'seeker') && <Field onClick={onBusinessApplyClick} icon={'business'} text={'apply-business'} />}
                     </div>
                     <div className={styles['boxes']}>
                         <Box onClick={() => { navigate('/files') }} icon={'folder_shared'} length={userBackend.files?.length || '0'} text={'my-files'} />
