@@ -11,7 +11,9 @@ const MessageContext = createContext({
     unreadMessages: [],
     hasMore: true,
     setPage: () => { },
-    page: 0
+    page: 0,
+    totalUnread:0,
+    setTotalUnread:()=>{}
 });
 
 export const useMessage = () => useContext(MessageContext);
@@ -24,6 +26,7 @@ export const MessageProvider = ({ children }) => {
     const [messages, setMessages] = useState([]);
     const [unreadMessages, setUnreadMessages] = useState([]);
     const [hasUnreadMessages, setHasUnreadMessages] = useState(false);
+    const [totalUnread, setTotalUnread] = useState(0);
 
     useEffect(() => {
         if (user) {
@@ -47,6 +50,7 @@ export const MessageProvider = ({ children }) => {
                     setMessages(prev => [...prev, ...data.messages]);
                 }
                 setHasMore(data.hasMore)
+                setTotalUnread(data.totalUnread);
             }).catch((err) => {
                 console.log(err);
             })
@@ -66,7 +70,9 @@ export const MessageProvider = ({ children }) => {
         unreadMessages,
         hasMore,
         setPage,
-        page
+        page,
+        totalUnread,
+        setTotalUnread
     }
 
     return (

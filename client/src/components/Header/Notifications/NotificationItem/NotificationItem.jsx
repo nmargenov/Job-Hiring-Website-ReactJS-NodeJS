@@ -8,7 +8,7 @@ import { useMessage } from '../../../../contexts/MessageContext';
 export const NotificationItem = ({ message, toggleOpen }) => {
     const { timeAgo } = useTime();
     const navigate = useNavigate()
-    const { messages, setMessages } = useMessage();
+    const { setMessages, setTotalUnread } = useMessage();
 
     function onClick() {
         if (message.read === true) {
@@ -23,7 +23,8 @@ export const NotificationItem = ({ message, toggleOpen }) => {
             setMessages(prev => prev.some(m => m._id === data._id)
                 ? prev.map(m => (m._id === data._id ? data : m))
                 : [data, ...prev]
-            )
+            );
+            setTotalUnread(prev=>prev-1);
         }).catch((err) => {
             console.log(err);
         })

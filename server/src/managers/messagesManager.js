@@ -8,10 +8,12 @@ exports.getMessages = async (userID, page, limit) => {
         .limit(parseInt(limit));
 
     const total = await Message.countDocuments({ user: userID });
+    const totalUnread = await Message.countDocuments({ user: userID, read:false });
 
     return {
         messages,
-        hasMore: total > (parseInt(page) + 1) * parseInt(limit)
+        hasMore: total > (parseInt(page) + 1) * parseInt(limit),
+        totalUnread
     }
 }
 

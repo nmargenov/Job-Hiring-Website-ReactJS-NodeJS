@@ -15,7 +15,7 @@ export const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isMessagesOpen, setIsMessagesOpen] = useState(false);
 
-    const { messages, hasUnreadMessages, unreadMessages, setMessages } = useMessage();
+    const { messages, hasUnreadMessages, unreadMessages, totalUnread } = useMessage();
 
     const { isAuthenticated } = useAuth();
     const { t } = useTranslation();
@@ -48,7 +48,7 @@ export const Header = () => {
                 {isAuthenticated &&
                     <div className={styles['message-div']}>
                         <span tabIndex={0} onKeyDown={(e)=>{handleKeyPress(e,toggleMessageOpen)}} onClick={toggleMessageOpen} className="material-icons">message</span>
-                        {(messages && hasUnreadMessages) && <span className={styles['message-count']}>{unreadMessages.length >= 5 ? '5+' : unreadMessages.length}</span>}
+                        {(messages && hasUnreadMessages) && <span className={styles['message-count']}>{totalUnread}</span>}
                         {isMessagesOpen && <Notifications toggleOpen={toggleMessageOpen} messages={messages} />}
                     </div>
                 }
