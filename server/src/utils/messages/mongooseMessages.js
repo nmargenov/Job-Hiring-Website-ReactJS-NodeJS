@@ -54,8 +54,8 @@ exports.MESSAGES = {
         }
     },
     Job: {
-        owner:{
-            required:"Owner is required"
+        owner: {
+            required: "Owner is required"
         },
         title: {
             required: "Title is required",
@@ -65,11 +65,23 @@ exports.MESSAGES = {
             required: "Description is required",
             length: "Description must be between 50 and 1500 characters long",
         },
-        salary:{
+        salary: {
             minValue: "Salary must be positive value"
         },
-        isActive:{
-            required:"isActive is required"
+        isActive: {
+            required: "isActive is required"
+        }
+    },
+    Message: {
+        user: {
+            required: "User is required"
+        },
+        context: {
+            required: "Context is required",
+            length: "Context must be between 5 and 250 characters long",
+        },
+        read: {
+            required: "Read is required",
         }
     }
 }
