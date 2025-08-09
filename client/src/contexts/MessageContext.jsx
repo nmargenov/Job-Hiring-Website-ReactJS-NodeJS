@@ -8,7 +8,10 @@ const MessageContext = createContext({
     setMessages: () => { },
     updateMessages: () => { },
     hasUnreadMessages: false,
-    unreadMessages: []
+    unreadMessages: [],
+    hasMore: true,
+    setPage: () => { },
+    page: 0
 });
 
 export const useMessage = () => useContext(MessageContext);
@@ -16,6 +19,8 @@ export const useMessage = () => useContext(MessageContext);
 export const MessageProvider = ({ children }) => {
     const { user } = useAuth();
 
+    const [hasMore, setHasMore] = useState(true);
+    const [page, setPage] = useState(0);
     const [messages, setMessages] = useState([]);
     const [unreadMessages, setUnreadMessages] = useState([]);
     const [hasUnreadMessages, setHasUnreadMessages] = useState(false);
@@ -24,18 +29,29 @@ export const MessageProvider = ({ children }) => {
         if (user) {
             updateMessages();
         }
-        console.log('message context');
-    }, []);
+    }, [page]);
 
-    function updateMessages() {
-        getMessages()
+    function updateMessages(arg) {
+        const pages = arg || page;
+        if (arg == '0') {
+            if(page!==0){
+                setPage(0);
+                return;
+            }
+        }
+        getMessages(pages)
             .then((data) => {
-                setMessages(data);
-                console.log(data);
+                if(pages===0){
+                    setMessages(data.messages)
+                }else{
+                    setMessages(prev => [...prev, ...data.messages]);
+                }
+                setHasMore(data.hasMore)
             }).catch((err) => {
                 console.log(err);
             })
     }
+
 
     useEffect(() => {
         setUnreadMessages(messages.filter(message => !message.read));
@@ -47,7 +63,10 @@ export const MessageProvider = ({ children }) => {
         setMessages,
         updateMessages,
         hasUnreadMessages,
-        unreadMessages
+        unreadMessages,
+        hasMore,
+        setPage,
+        page
     }
 
     return (

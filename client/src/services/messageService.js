@@ -5,8 +5,9 @@ const paths = {
     me: '/messages/me'
 }
 
-export const getMessages = () => {
-    const url = BASE_URL + paths.me;
+export const getMessages = (page) => {
+    const params = new URLSearchParams({ page, limit: 5 });
+    const url = `${BASE_URL}${paths.me}?${params.toString()}`;
     return get(url);
 }
 

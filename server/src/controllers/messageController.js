@@ -9,11 +9,13 @@ const { getMessages, readMessages } = require('../managers/messagesManager');
 
 router.get(PATHS.me, mustBeAuth, MustBeSetup, async (req, res) => {
     try {
+        const { page = 0, limit = 5 } = req.query;
         const userID = req.user._id;
-        const messages = await getMessages(userID);
+        const messages = await getMessages(userID,page,limit);
         res.status(200).json(messages);
     } catch (err) {
         const error = formatErrorMessage(err);
+        console.log(err);
         res.status(400).send({ message: error });
     }
 });
@@ -22,7 +24,7 @@ router.post(PATHS.me, mustBeAuth, MustBeSetup, async (req, res) => {
     try {
         const userID = req.user._id;
         const messages = await readMessages(userID);
-        res.status(200).json(messages);
+        res.status(200).send({message:'done'});
     } catch (err) {
         const error = formatErrorMessage(err);
         res.status(400).send({ message: error });

@@ -13,21 +13,18 @@ export function useSocket(user, loginAuthContext, updateMessages) {
         });
 
         newSocket.on('roleChanged', async () => {
-            console.log('role changed');
 
             getMe()
                 .then((data) => {
                     loginAuthContext(data);
-                    console.log(data);
                 }).catch((err) => {
                     console.log(err);
                 })
         });
 
          newSocket.on('message', async () => {
-            console.log('message');
 
-            updateMessages()
+            updateMessages(0)
         });
 
 

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faList, faClose } from "@fortawesome/free-solid-svg-icons"
 import { useTranslation } from 'react-i18next';
-import {Notifications} from './Notifications/Notifications'
+import { Notifications } from './Notifications/Notifications'
 import { Nav } from './Nav/Nav';
 
 import styles from './header.module.css';
@@ -15,7 +15,7 @@ export const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isMessagesOpen, setIsMessagesOpen] = useState(false);
 
-    const { messages, hasUnreadMessages, unreadMessages, setMessages} = useMessage();
+    const { messages, hasUnreadMessages, unreadMessages, setMessages } = useMessage();
 
     const { isAuthenticated } = useAuth();
     const { t } = useTranslation();
@@ -30,12 +30,16 @@ export const Header = () => {
         }
     }
 
-    function toggleMessageOpen(){
-        if(isMessagesOpen){
+    function toggleMessageOpen() {
+        if (isMessagesOpen) {
+            if (messages.every((msg) => msg.read === true)) {
+                setIsMessagesOpen(!isMessagesOpen);
+                return
+            }
             readMessages()
-                .then((data)=>{
-                    setMessages(data);
-                }).catch((err)=>{})
+                .then((data) => {
+                    setMessages(messages.map(msg => ({ ...msg, read: true })));
+                }).catch((err) => { })
         }
         setIsMessagesOpen(!isMessagesOpen);
     }
@@ -55,7 +59,7 @@ export const Header = () => {
                     <div className={styles['message-div']}>
                         <span onClick={toggleMessageOpen} className="material-icons">message</span>
                         {(messages && hasUnreadMessages) && <span className={styles['message-count']}>{unreadMessages.length >= 5 ? '5+' : unreadMessages.length}</span>}
-                        {isMessagesOpen && <Notifications messages={messages}/>}
+                        {isMessagesOpen && <Notifications messages={messages} />}
                     </div>
                 }
                 <FontAwesomeIcon tabIndex={0}
