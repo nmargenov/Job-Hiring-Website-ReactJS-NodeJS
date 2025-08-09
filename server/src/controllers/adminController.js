@@ -3,7 +3,7 @@ const { mustBeAuth } = require('../middlewares/authMiddleware');
 const { MustBeSetup } = require('../middlewares/isSetupMiddleware');
 const { formatErrorMessage } = require('../utils/errorMessage');
 const { PATHS } = require('../utils/paths');
-
+const { getIO } = require("../socket.js");
 const router = require('express').Router();
 
 router.post(PATHS.acceptBusiness, mustBeAuth, MustBeSetup, async (req, res) => {
@@ -11,6 +11,8 @@ router.post(PATHS.acceptBusiness, mustBeAuth, MustBeSetup, async (req, res) => {
         const userID = req.user._id;
         const businessID = req.params.businessID;
         const user = await acceptBusiness(userID, businessID);
+        const io = getIO();
+        io.to(`user_${user._id}`).emit("roleChanged");
         res.status(200).json(user);
     } catch (err) {
         const error = formatErrorMessage(err);
@@ -19,7 +21,7 @@ router.post(PATHS.acceptBusiness, mustBeAuth, MustBeSetup, async (req, res) => {
 });
 
 router.post(PATHS.declineBusiness, mustBeAuth, MustBeSetup, async (req, res) => {
-    try{
+    try {
         const userID = req.user._id;
         const businessID = req.params.businessID;
         const user = await declineBusiness(userID, businessID);
@@ -31,7 +33,7 @@ router.post(PATHS.declineBusiness, mustBeAuth, MustBeSetup, async (req, res) => 
 });
 
 router.delete(PATHS.adminBusiness, mustBeAuth, MustBeSetup, async (req, res) => {
-    try{
+    try {
         const userID = req.user._id;
         const businessID = req.params.businessID;
         const user = await deleteBusiness(userID, businessID);

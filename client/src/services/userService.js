@@ -10,6 +10,7 @@ const paths = {
     profilePicture: "/users/profile-picture",
     files: "/users/file",
     fileID: "/users/file/:fileID",
+    me: '/users/me'
 }
 
 export const verifyProfile = (firstName, lastName, phone, countryCode) => {
@@ -65,4 +66,8 @@ export const getAllFiles = () => {
 export const deleteFile = (fileID) => {
     const url = BASE_URL + paths.fileID.replace(':fileID', fileID);
     return del(url);
+}
+
+export const getMe = () => {
+    return get(BASE_URL+paths.me);F
 }

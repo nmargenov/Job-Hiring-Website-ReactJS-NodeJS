@@ -296,3 +296,8 @@ const deleteFileLocaly = async (file, req) => {
         }
     });
 }
+
+exports.me = async (userID) => {
+    const user = await User.findById(userID).populate('business');
+    return returnToken(user);
+}

@@ -19,5 +19,6 @@ exports.PATHS={
     declineBusiness:"/:businessID/decline",
     profilePicture:"/profile-picture",
     files:"/file",
-    file:"/file/:fileID"
+    file:"/file/:fileID",
+    me:"/me"
 }
