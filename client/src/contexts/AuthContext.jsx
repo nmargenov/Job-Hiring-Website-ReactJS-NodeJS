@@ -24,7 +24,6 @@ export const AuthProvider = ({ children }) => {
         setCookie('authToken', token, 7);
     }
 
-    const socket = useSocket(user, loginAuthContext);
     useEffect(() => {
         const cookieToken = getCookie('authToken');
         if (cookieToken) {
@@ -35,13 +34,6 @@ export const AuthProvider = ({ children }) => {
 
     }, []);
 
-    function connectToSocket() {
-        console.log("connecting to socket");
-        socket.on('roleChanged', async () => {
-            console.log('role changed');
-        })
-    }
-
     const logoutAuthContext = () => {
         setUser(null);
         deleteDeclinedCookies(["authToken"]);
@@ -49,7 +41,6 @@ export const AuthProvider = ({ children }) => {
 
     const context = {
         user,
-        socket,
         loginAuthContext,
         logoutAuthContext,
         isAuthenticated: !!user,

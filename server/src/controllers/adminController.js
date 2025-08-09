@@ -13,6 +13,7 @@ router.post(PATHS.acceptBusiness, mustBeAuth, MustBeSetup, async (req, res) => {
         const user = await acceptBusiness(userID, businessID);
         const io = getIO();
         io.to(`user_${user._id}`).emit("roleChanged");
+        io.to(`user_${user._id}`).emit("message");
         res.status(200).json(user);
     } catch (err) {
         const error = formatErrorMessage(err);

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { getMe } from "../services/userService";
 
-export function useSocket(user, loginAuthContext) {
+export function useSocket(user, loginAuthContext, updateMessages) {
     const [socket, setSocket] = useState(null);
     useEffect(() => {
         if (!user) return;
@@ -22,7 +22,13 @@ export function useSocket(user, loginAuthContext) {
                 }).catch((err) => {
                     console.log(err);
                 })
-        })
+        });
+
+         newSocket.on('message', async () => {
+            console.log('message');
+
+            updateMessages()
+        });
 
 
         setSocket(newSocket);

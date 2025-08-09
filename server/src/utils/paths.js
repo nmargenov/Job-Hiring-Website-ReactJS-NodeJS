@@ -20,5 +20,6 @@ exports.PATHS={
     profilePicture:"/profile-picture",
     files:"/file",
     file:"/file/:fileID",
-    me:"/me"
+    me:"/me",
+    messages:"/api/messages"
 }

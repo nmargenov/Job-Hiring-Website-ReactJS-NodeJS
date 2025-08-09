@@ -16,57 +16,63 @@ import { MustBeSetupAndLogged } from './guards/MustBeSetupAndLogged'
 import { MyAccount } from './components/MyAccount/MyAccount'
 import { Files } from './components/Files/Files'
 import { Apply } from './components/Business/Apply/Apply'
+import { MessageProvider } from './contexts/MessageContext'
+import { SocketProvider } from './contexts/SocketContext'
 
 function App() {
 
   return (
     <>
       <AuthProvider>
-        <ConsentProvider>
-          <ThemeProvider>
-            <CookieConsentModal />
-            <div className="page">
-              <Header />
-              <main>
-                <Routes>
-                  <Route path="/" element={
-                    <MustBeSetupIfLogged>
-                      <Home />
-                    </MustBeSetupIfLogged>
-                  } />
-                  <Route path="/profile" element={
-                    <MustBeSetupAndLogged>
-                      <MyAccount />
-                    </MustBeSetupAndLogged>
-                  } />
-                  <Route path="/business/apply" element={
-                    <MustBeSetupAndLogged>
-                      <Apply />
-                    </MustBeSetupAndLogged>
-                  } />
-                  <Route path="/files" element={
-                    <MustBeSetupAndLogged>
-                      <Files />
-                    </MustBeSetupAndLogged>
-                  } />
-                  <Route path='/login' element={
-                    <MustBeGuestGuard>
-                      <Login />
-                    </MustBeGuestGuard>} />
-                  <Route path="/verification-code" element={
-                    <MustBeGuestGuard>
-                      <VerifyLoginCode />
-                    </MustBeGuestGuard>} />
-                  <Route path="/profile-setup" element={
-                    <MustBeLoggedAndNotSetup>
-                      <SetupProfile />
-                    </MustBeLoggedAndNotSetup>
-                  } />
-                </Routes>
-              </main>
-            </div>
-          </ThemeProvider>
-        </ConsentProvider>
+        <MessageProvider>
+          <SocketProvider>
+          <ConsentProvider>
+            <ThemeProvider>
+              <CookieConsentModal />
+              <div className="page">
+                <Header />
+                <main>
+                  <Routes>
+                    <Route path="/" element={
+                      <MustBeSetupIfLogged>
+                        <Home />
+                      </MustBeSetupIfLogged>
+                    } />
+                    <Route path="/profile" element={
+                      <MustBeSetupAndLogged>
+                        <MyAccount />
+                      </MustBeSetupAndLogged>
+                    } />
+                    <Route path="/business/apply" element={
+                      <MustBeSetupAndLogged>
+                        <Apply />
+                      </MustBeSetupAndLogged>
+                    } />
+                    <Route path="/files" element={
+                      <MustBeSetupAndLogged>
+                        <Files />
+                      </MustBeSetupAndLogged>
+                    } />
+                    <Route path='/login' element={
+                      <MustBeGuestGuard>
+                        <Login />
+                      </MustBeGuestGuard>} />
+                    <Route path="/verification-code" element={
+                      <MustBeGuestGuard>
+                        <VerifyLoginCode />
+                      </MustBeGuestGuard>} />
+                    <Route path="/profile-setup" element={
+                      <MustBeLoggedAndNotSetup>
+                        <SetupProfile />
+                      </MustBeLoggedAndNotSetup>
+                    } />
+                  </Routes>
+                </main>
+              </div>
+            </ThemeProvider>
+          </ConsentProvider>
+          </SocketProvider>
+        </MessageProvider>
       </AuthProvider>
 
     </>
