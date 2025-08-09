@@ -18,6 +18,9 @@ import { Files } from './components/Files/Files'
 import { Apply } from './components/Business/Apply/Apply'
 import { MessageProvider } from './contexts/MessageContext'
 import { SocketProvider } from './contexts/SocketContext'
+import { Admin } from './components/Admin/Admin'
+import { BusinessApplicationsReview } from './components/Admin/BusinessApplicationsReview/BusinessApplicationsReview'
+import { AdminProvider } from './contexts/AdminContext'
 
 function App() {
 
@@ -25,53 +28,65 @@ function App() {
     <>
       <AuthProvider>
         <MessageProvider>
-          <SocketProvider>
-          <ConsentProvider>
-            <ThemeProvider>
-              <CookieConsentModal />
-              <div className="page">
-                <Header />
-                <main>
-                  <Routes>
-                    <Route path="/" element={
-                      <MustBeSetupIfLogged>
-                        <Home />
-                      </MustBeSetupIfLogged>
-                    } />
-                    <Route path="/profile" element={
-                      <MustBeSetupAndLogged>
-                        <MyAccount />
-                      </MustBeSetupAndLogged>
-                    } />
-                    <Route path="/business/apply" element={
-                      <MustBeSetupAndLogged>
-                        <Apply />
-                      </MustBeSetupAndLogged>
-                    } />
-                    <Route path="/files" element={
-                      <MustBeSetupAndLogged>
-                        <Files />
-                      </MustBeSetupAndLogged>
-                    } />
-                    <Route path='/login' element={
-                      <MustBeGuestGuard>
-                        <Login />
-                      </MustBeGuestGuard>} />
-                    <Route path="/verification-code" element={
-                      <MustBeGuestGuard>
-                        <VerifyLoginCode />
-                      </MustBeGuestGuard>} />
-                    <Route path="/profile-setup" element={
-                      <MustBeLoggedAndNotSetup>
-                        <SetupProfile />
-                      </MustBeLoggedAndNotSetup>
-                    } />
-                  </Routes>
-                </main>
-              </div>
-            </ThemeProvider>
-          </ConsentProvider>
-          </SocketProvider>
+          <AdminProvider>
+            <SocketProvider>
+              <ConsentProvider>
+                <ThemeProvider>
+                  <CookieConsentModal />
+                  <div className="page">
+                    <Header />
+                    <main>
+                      <Routes>
+                        <Route path="/" element={
+                          <MustBeSetupIfLogged>
+                            <Home />
+                          </MustBeSetupIfLogged>
+                        } />
+                        <Route path="/profile" element={
+                          <MustBeSetupAndLogged>
+                            <MyAccount />
+                          </MustBeSetupAndLogged>
+                        } />
+                        <Route path="/business/apply" element={
+                          <MustBeSetupAndLogged>
+                            <Apply />
+                          </MustBeSetupAndLogged>
+                        } />
+                        <Route path="/admin" element={
+                          <MustBeSetupAndLogged>
+                            <Admin />
+                          </MustBeSetupAndLogged>
+                        } />
+                        <Route path="/admin/business-review" element={
+                          <MustBeSetupAndLogged>
+                            <BusinessApplicationsReview />
+                          </MustBeSetupAndLogged>
+                        } />
+                        <Route path="/files" element={
+                          <MustBeSetupAndLogged>
+                            <Files />
+                          </MustBeSetupAndLogged>
+                        } />
+                        <Route path='/login' element={
+                          <MustBeGuestGuard>
+                            <Login />
+                          </MustBeGuestGuard>} />
+                        <Route path="/verification-code" element={
+                          <MustBeGuestGuard>
+                            <VerifyLoginCode />
+                          </MustBeGuestGuard>} />
+                        <Route path="/profile-setup" element={
+                          <MustBeLoggedAndNotSetup>
+                            <SetupProfile />
+                          </MustBeLoggedAndNotSetup>
+                        } />
+                      </Routes>
+                    </main>
+                  </div>
+                </ThemeProvider>
+              </ConsentProvider>
+            </SocketProvider>
+          </AdminProvider>
         </MessageProvider>
       </AuthProvider>
 
