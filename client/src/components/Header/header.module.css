@@ -71,6 +71,7 @@ a {
 
 .right-div svg{
     border: 3px solid var(--header-color);
+    z-index: 999;
 }
 
 .right-div svg:focus {
@@ -87,6 +88,7 @@ a {
     font-size: 35px;
     cursor: pointer;
     color:var(--svg-color);
+    z-index: 999;
 }
 
 .message-count{

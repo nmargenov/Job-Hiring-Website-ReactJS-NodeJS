@@ -87,5 +87,8 @@
     "businessName": "Business Name",
     "businessBio": "Business Description",
     "employeeCount": "Number of Employees",
-    "already-submitted":"You've submitted your business application!"
+    "already-submitted":"You've submitted your business application!",
+    "notifications":"Notifications",
+    "loading":"Loading",
+    "no-more":"No more notifications"
 }

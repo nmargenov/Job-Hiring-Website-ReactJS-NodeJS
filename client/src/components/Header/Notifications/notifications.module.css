@@ -13,6 +13,16 @@
     scrollbar-color: auto;
 }
 
+.notifications-div h2{
+  padding: 10px;
+  border-bottom: 1px solid gray;
+}
+
+.scroll-message{
+  font-size: 16px !important;
+  padding-left: 10px;
+}
+
 .notifications-div::-webkit-scrollbar {
   width: 8px; /* width when scrollbar is visible */
   height: 8px;
@@ -25,4 +35,13 @@
 
 .notifications-div::-webkit-scrollbar-track {
   background: transparent; /* no track background */
+}
+
+.opacity{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 900;
 }

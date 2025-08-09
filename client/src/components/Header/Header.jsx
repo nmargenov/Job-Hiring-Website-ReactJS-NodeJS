@@ -10,6 +10,7 @@ import styles from './header.module.css';
 import { useAuth } from '../../contexts/AuthContext';
 import { useMessage } from '../../contexts/MessageContext';
 import { readMessages } from '../../services/messageService';
+import { handleKeyPress } from '../../utils/handleKeyPress';
 
 export const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -57,9 +58,9 @@ export const Header = () => {
                 }
                 {isAuthenticated &&
                     <div className={styles['message-div']}>
-                        <span onClick={toggleMessageOpen} className="material-icons">message</span>
+                        <span tabIndex={0} onKeyDown={(e)=>{handleKeyPress(e,toggleMessageOpen)}} onClick={toggleMessageOpen} className="material-icons">message</span>
                         {(messages && hasUnreadMessages) && <span className={styles['message-count']}>{unreadMessages.length >= 5 ? '5+' : unreadMessages.length}</span>}
-                        {isMessagesOpen && <Notifications messages={messages} />}
+                        {isMessagesOpen && <Notifications toggleOpen={toggleMessageOpen} messages={messages} />}
                     </div>
                 }
                 <FontAwesomeIcon tabIndex={0}
