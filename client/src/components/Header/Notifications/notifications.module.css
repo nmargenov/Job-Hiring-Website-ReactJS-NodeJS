@@ -11,6 +11,7 @@
     overflow: auto;
     scrollbar-width: thin;
     scrollbar-color: auto;
+    z-index: 998;
 }
 
 .notifications-div h2{

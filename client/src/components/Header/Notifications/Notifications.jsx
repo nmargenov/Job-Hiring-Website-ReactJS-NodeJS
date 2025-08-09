@@ -25,7 +25,7 @@ export const Notifications = ({ messages,toggleOpen }) => {
                     scrollableTarget="notifications-scroll"
                 >
                     {messages.map((message) => {
-                        return <NotificationItem key={message._id} message={message} />
+                        return <NotificationItem toggleOpen={toggleOpen} key={message._id} message={message} />
                     })}
                 </InfiniteScroll>
             </ul>

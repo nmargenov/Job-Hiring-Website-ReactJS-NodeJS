@@ -1,3 +1,5 @@
+const User = require("./models/User");
+
 let io = null;
 
 function initSocket(server) {
@@ -8,10 +10,17 @@ function initSocket(server) {
             credentials: true,
         },
     });
-    io.on("connection", (socket) => {
+    io.on("connection", async (socket) => {
         const userID = socket.handshake.query.userId;
 
-          if (userID) {
+        const user = await User.findById(userID).select('role');
+
+        if (user && user.role === 'admin') {
+            socket.join('admins');  // join "admins" room
+            console.log(`Socket ${socket.id} joined admins's room user_${userID}`);
+        }
+
+        if (userID) {
             socket.join(`user_${userID}`);
             console.log(`Socket ${socket.id} joined room user_${userID}`);
         } else {

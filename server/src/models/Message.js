@@ -11,13 +11,18 @@ const MessageSchema = new mongoose.Schema({
     context: {
         type: String,
         required: [true, MESSAGES.Message.context.required],
-        minLength: [5,MESSAGES.Message.context.length],
-        maxLength: [250,MESSAGES.Message.context.length],
+        minLength: [5, MESSAGES.Message.context.length],
+        maxLength: [250, MESSAGES.Message.context.length],
     },
     read: {
         type: Boolean,
         default: false,
         required: [true, MESSAGES.Message.read.required]
+    },
+    business: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Business',
+        default:null
     }
 
 }, { timestamps: true });

@@ -20,6 +20,14 @@
     background-color: var(--unread-hover);
 }
 
+.message-li:active{
+    background-color: var(--active-background);
+}
+
+.unread:active{
+    background-color: var(--unread-active);
+}
+
 .time-ago{
     font-size: 12px !important;
     display: block;

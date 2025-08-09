@@ -4,6 +4,7 @@ const { MustBeSetup } = require('../middlewares/isSetupMiddleware');
 const { formatErrorMessage } = require('../utils/errorMessage');
 const { PATHS } = require('../utils/paths');
 const { getIO } = require("../socket.js");
+const Message = require('../models/Message.js');
 const router = require('express').Router();
 
 router.post(PATHS.acceptBusiness, mustBeAuth, MustBeSetup, async (req, res) => {
@@ -11,6 +12,7 @@ router.post(PATHS.acceptBusiness, mustBeAuth, MustBeSetup, async (req, res) => {
         const userID = req.user._id;
         const businessID = req.params.businessID;
         const user = await acceptBusiness(userID, businessID);
+        await deleteMessageForAdminsBusiness(businessID);
         const io = getIO();
         io.to(`user_${user._id}`).emit("roleChanged");
         io.to(`user_${user._id}`).emit("message");
@@ -56,5 +58,9 @@ router.delete(PATHS.adminBusiness, mustBeAuth, MustBeSetup, async (req, res) => 
         res.status(400).send({ message: error });
     }
 });
+
+async function deleteMessageForAdminsBusiness(businessID){
+    await Message.deleteMany({business:businessID})
+}
 
 module.exports = router;

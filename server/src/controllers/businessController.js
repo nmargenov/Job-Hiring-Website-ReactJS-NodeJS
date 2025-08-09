@@ -6,6 +6,7 @@ const { MustBeSetup } = require('../middlewares/isSetupMiddleware');
 const { formatErrorMessage } = require('../utils/errorMessage');
 const { PATHS } = require('../utils/paths');
 
+
 router.post(PATHS.businessApply, mustBeAuth, MustBeSetup, async (req, res) => {
     try {
         const userID = req.user._id;
@@ -13,6 +14,7 @@ router.post(PATHS.businessApply, mustBeAuth, MustBeSetup, async (req, res) => {
         const bio = req.body.bio?.trim();
         const employeeCount = req.body.employeeCount?.trim();
         const token = await apply(userID, businessName, bio, employeeCount);
+        
         res.status(200).json(token);
     } catch (err) {
         const error = formatErrorMessage(err);

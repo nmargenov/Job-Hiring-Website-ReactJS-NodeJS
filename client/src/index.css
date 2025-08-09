@@ -13,6 +13,7 @@
     --loader-color: rgb(63, 63, 63);
     --unread-background: #e6f7ff;
     --unread-hover: #c7edff;
+    --unread-active: #96deff;
 }
 
 :root[data-theme='dark'] {
@@ -30,6 +31,7 @@
     --loader-color: white;
     --unread-background: #1a2a40;;
     --unread-hover: #0c1829;
+    --unread-active: #081629;
 }
 
 body {
