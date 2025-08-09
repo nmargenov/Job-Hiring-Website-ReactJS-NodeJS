@@ -9,7 +9,6 @@ import { Nav } from './Nav/Nav';
 import styles from './header.module.css';
 import { useAuth } from '../../contexts/AuthContext';
 import { useMessage } from '../../contexts/MessageContext';
-import { readMessages } from '../../services/messageService';
 import { handleKeyPress } from '../../utils/handleKeyPress';
 
 export const Header = () => {
@@ -32,16 +31,6 @@ export const Header = () => {
     }
 
     function toggleMessageOpen() {
-        if (isMessagesOpen) {
-            if (messages.every((msg) => msg.read === true)) {
-                setIsMessagesOpen(!isMessagesOpen);
-                return
-            }
-            readMessages()
-                .then((data) => {
-                    setMessages(messages.map(msg => ({ ...msg, read: true })));
-                }).catch((err) => { })
-        }
         setIsMessagesOpen(!isMessagesOpen);
     }
 

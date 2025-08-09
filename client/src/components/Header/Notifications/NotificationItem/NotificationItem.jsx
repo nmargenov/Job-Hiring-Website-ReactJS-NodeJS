@@ -2,15 +2,32 @@ import { useNavigate } from 'react-router-dom';
 import { useTime } from '../../../../hooks/useTime';
 import styles from './notificationItem.module.css';
 import { handleKeyPress } from '../../../../utils/handleKeyPress';
+import { readMessage } from '../../../../services/messageService';
+import { useMessage } from '../../../../contexts/MessageContext';
 
-export const NotificationItem = ({ message,toggleOpen }) => {
+export const NotificationItem = ({ message, toggleOpen }) => {
     const { timeAgo } = useTime();
     const navigate = useNavigate()
+    const { messages, setMessages } = useMessage();
+
     function onClick() {
+        if (message.read === true) {
+            return;
+        }
+
         if (message.business !== null) {
-            toggleOpen(); 
+            toggleOpen();
             navigate('/admin/business-review');
         }
+        readMessage(message._id).then((data) => {
+            setMessages(prev => prev.some(m => m._id === data._id)
+                ? prev.map(m => (m._id === data._id ? data : m))
+                : [data, ...prev]
+            )
+        }).catch((err) => {
+            console.log(err);
+        })
+
     }
 
     return (

@@ -22,5 +22,6 @@ exports.PATHS={
     file:"/file/:fileID",
     me:"/me",
     messages:"/api/messages",
-    pendingBusinesses:"/pending-businesses"
+    pendingBusinesses:"/pending-businesses",
+    message:"/:messageID"
 }
