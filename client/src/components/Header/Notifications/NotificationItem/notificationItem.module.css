@@ -1,0 +1,27 @@
+.message-li{
+    border-bottom: 1px solid gray;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.message-li span{
+    font-size: 18px;
+}
+
+.unread{
+    background-color: var(--unread-background);
+}
+
+.message-li:hover{
+    background-color: var(--hover-background);
+}
+
+.unread:hover{
+    background-color: var(--unread-hover);
+}
+
+.time-ago{
+    font-size: 12px !important;
+    display: block;
+    margin-bottom: 3px;
+}

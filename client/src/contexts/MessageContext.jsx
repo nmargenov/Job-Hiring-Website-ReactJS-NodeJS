@@ -1,12 +1,14 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useSocket } from "../utils/socket.js";
 import { useAuth } from './AuthContext';
-import { get5LastMessages } from "../services/messageService.js";
+import { getMessages } from "../services/messageService.js";
 
 const MessageContext = createContext({
     messages: [],
     setMessages: () => { },
-    updateMessages:()=>{ }
+    updateMessages: () => { },
+    hasUnreadMessages: false,
+    unreadMessages: []
 });
 
 export const useMessage = () => useContext(MessageContext);
@@ -15,6 +17,8 @@ export const MessageProvider = ({ children }) => {
     const { user } = useAuth();
 
     const [messages, setMessages] = useState([]);
+    const [unreadMessages, setUnreadMessages] = useState([]);
+    const [hasUnreadMessages, setHasUnreadMessages] = useState(false);
 
     useEffect(() => {
         if (user) {
@@ -24,7 +28,7 @@ export const MessageProvider = ({ children }) => {
     }, []);
 
     function updateMessages() {
-        get5LastMessages()
+        getMessages()
             .then((data) => {
                 setMessages(data);
                 console.log(data);
@@ -33,10 +37,17 @@ export const MessageProvider = ({ children }) => {
             })
     }
 
+    useEffect(() => {
+        setUnreadMessages(messages.filter(message => !message.read));
+        setHasUnreadMessages(messages.length > 0 && messages.filter(message => !message.read).length > 0);
+    }, [messages])
+
     const context = {
-        messages, 
+        messages,
         setMessages,
-        updateMessages
+        updateMessages,
+        hasUnreadMessages,
+        unreadMessages
     }
 
     return (

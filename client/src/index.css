@@ -11,6 +11,8 @@
     --login-form-svg: #999999;
     --code-design-button: #d40080;
     --loader-color: rgb(63, 63, 63);
+    --unread-background: #e6f7ff;
+    --unread-hover: #c7edff;
 }
 
 :root[data-theme='dark'] {
@@ -26,6 +28,8 @@
     --login-form-svg: rgb(202, 202, 202);
     --code-design-button: white;
     --loader-color: white;
+    --unread-background: #1a2a40;;
+    --unread-hover: #0c1829;
 }
 
 body {

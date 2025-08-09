@@ -1,0 +1,28 @@
+.notifications-div {
+    width: 300px;
+    height: 500px;
+    position: absolute;
+    left: 82px;
+    bottom: 0;
+    transform: translate(-100%, 100%);
+    background-color: var(--header-color);
+    border: 2px solid gray;
+    list-style-type: none;
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: auto;
+}
+
+.notifications-div::-webkit-scrollbar {
+  width: 8px; /* width when scrollbar is visible */
+  height: 8px;
+}
+
+.notifications-div::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.3); /* visible scrollbar handle */
+  border-radius: 4px;
+}
+
+.notifications-div::-webkit-scrollbar-track {
+  background: transparent; /* no track background */
+}

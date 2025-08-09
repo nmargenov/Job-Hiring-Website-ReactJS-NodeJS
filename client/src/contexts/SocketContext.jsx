@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useSocket } from "../utils/socket.js";
 import { useAuth } from './AuthContext';
-import { get5LastMessages } from "../services/messageService.js";
 import { useMessage } from "./MessageContext.jsx";
 
 const SocketContext = createContext({

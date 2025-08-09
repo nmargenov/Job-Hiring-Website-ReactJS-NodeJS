@@ -1,12 +1,12 @@
 const Message = require("../models/Message");
 
-exports.getMessages = async (userID, limit) => {
-    let messages = []
-    if (limit) {
-        messages = await Message.find({ user: userID }).limit(limit);
-    }else{
-        messages = await Message.find({ user: userID });
-    }
-    
+exports.getMessages = async (userID) => {
+    const messages = await Message.find({ user: userID }).sort({ createdAt: -1 });
     return messages;
+}
+
+exports.readMessages = async (userID) => {
+    const messages = await Message.updateMany({ user: userID }, { $set: { read: true } });
+    const updatedMessages = await Message.find({ user: userID }).sort({createdAt: -1});
+    return updatedMessages
 }

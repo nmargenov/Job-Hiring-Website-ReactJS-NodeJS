@@ -77,6 +77,43 @@ a {
     border: 3px solid white;
 }
 
+.message-div{
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.message-div span:first-of-type{
+    font-size: 35px;
+    cursor: pointer;
+    color:var(--svg-color);
+}
+
+.message-count{
+    position: absolute;
+    top: -10px;
+    right: 0;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 10px;
+    background-color: red;
+}
+
+
+@media (max-width: 768px) {
+
+    .right-div .login-button {
+        display: none;
+    }
+
+    .logo {
+        height: 60px;
+    }
+
+    .logo img {
+        height: 60px;
+    }
+}
 
 @media (max-width: 768px) {
 
