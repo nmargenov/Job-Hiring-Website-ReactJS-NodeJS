@@ -8,12 +8,12 @@ const SocketContext = createContext({
 
 export const SocketProvider = ({ children }) => {
     const { user, loginAuthContext } = useAuth();
-    const { updateMessages } = useMessage();
+    const { updateMessages, deleteAdminMessage } = useMessage();
 
-    const socket = useSocket(user, loginAuthContext, updateMessages);
+    const socket = useSocket(user, loginAuthContext, updateMessages, deleteAdminMessage);
 
     const context = {
-        
+
     }
 
     return (

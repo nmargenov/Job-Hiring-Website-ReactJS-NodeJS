@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { getMe } from "../services/userService";
 
-export function useSocket(user, loginAuthContext, updateMessages) {
+export function useSocket(user, loginAuthContext, updateMessages, deleteAdminMessage) {
     const [socket, setSocket] = useState(null);
     useEffect(() => {
         if (!user) return;
@@ -22,11 +22,14 @@ export function useSocket(user, loginAuthContext, updateMessages) {
                 })
         });
 
-         newSocket.on('message', async () => {
+        newSocket.on('message', async () => {
 
             updateMessages(0)
         });
 
+        newSocket.on('admin-deleted-message', async (data) => {
+            deleteAdminMessage(data.businessID);
+        });
 
         setSocket(newSocket);
 

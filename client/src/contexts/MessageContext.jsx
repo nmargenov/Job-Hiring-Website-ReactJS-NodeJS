@@ -12,8 +12,9 @@ const MessageContext = createContext({
     hasMore: true,
     setPage: () => { },
     page: 0,
-    totalUnread:0,
-    setTotalUnread:()=>{}
+    totalUnread: 0,
+    setTotalUnread: () => { },
+    deleteAdminMessage: () => { }
 });
 
 export const useMessage = () => useContext(MessageContext);
@@ -37,16 +38,16 @@ export const MessageProvider = ({ children }) => {
     function updateMessages(arg) {
         const pages = arg || page;
         if (arg == '0') {
-            if(page!==0){
+            if (page !== 0) {
                 setPage(0);
                 return;
             }
         }
         getMessages(pages)
             .then((data) => {
-                if(pages===0){
+                if (pages === 0) {
                     setMessages(data.messages)
-                }else{
+                } else {
                     setMessages(prev => [...prev, ...data.messages]);
                 }
                 setHasMore(data.hasMore)
@@ -56,10 +57,15 @@ export const MessageProvider = ({ children }) => {
             })
     }
 
+    function deleteAdminMessage(businessID) {
+        setMessages(prev => prev.filter((m) => m.business != businessID));
+        setTotalUnread(prev => prev - 1);
+    }
+
 
     useEffect(() => {
         setUnreadMessages(messages.filter(message => !message.read));
-        setHasUnreadMessages(messages.length > 0 && messages.filter(message => !message.read).length > 0);
+        setHasUnreadMessages(totalUnread > 0);
     }, [messages])
 
     const context = {
@@ -72,7 +78,8 @@ export const MessageProvider = ({ children }) => {
         setPage,
         page,
         totalUnread,
-        setTotalUnread
+        setTotalUnread,
+        deleteAdminMessage
     }
 
     return (

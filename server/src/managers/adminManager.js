@@ -3,6 +3,7 @@ const Job = require("../models/Job");
 const Message = require("../models/Message");
 const User = require("../models/User");
 const { MESSAGES } = require("../utils/messages/Messages");
+const { getIO } = require("../socket.js");
 
 exports.acceptBusiness = async (userID, businessID) => {
     await checkIfAdmin(userID);
@@ -16,6 +17,7 @@ exports.acceptBusiness = async (userID, businessID) => {
         read: false
     });
 
+    await deleteMessageForAdminsBusiness(businessID);
     return newUser.populate('business');
 };
 
@@ -94,4 +96,10 @@ async function checkBusiness(businessID) {
     }
 
     return business;
+}
+
+const deleteMessageForAdminsBusiness = async (businessID) => {
+    await Message.deleteMany({ business: businessID })
+    const io = getIO();
+    io.to('admins').emit("admin-deleted-message", { businessID });
 }
