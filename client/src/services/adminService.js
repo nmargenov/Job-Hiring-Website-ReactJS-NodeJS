@@ -17,3 +17,8 @@ export const acceptBusiness = (businessID) => {
     const url = BASE_URL + paths.acceptBusiness.replace(':businessID', businessID);
     return post(url);
 }
+
+export const declineBusiness = (businessID) => {
+    const url = BASE_URL + paths.declineBusiness.replace(':businessID', businessID);
+    return post(url);
+}

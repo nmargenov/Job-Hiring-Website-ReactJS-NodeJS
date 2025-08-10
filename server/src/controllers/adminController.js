@@ -38,6 +38,8 @@ router.post(PATHS.declineBusiness, mustBeAuth, MustBeSetup, async (req, res) => 
         const userID = req.user._id;
         const businessID = req.params.businessID;
         const user = await declineBusiness(userID, businessID);
+        const io = getIO();
+        io.to(`user_${user._id}`).emit("message");
         res.status(200).json(user);
     } catch (err) {
         const error = formatErrorMessage(err);

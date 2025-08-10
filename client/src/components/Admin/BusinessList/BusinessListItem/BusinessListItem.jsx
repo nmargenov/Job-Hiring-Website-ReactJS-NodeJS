@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { checkPhotoURL } from '../../../../utils/checkPhotoURL';
 import styles from './businessListItem.module.css';
-import { acceptBusiness } from '../../../../services/adminService';
+import { acceptBusiness, declineBusiness } from '../../../../services/adminService';
 
 export const BusinessListItem = ({ item, setBusinesses }) => {
 
@@ -23,7 +23,14 @@ export const BusinessListItem = ({ item, setBusinesses }) => {
 
     function onDeclineClick() {
         removeBusinessFromArray();
-        setErrorMsg('');
+        declineBusiness(item._id)
+            .then((data) => {
+                removeBusinessFromArray();
+                setIsLoading(false);
+            }).catch((err) => {
+                setErrorMsg(err.message);
+                setIsLoading(false);
+            })
     }
 
     function removeBusinessFromArray() {

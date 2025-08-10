@@ -24,14 +24,21 @@ exports.acceptBusiness = async (userID, businessID) => {
 exports.getPendingBusinesses = async (userID, page, limit) => {
     await checkIfAdmin(userID);
 
-    const businesses = await Business.find()
-        .populate({
-            path: 'owner',
-            match: { isApproved: false }
-        })
-        .sort({ createdAt: -1 })
-        .skip(page * limit)
-        .limit(parseInt(limit));
+    const businesses = await Business.aggregate([
+        {
+            $lookup: {
+                from: 'users',
+                localField: 'owner',
+                foreignField: '_id',
+                as: 'owner'
+            }
+        },
+        { $unwind: '$owner' },
+        { $match: { 'owner.isApproved': false } },
+        { $sort: { createdAt: -1 } },
+        { $skip: parseInt(page) * parseInt(limit) },
+        { $limit: parseInt(limit) }
+    ]);
 
     const total = businesses.length;
 
@@ -51,10 +58,11 @@ exports.declineBusiness = async (userID, businessID) => {
     await Business.findByIdAndDelete(businessID);
 
     const message = await Message.create({
-        user: newUser._id,
+        user: user._id,
         context: "Your business application has been declined! You can request again",
         read: false
     });
+    await deleteMessageForAdminsBusiness(businessID);
 
     return user;
 }

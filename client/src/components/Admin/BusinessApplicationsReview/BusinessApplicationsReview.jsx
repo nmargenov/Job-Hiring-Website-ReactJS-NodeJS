@@ -9,9 +9,10 @@ import { StatePicker } from './StatePicker/StatePicker';
 export const BusinessApplicationsReview = () => {
     const { businesses, setBusinesses, setHasMore } = useAdmin();
     const [isLoading, setIsLoading] = useState(true);
+    const [page,setPage] = useState(0);
     useEffect(() => {
         setIsLoading(true);
-        getPendingBusinesses()
+        getPendingBusinesses(page)
             .then((data) => {
                 console.log(data);
                 setIsLoading(false);
