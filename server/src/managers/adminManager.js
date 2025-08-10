@@ -27,7 +27,6 @@ exports.getPendingBusinesses = async (userID, page, limit) => {
     const businesses = await Business.find()
         .populate({
             path: 'owner',
-            select: 'isApproved',
             match: { isApproved: false }
         })
         .sort({ createdAt: -1 })

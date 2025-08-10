@@ -1,23 +1,32 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Loader } from '../../shared/Loader/Loader';
 import styles from './businessApplicationsReview.module.css';
 import { getPendingBusinesses } from '../../../services/adminService';
 import { useAdmin } from '../../../contexts/AdminContext';
+import { BusinessList } from '../BusinessList/BusinessList';
+import { StatePicker } from './StatePicker/StatePicker';
 
 export const BusinessApplicationsReview = () => {
     const { businesses, setBusinesses, setHasMore } = useAdmin();
-
+    const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
+        setIsLoading(true);
         getPendingBusinesses()
-            .then((data)=>{
+            .then((data) => {
+                console.log(data);
+                setIsLoading(false);
                 setHasMore(data.hasMore);
                 setBusinesses(data.businesses);
-            }).catch((err)=>{
+            }).catch((err) => {
                 console.log(err);
             })
 
     }, [])
     return (
-        <h1>review</h1>
+        <div className={styles['review-div']}>
+            <h1>review</h1>
+            <StatePicker />
+            {!isLoading && <BusinessList setBusinesses={setBusinesses} businesses={businesses} />}
+        </div>
     )
 }
