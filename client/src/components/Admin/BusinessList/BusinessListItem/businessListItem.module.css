@@ -11,6 +11,7 @@
 
 .main-div-item {
     display: flex;
+    cursor: pointer;
     gap: 15px;
     padding-bottom: 10px;
     border-bottom: 1px solid white;

@@ -11,20 +11,21 @@ export const NotificationItem = ({ message, toggleOpen }) => {
     const { setMessages, setTotalUnread } = useMessage();
 
     function onClick() {
+        if (message.business !== null) {
+            toggleOpen();
+            navigate(`/admin/business/${message.business}`);
+        }
+       
         if (message.read === true) {
             return;
         }
 
-        if (message.business !== null) {
-            toggleOpen();
-            navigate('/admin/business-review');
-        }
         readMessage(message._id).then((data) => {
             setMessages(prev => prev.some(m => m._id === data._id)
                 ? prev.map(m => (m._id === data._id ? data : m))
                 : [data, ...prev]
             );
-            setTotalUnread(prev=>prev-1);
+            setTotalUnread(prev => prev - 1);
         }).catch((err) => {
             console.log(err);
         })

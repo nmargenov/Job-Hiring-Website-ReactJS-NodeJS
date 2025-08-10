@@ -2,12 +2,15 @@ import { useState } from 'react';
 import { checkPhotoURL } from '../../../../utils/checkPhotoURL';
 import styles from './businessListItem.module.css';
 import { acceptBusiness, declineBusiness } from '../../../../services/adminService';
+import { useNavigate } from 'react-router-dom';
+import { handleKeyPress } from '../../../../utils/handleKeyPress';
 
 export const BusinessListItem = ({ item, setBusinesses }) => {
 
     const [errorMsg, setErrorMsg] = useState('');
-
     const [isLoading, setIsLoading] = useState(false);
+
+    const navigate = useNavigate();
 
     function onAcceptClick() {
         setIsLoading(true);
@@ -36,9 +39,16 @@ export const BusinessListItem = ({ item, setBusinesses }) => {
     function removeBusinessFromArray() {
         setBusinesses(prev => prev.filter((p) => p._id !== item._id));
     }
+
+    function onBusinessClick() {
+        navigate(`/admin/business/${item._id}`);
+    }
+
     return (
         <li className={styles['list-item']}>
-            <div className={styles['main-div-item']}>
+            <div tabIndex={0}
+                onKeyDown={(e) => handleKeyPress(e, onBusinessClick)}
+                onClick={onBusinessClick} className={styles['main-div-item']}>
                 <div className={styles['left-div']}>
                     <div className={styles['image-div']}>
                         <img onClick={() => { setIsLoading(false) }} className={styles['profile-image']} src={item.owner.profilePicture ? checkPhotoURL(item.owner.profilePicture) : '/images/default.jpg'} alt="profile-picture" />                    </div>
