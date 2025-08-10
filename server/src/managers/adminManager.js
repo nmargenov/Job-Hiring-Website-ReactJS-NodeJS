@@ -85,6 +85,13 @@ exports.deleteBusiness = async (userID, businessID) => {
     return user;
 }
 
+exports.getBusiness = async (userID, businessID) => { 
+    await checkIfAdmin(userID);
+
+    const business = await Business.findById(businessID).populate('owner');
+
+    return business;
+}
 
 async function checkIfAdmin(userID) {
     const admin = await User.findById(userID);

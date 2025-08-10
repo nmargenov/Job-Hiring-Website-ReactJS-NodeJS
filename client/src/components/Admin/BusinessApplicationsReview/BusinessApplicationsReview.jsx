@@ -9,7 +9,7 @@ import { StatePicker } from './StatePicker/StatePicker';
 export const BusinessApplicationsReview = () => {
     const { businesses, setBusinesses, setHasMore } = useAdmin();
     const [isLoading, setIsLoading] = useState(true);
-    const [page,setPage] = useState(0);
+    const [page, setPage] = useState(0);
     useEffect(() => {
         setIsLoading(true);
         getPendingBusinesses(page)
@@ -21,13 +21,15 @@ export const BusinessApplicationsReview = () => {
             }).catch((err) => {
                 console.log(err);
             })
-
     }, [])
     return (
-        <div className={styles['review-div']}>
-            <h1>review</h1>
-            <StatePicker />
-            {!isLoading && <BusinessList setBusinesses={setBusinesses} businesses={businesses} />}
-        </div>
+        <>
+            {isLoading && <Loader />}
+            {!isLoading && <div className={styles['review-div']}>
+                <h1>review</h1>
+                <StatePicker />
+                <BusinessList setBusinesses={setBusinesses} businesses={businesses} />
+            </div>}
+        </>
     )
 }

@@ -4,7 +4,8 @@ import { get, post } from "./requester";
 const paths = {
     pending: '/admin/pending-businesses',
     acceptBusiness: "/admin/:businessID/accept",
-    declineBusiness: "/admin/:businessID/decline"
+    declineBusiness: "/admin/:businessID/decline",
+    business: "/admin/:businessID"
 }
 
 export const getPendingBusinesses = (page) => {
@@ -21,4 +22,9 @@ export const acceptBusiness = (businessID) => {
 export const declineBusiness = (businessID) => {
     const url = BASE_URL + paths.declineBusiness.replace(':businessID', businessID);
     return post(url);
+}
+
+export const getBusiness = (businessID) => {
+    const url = BASE_URL + paths.business.replace(':businessID', businessID);
+    return get(url);
 }

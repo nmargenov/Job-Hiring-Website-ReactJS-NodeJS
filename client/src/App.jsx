@@ -21,6 +21,7 @@ import { SocketProvider } from './contexts/SocketContext'
 import { Admin } from './components/Admin/Admin'
 import { BusinessApplicationsReview } from './components/Admin/BusinessApplicationsReview/BusinessApplicationsReview'
 import { AdminProvider } from './contexts/AdminContext'
+import { Business } from './components/Admin/Business/Business'
 
 function App() {
 
@@ -60,6 +61,11 @@ function App() {
                         <Route path="/admin/business-review" element={
                           <MustBeSetupAndLogged>
                             <BusinessApplicationsReview />
+                          </MustBeSetupAndLogged>
+                        } />
+                        <Route path="/admin/business/:businessID" element={
+                          <MustBeSetupAndLogged>
+                            <Business />
                           </MustBeSetupAndLogged>
                         } />
                         <Route path="/files" element={
