@@ -91,5 +91,12 @@
     "notifications":"Notifications",
     "loading":"Loading",
     "no-more":"No more notifications",
-    "admin-panel":"Admin panel"
+    "admin-panel":"Admin panel",
+    "requester-info":"Requester information",
+    "employees":"Employees",
+    "status":"Status",
+    "pending":"Pending",
+    "approved":"Approved",
+    "approve":"Approve",
+    "decline":"Decline"
 }
