@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { checkPhotoURL } from '../../../../utils/checkPhotoURL';
 import styles from './businessListItem.module.css';
+import { acceptBusiness } from '../../../../services/adminService';
 
-export const BusinessListItem = ({ item,setBusinesses} ) => {
+export const BusinessListItem = ({ item, setBusinesses }) => {
 
     const [errorMsg, setErrorMsg] = useState('');
 
@@ -10,7 +11,14 @@ export const BusinessListItem = ({ item,setBusinesses} ) => {
 
     function onAcceptClick() {
         setIsLoading(true);
-        // setErrorMsg('asdasdasd asdhu ashdasuh dhua uhsduhas hduhausd hashudashjuid')
+        acceptBusiness(item._id)
+            .then((data) => {
+                removeBusinessFromArray();
+                setIsLoading(false);
+            }).catch((err) => {
+                setErrorMsg(err.message);
+                setIsLoading(false);
+            })
     }
 
     function onDeclineClick() {
@@ -18,8 +26,8 @@ export const BusinessListItem = ({ item,setBusinesses} ) => {
         setErrorMsg('');
     }
 
-    function removeBusinessFromArray(){
-        setBusinesses(prev=>prev.filter((p)=>p._id !== item._id));
+    function removeBusinessFromArray() {
+        setBusinesses(prev => prev.filter((p) => p._id !== item._id));
     }
     return (
         <li className={styles['list-item']}>

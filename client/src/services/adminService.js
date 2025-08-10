@@ -1,12 +1,19 @@
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
-import { get } from "./requester";
+import { get, post } from "./requester";
 
 const paths = {
-    pending: '/admin/pending-businesses'
+    pending: '/admin/pending-businesses',
+    acceptBusiness: "/admin/:businessID/accept",
+    declineBusiness: "/admin/:businessID/decline"
 }
 
 export const getPendingBusinesses = (page) => {
     const params = new URLSearchParams({ page, limit: 5 });
     const url = `${BASE_URL}${paths.pending}?${params.toString()}`;
     return get(url);
+}
+
+export const acceptBusiness = (businessID) => {
+    const url = BASE_URL + paths.acceptBusiness.replace(':businessID', businessID);
+    return post(url);
 }
