@@ -24,7 +24,7 @@ exports.acceptBusiness = async (userID, businessID) => {
 exports.getPendingBusinesses = async (userID, page, limit) => {
     await checkIfAdmin(userID);
 
-    const businesses = await Business.aggregate([
+    const result = await Business.aggregate([
         {
             $lookup: {
                 from: 'users',
@@ -35,17 +35,45 @@ exports.getPendingBusinesses = async (userID, page, limit) => {
         },
         { $unwind: '$owner' },
         { $match: { 'owner.isApproved': false } },
-        { $sort: { createdAt: -1 } },
-        { $skip: parseInt(page) * parseInt(limit) },
-        { $limit: parseInt(limit) }
+        {
+            $facet: {
+                data: [
+                    { $sort: { createdAt: -1 } },
+                    { $skip: parseInt(page) * parseInt(limit) },
+                    { $limit: parseInt(limit) }
+                ],
+                totalCount: [
+                    { $count: 'count' }
+                ]
+            }
+        }
     ]);
 
-    const total = businesses.length;
+    const businesses = result[0].data;
+    const total = result[0].totalCount[0]?.count || 0;
+
+    return {
+        businesses,
+        hasMore: total > (parseInt(page) + 1) * parseInt(limit)
+    };
+}
+
+exports.getBusinesses = async (userID, page, limit) => {
+    await checkIfAdmin(userID);
+
+    const businesses = await Business.find()
+        .populate('owner')
+        .sort({ createdAt: -1 })
+        .skip(page * limit)
+        .limit(parseInt(limit));
+
+    const total = await Business.countDocuments();
 
     return {
         businesses,
         hasMore: total > (parseInt(page) + 1) * parseInt(limit)
     }
+
 }
 
 exports.declineBusiness = async (userID, businessID) => {
@@ -85,12 +113,12 @@ exports.deleteBusiness = async (userID, businessID) => {
     return user;
 }
 
-exports.getBusiness = async (userID, businessID) => { 
+exports.getBusiness = async (userID, businessID) => {
     await checkIfAdmin(userID);
 
-    const business = await Business.findById(businessID).populate('owner');
+    const businesses = await Business.findById(businessID).populate('owner');
 
-    return business;
+    return businesses;
 }
 
 async function checkIfAdmin(userID) {

@@ -13,8 +13,6 @@
     display: flex;
     cursor: pointer;
     gap: 15px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid white;
 }
 
 .left-div {
@@ -51,6 +49,8 @@
 }
 
 .actions {
+    border-top: 1px solid white;
+    padding-top: 15px;
     display: flex;
     justify-content: space-between;
 }

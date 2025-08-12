@@ -1,0 +1,37 @@
+.state-div{
+    display: flex;
+    gap: 15px;
+}
+
+.state-div span{
+    font-size: 18px;
+    border: 1px solid gray;
+    text-align: center;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 5px;
+    width: 50%;
+}
+
+.state-div span:hover{
+    background-color: var(--hover-background);
+}
+
+.state-div span:active{
+    background-color: var(--active-background);
+}
+
+
+.active{
+    background-color: gray;
+    border: 1px solid white !important;
+    color:white;
+}
+
+.active:hover{
+    background-color: rgb(102, 102, 102) !important;
+}
+
+.active:active{
+    background-color: rgb(63, 63, 63) !important;
+}

@@ -3,7 +3,7 @@ import { useConsent } from '../../../contexts/CookieConsentContext';
 import { useTheme } from "../../../contexts/ThemeContext";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faPhone, faCookie, faClose, faSignOut, faUser, faUserShield} from "@fortawesome/free-solid-svg-icons"
+import { faHome, faPhone, faCookie, faClose, faSignOut, faUser, faUserShield } from "@fortawesome/free-solid-svg-icons"
 
 import { NavItem } from '../navItem/NavItem';
 
@@ -58,6 +58,11 @@ export const Nav = ({ toggleOpen, onKey, isOpen }) => {
         navigate('/profile');
     }
 
+    function onAdminClick() {
+        toggleOpen();
+        navigate('/admin');
+    }
+
     return (
         <nav className={styles['nav']}>
             <div className={styles['section']}>
@@ -70,7 +75,7 @@ export const Nav = ({ toggleOpen, onKey, isOpen }) => {
             {isAuthenticated && user.isSetup &&
                 <div onClick={onProfileClick} className={styles["user-info"]}>
                     <div className={styles['image-div']}><img src={user.profilePicture ? checkPhotoURL(user.profilePicture) : '/images/default.jpg'} alt="profile-picture" /></div>
-                    { (user.role === "seeker" || user.role === "admin") &&
+                    {(user.role === "seeker" || user.role === "admin") &&
                         <span>{user.firstName} {user.lastName}</span>
                     }
                     {user.role === "hirer" &&
@@ -79,9 +84,9 @@ export const Nav = ({ toggleOpen, onKey, isOpen }) => {
             }
             <div className={styles['section']}>
                 <NavItem destination={'/'} icon={faHome} text={t("homepage")} onClick={toggleOpen} />
-                {isAuthenticated && user.isSetup && 
-                <NavItem icon={faUser} destination={'/profile'} onClick={toggleOpen} text={t("account")} />}
-                {isAuthenticated && user.role==='admin' && <NavItem destination={'/admin'} icon={faUserShield} text={t("admin-panel")} />}
+                {isAuthenticated && user.isSetup &&
+                    <NavItem icon={faUser} destination={'/profile'} onClick={toggleOpen} text={t("account")} />}
+                {isAuthenticated && user.role === 'admin' && <NavItem destination={'/admin'} onClick={onAdminClick} icon={faUserShield} text={t("admin-panel")} />}
                 <NavItem destination={'/contacts'} icon={faPhone} text={t("contacts")} onClick={toggleOpen} />
                 <NavItem onClick={onCookieClick} icon={faCookie} text={t("cookie-title")} />
                 {isAuthenticated && <NavItem onClick={onLogoutClick} icon={faSignOut} text={t("logout")} />}

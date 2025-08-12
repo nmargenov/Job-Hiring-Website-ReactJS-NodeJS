@@ -10,11 +10,11 @@ exports.auth = async (req, res, next) => {
         try {
             const decodedToken = await verify(token, SECRET);
 
-            req.user=decodedToken;
+            req.user = decodedToken;
             res.isLogged = true;
             res.locals.isLogged = true;
             res.locals.user = decodedToken;
-            
+
             next();
         } catch (err) {
             res.status(409).send({ message: MESSAGES.invalidToken });
@@ -25,26 +25,26 @@ exports.auth = async (req, res, next) => {
     }
 };
 
-exports.mustBeAuth = (req,res,next)=>{
-    try{
-        if(!req.user){
+exports.mustBeAuth = (req, res, next) => {
+    try {
+        if (!req.user) {
             throw new Error(MESSAGES.unauthorized);
-        }else{
+        } else {
             next();
         }
-    }catch(err){
-        res.status(401).send({message:err.message});
+    } catch (err) {
+        res.status(401).send({ message: err.message });
     }
 }
 
-exports.mustBeGuest = (req,res,next)=>{
-    try{
-        if(req.user){
+exports.mustBeGuest = (req, res, next) => {
+    try {
+        if (req.user) {
             throw new Error(MESSAGES.forbidden);
-        }else{
+        } else {
             next();
         }
-    }catch(err){
-        res.status(403).send({message:err.message});
+    } catch (err) {
+        res.status(403).send({ message: err.message });
     }
 }

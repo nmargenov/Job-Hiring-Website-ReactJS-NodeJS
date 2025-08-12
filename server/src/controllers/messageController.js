@@ -15,7 +15,6 @@ router.get(PATHS.me, mustBeAuth, MustBeSetup, async (req, res) => {
         res.status(200).json(messages);
     } catch (err) {
         const error = formatErrorMessage(err);
-        console.log(err);
         res.status(400).send({ message: error });
     }
 });
@@ -28,7 +27,6 @@ router.patch(PATHS.message, mustBeAuth, MustBeSetup, async (req, res) => {
         res.status(200).send(newMessage);
     } catch (err) {
         const error = formatErrorMessage(err);
-        console.log(err);
         res.status(400).send({ message: error });
     }
 });

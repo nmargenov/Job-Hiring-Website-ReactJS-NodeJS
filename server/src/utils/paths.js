@@ -14,7 +14,7 @@ exports.PATHS={
     userID: "/:userID",
     archiveJob: "/:jobID/archive",
     jobID: "/:jobID",
-    adminBusiness:"/:businessID",
+    adminBusiness:"/business/:businessID",
     acceptBusiness:"/:businessID/accept",
     declineBusiness:"/:businessID/decline",
     profilePicture:"/profile-picture",
@@ -23,5 +23,6 @@ exports.PATHS={
     me:"/me",
     messages:"/api/messages",
     pendingBusinesses:"/pending-businesses",
-    message:"/:messageID"
+    message:"/:messageID",
+    businesses:'/businesses'
 }

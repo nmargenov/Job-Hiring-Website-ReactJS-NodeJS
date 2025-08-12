@@ -12,7 +12,7 @@ export const useAdmin = () => useContext(AdminContext);
 export const AdminProvider = ({ children }) => {
 
     const [hasMore, setHasMore] = useState(true);
-    const [businesses, setBusinesses] = useState(0);
+    const [businesses, setBusinesses] = useState([]);
 
 
     const context = {

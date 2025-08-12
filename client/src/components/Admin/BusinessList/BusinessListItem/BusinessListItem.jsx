@@ -28,7 +28,6 @@ export const BusinessListItem = ({ item, setBusinesses }) => {
     }
 
     function onDeclineClick() {
-        removeBusinessFromArray();
         declineBusiness(item._id)
             .then((data) => {
                 removeBusinessFromArray();
@@ -62,6 +61,7 @@ export const BusinessListItem = ({ item, setBusinesses }) => {
                     </span>
                 </div>
             </div>
+            {!item.owner.isApproved &&
             <div className={styles['actions']}>
                 <div className={styles['error-msg']}>
                     <span>{errorMsg}</span>
@@ -70,7 +70,7 @@ export const BusinessListItem = ({ item, setBusinesses }) => {
                     <button disabled={isLoading} onClick={onDeclineClick} className={styles['design-button']}>{t('decline')}</button>
                     <input disabled={isLoading} onClick={onAcceptClick} type='submit' value={t('approve')} />
                 </div>
-            </div>
+            </div>}
         </li>
     )
 }
