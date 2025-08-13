@@ -6,14 +6,16 @@ import { useAdmin } from '../../../contexts/AdminContext';
 import { BusinessList } from '../BusinessList/BusinessList';
 import { StatePicker } from './StatePicker/StatePicker';
 import { useTranslation } from 'react-i18next';
+import { Page404 } from '../../Page404/Page404';
 
 export const BusinessApplicationsReview = () => {
     const { businesses, setBusinesses, setHasMore, hasMore } = useAdmin();
     const [isLoading, setIsLoading] = useState(true);
     const [page, setPage] = useState(0);
     const [state, setState] = useState('pending');
-    
-    const {t} = useTranslation();
+    const [error, setError] = useState(false);
+
+    const { t } = useTranslation();
 
     useEffect(() => {
         setIsLoading(true);
@@ -39,8 +41,9 @@ export const BusinessApplicationsReview = () => {
                 setIsLoading(false);
                 setHasMore(data.hasMore);
                 setBusinesses(prev => [...prev, ...data.businesses]);
+                setError(false);
             }).catch((err) => {
-                console.log(err);
+                setError(true);
             })
     }
 
@@ -51,8 +54,9 @@ export const BusinessApplicationsReview = () => {
                 setPage(prev => prev + 1);
                 setHasMore(data.hasMore);
                 setBusinesses(prev => [...prev, ...data.businesses]);
+                setError(false);
             }).catch((err) => {
-                console.log(err)
+                setError(true);
             })
     }
 
@@ -71,7 +75,7 @@ export const BusinessApplicationsReview = () => {
     return (
         <>
             {isLoading && <Loader />}
-            {!isLoading && <div className={styles['review-div']}>
+            {!isLoading && !error && <div className={styles['review-div']}>
                 <h1>{t('review')}</h1>
                 <StatePicker setBusinesses={setBusinesses} setPage={setPage} state={state} setState={setState} />
                 {businesses && businesses.length > 0 && <BusinessList setBusinesses={setBusinesses} businesses={businesses} />}
@@ -85,6 +89,7 @@ export const BusinessApplicationsReview = () => {
                     </div>}
                 {!businesses || businesses.length === 0 && <h2>{t('no-applications')}</h2>}
             </div>}
+            {!isLoading && error && <Page404 errorLoading={true}/>}
         </>
     )
 }

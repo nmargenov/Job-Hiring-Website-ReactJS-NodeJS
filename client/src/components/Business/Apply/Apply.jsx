@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import { getProfile } from '../../../services/userService';
 import { useState } from 'react';
 import { Loader } from '../../shared/Loader/Loader';
+import { Page404 } from '../../Page404/Page404';
 
 export const Apply = () => {
     const [user, setUser] = useState(null);
@@ -23,6 +24,7 @@ export const Apply = () => {
     const { user: userAuth, loginAuthContext } = useAuth();
 
     const [isPageLoading, setIsPageLoading] = useState(false);
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         setIsPageLoading(true);
@@ -34,9 +36,11 @@ export const Apply = () => {
                     businessName: data.business.businessName,
                     businessBio: data.business.bio,
                     employeeCount: data.business.employeeCount
-                })
+                });
+                setError(false);
             }).catch((err) => {
                 setIsPageLoading(false);
+                setError(true);
             })
     }, [userAuth])
 
@@ -61,11 +65,11 @@ export const Apply = () => {
     return (
         <>
             {isPageLoading && <Loader />}
-            {!isPageLoading && <div className={styles['apply-main-div']}>
+            {!isPageLoading && !error && <div className={styles['apply-main-div']}>
                 <h2>{t('apply-business')}</h2>
                 <span>{t('business-apply-description')}</span>
                 <div className={styles['sucess-message-div']}>
-                    {user?.hasBusinessApplication &&<span>{t('already-submitted')}</span>}
+                    {user?.hasBusinessApplication && <span>{t('already-submitted')}</span>}
                 </div>
                 <Form onSubmit={onSubmit}
                     errorMsg={errorMsg}
@@ -101,6 +105,7 @@ export const Apply = () => {
                     />
                 </Form>
             </div>}
+            {!isLoading && error && <Page404 errorLoading={true}/>}
         </>
     )
 }

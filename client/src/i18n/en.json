@@ -85,6 +85,7 @@
     "delete-file": "Are you sure you want to delete the file?",
     "business-apply-description": "Enter the information below and wait for approval from an administrator",
     "businessName": "Business Name",
+    "apply": "Apply",
     "businessBio": "Business Description",
     "employeeCount": "Number of Employees",
     "already-submitted": "You've submitted your business application!",

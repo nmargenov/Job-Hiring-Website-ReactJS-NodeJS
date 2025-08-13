@@ -5,6 +5,7 @@ import { acceptBusiness, declineBusiness, getBusiness } from '../../../services/
 import { Loader } from '../../shared/Loader/Loader';
 import { checkPhotoURL } from '../../../utils/checkPhotoURL';
 import { useTranslation } from 'react-i18next';
+import { Page404 } from '../../Page404/Page404';
 
 export const Business = () => {
 
@@ -13,6 +14,7 @@ export const Business = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [business, setBusiness] = useState(null);
     const [errorMsg, setErrorMsg] = useState('');
+    const [error, setError] = useState(false);
 
     const navigate = useNavigate();
 
@@ -24,9 +26,10 @@ export const Business = () => {
             .then((data) => {
                 setIsLoading(false);
                 setBusiness(data);
+                setError(false);
             }).catch((err) => {
                 setIsLoading(false);
-                console.log(err);
+                setError(true);
             })
     }, [])
 
@@ -48,15 +51,15 @@ export const Business = () => {
                 setErrorMsg(err.message);
             });
     }
-    
-    function onDeclineClick(){
+
+    function onDeclineClick() {
         setIsLoading(true);
         declineBusiness(business._id)
-            .then((data)=>{
+            .then((data) => {
                 setErrorMsg('');
                 navigate('/admin/business-review')
                 setIsLoading(false);
-            }).catch((err)=>{
+            }).catch((err) => {
                 setErrorMsg(err.message);
                 setIsLoading(false);
             })
@@ -65,7 +68,7 @@ export const Business = () => {
     return (
         <>
             {isLoading && <Loader />}
-            {!isLoading &&
+            {!isLoading && !error &&
                 <div className={styles['main-div']}>
                     <div className={styles['business-div']}>
                         <div className={styles['main-info-div']}>
@@ -125,6 +128,7 @@ export const Business = () => {
                     </div>
                 </div>
             }
+            {!isLoading && error && <Page404 errorLoading={false} />}
         </>
     )
 }

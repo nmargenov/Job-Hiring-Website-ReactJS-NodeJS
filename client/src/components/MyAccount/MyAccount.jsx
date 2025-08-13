@@ -10,6 +10,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { EditPhone } from "./EditPhone/EditPhone";
 import { ChangeEmail } from "./ChangeEmail/ChangeEmail";
 import { useNavigate } from "react-router-dom";
+import { Page404 } from "../Page404/Page404";
 
 export const MyAccount = () => {
     const [isPageLoading, setIsPageLoading] = useState(true);
@@ -18,6 +19,8 @@ export const MyAccount = () => {
     const [isEditName, setIsEditName] = useState(false);
     const [isEditPhone, setIsEditPhone] = useState(false);
     const [isEditEmail, setIsEditEmail] = useState(false);
+
+    const [error, setError] = useState(false);
 
     const navigate = useNavigate();
 
@@ -28,9 +31,12 @@ export const MyAccount = () => {
         setIsPageLoading(true);
         getProfile(id)
             .then((data) => {
+                setError(false);
                 setUserBackend(data);
                 setIsPageLoading(false);
             }).catch((err) => {
+                setError(true);
+                setIsPageLoading(false);
             })
     }, [user]);
 
@@ -53,7 +59,7 @@ export const MyAccount = () => {
     return (
         <>
             {isPageLoading && <Loader />}
-            {!isPageLoading && <>
+            {!isPageLoading && !error && <>
                 {isEditEmail && <ChangeEmail setIsEditEmail={setIsEditEmail} user={userBackend} />}
                 {isEditPhone && <EditPhone setIsEditPhone={setIsEditPhone} user={userBackend} />}
                 {isEditName && <EditName setIsEditName={setIsEditName} user={userBackend} />}
@@ -71,6 +77,7 @@ export const MyAccount = () => {
                     </div>
                 </div>}
             </>}
+            {!isPageLoading && error && <Page404 errorLoading={true}/>}
         </>
     )
 }

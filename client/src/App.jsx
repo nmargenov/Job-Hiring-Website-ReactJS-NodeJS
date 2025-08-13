@@ -22,6 +22,7 @@ import { Admin } from './components/Admin/Admin'
 import { BusinessApplicationsReview } from './components/Admin/BusinessApplicationsReview/BusinessApplicationsReview'
 import { AdminProvider } from './contexts/AdminContext'
 import { Business } from './components/Admin/Business/Business'
+import { Page404 } from './components/Page404/Page404'
 
 function App() {
 
@@ -85,6 +86,12 @@ function App() {
                           <MustBeLoggedAndNotSetup>
                             <SetupProfile />
                           </MustBeLoggedAndNotSetup>
+                        } />
+
+                        <Route path='*' element={
+                          <MustBeSetupIfLogged>
+                            <Page404 />
+                          </MustBeSetupIfLogged>
                         } />
                       </Routes>
                     </main>
