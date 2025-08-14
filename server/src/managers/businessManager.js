@@ -51,9 +51,7 @@ exports.getEdit = async (userID, businessID) => {
         return toReturn;
     }
     
-    console.log(businessID);
     business = await Business.findById(businessID);
-    console.log(business);
     if (business.owner != userID) throw new Error(MESSAGES.unauthorized);
 
     return business;

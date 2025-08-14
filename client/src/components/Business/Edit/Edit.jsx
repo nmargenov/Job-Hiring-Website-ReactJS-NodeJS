@@ -9,9 +9,9 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { Loader } from '../../shared/Loader/Loader';
 import { Page404 } from '../../Page404/Page404';
-import { getEdit } from '../../../services/businessService';
+import { editBusiness, getEdit } from '../../../services/businessService';
 
-export const Edit = ({businessID}) => {
+export const Edit = ({ businessID }) => {
     const [business, setBusiness] = useState(null);
 
     const initialValues = {
@@ -31,7 +31,6 @@ export const Edit = ({businessID}) => {
             .then((data) => {
                 setIsPageLoading(false);
                 setBusiness(data);
-                console.log(data);
                 setValues({
                     businessName: data.businessName,
                     businessBio: data.bio,
@@ -39,12 +38,10 @@ export const Edit = ({businessID}) => {
                 });
                 setError(false);
             }).catch((err) => {
-                console.log(err);
-                console.log('hee');
                 setIsPageLoading(false);
                 setError(true);
             })
-    }, [])
+    }, [userAuth])
 
     const { t } = useTranslation();
 
@@ -53,7 +50,18 @@ export const Edit = ({businessID}) => {
     function onSubmit(e) {
         onSubmitHandler(e);
         setIsLoading(true);
-
+        editBusiness(userAuth.businessID,
+            values.businessName,
+            values.businessBio,
+            values.employeeCount)
+            .then((data) => {
+                loginAuthContext(data)
+                setIsLoading(false);
+                setErrorMsg('');
+            }).catch((err) => {
+                setErrorMsg(err.message);
+                setIsLoading(false);
+            });
     }
 
     return (
