@@ -4,6 +4,7 @@ const Message = require("../models/Message");
 const User = require("../models/User");
 const { MESSAGES } = require("../utils/messages/Messages");
 const { getIO } = require("../socket.js");
+const EditBusiness = require("../models/EditBusiness.js");
 
 exports.acceptBusiness = async (userID, businessID) => {
     await checkIfAdmin(userID);
@@ -88,6 +89,37 @@ exports.declineBusiness = async (userID, businessID) => {
     const message = await Message.create({
         user: user._id,
         context: "Your business application has been declined! You can request again",
+        read: false
+    });
+    await deleteMessageForAdminsBusiness(businessID);
+
+    return user;
+}
+
+exports.AcceptBusinessEdit = async (userID, businessID) => {
+    await checkIfAdmin(userID);
+
+    const user = await User.findOne({ business: businessID }).populate('business');
+    if (!user.business.hasEdit) throw new Error(MESSAGES.forbidden);
+    if (!user) throw new Error(MESSAGES.userNotFound);
+
+    const businessEdit = await EditBusiness.findOne({ business: businessID });
+    if (!businessEdit) throw new Error(MESSAGES.forbidden);
+
+    await Business.findByIdAndUpdate(businessID,
+        {
+            businessName: businessEdit.businessName,
+            bio: businessEdit.bio,
+            employeeCount: businessEdit.employeeCount,
+            hasEdit: false
+        }
+        , { runValidators: true });
+
+    await EditBusiness.findOneAndDelete({ business: businessID });
+
+    const message = await Message.create({
+        user: user._id,
+        context: "Your business edit application has been accepted!",
         read: false
     });
     await deleteMessageForAdminsBusiness(businessID);

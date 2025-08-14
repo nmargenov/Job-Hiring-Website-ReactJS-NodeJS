@@ -25,5 +25,6 @@ exports.PATHS={
     pendingBusinesses:"/pending-businesses",
     message:"/:messageID",
     businesses:'/businesses',
-    businessID:"/:businessID"
+    businessID:"/:businessID",
+    acceptEditBusiness:"/:businessID/accept-edit"
 }

@@ -1,4 +1,4 @@
-const { acceptBusiness, declineBusiness, deleteBusiness, getPendingBusinesses, getBusiness, getBusinesses } = require('../managers/adminManager');
+const { acceptBusiness, declineBusiness, deleteBusiness, getPendingBusinesses, getBusiness, getBusinesses, AcceptBusinessEdit } = require('../managers/adminManager');
 const { mustBeAuth } = require('../middlewares/authMiddleware');
 const { MustBeSetup } = require('../middlewares/isSetupMiddleware');
 const { formatErrorMessage } = require('../utils/errorMessage');
@@ -75,8 +75,23 @@ router.get(PATHS.businesses, mustBeAuth, async (req, res) => {
     try {
         const userID = req.user._id;
         const { page = 0, limit = 5 } = req.query;
-        const business = await getBusinesses(userID,page,limit);
+        const business = await getBusinesses(userID, page, limit);
         res.status(200).json(business);
+    } catch (err) {
+        const error = formatErrorMessage(err);
+        res.status(400).send({ message: error });
+    }
+});
+
+router.post(PATHS.acceptEditBusiness, mustBeAuth, MustBeSetup, async (req, res) => {
+    try {
+        const userID = req.user._id;
+        const businessID = req.params.businessID;
+        const user = await AcceptBusinessEdit(userID, businessID);
+        const io = getIO();
+        io.to(`user_${user._id}`).emit("roleChanged");
+        io.to(`user_${user._id}`).emit("message");
+        res.status(200).json(user);
     } catch (err) {
         const error = formatErrorMessage(err);
         res.status(400).send({ message: error });
