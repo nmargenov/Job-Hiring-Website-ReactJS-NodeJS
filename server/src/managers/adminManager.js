@@ -127,6 +127,28 @@ exports.AcceptBusinessEdit = async (userID, businessID) => {
     return user;
 }
 
+exports.declineBusinessEdit = async (userID, businessID) => {
+    await checkIfAdmin(userID);
+
+    const user = await User.findOne({ business: businessID }).populate('business');
+    if (!user.business.hasEdit) throw new Error(MESSAGES.forbidden);
+    if (!user) throw new Error(MESSAGES.userNotFound);
+
+    const businessEdit = await EditBusiness.findOne({ business: businessID });
+    if (!businessEdit) throw new Error(MESSAGES.forbidden);
+
+    await EditBusiness.findOneAndDelete({ business: businessID });
+
+    const message = await Message.create({
+        user: user._id,
+        context: "Your business edit application has been declined! You can request again",
+        read: false
+    });
+    await deleteMessageForAdminsBusiness(businessID);
+
+    return user;
+}
+
 exports.deleteBusiness = async (userID, businessID) => {
     await checkIfAdmin(userID);
 

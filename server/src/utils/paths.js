@@ -26,5 +26,6 @@ exports.PATHS={
     message:"/:messageID",
     businesses:'/businesses',
     businessID:"/:businessID",
-    acceptEditBusiness:"/:businessID/accept-edit"
+    acceptEditBusiness:"/:businessID/accept-edit",
+    declineEditBusiness:"/:businessID/decline-edit"
 }
