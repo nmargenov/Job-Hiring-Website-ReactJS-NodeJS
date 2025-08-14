@@ -4,6 +4,7 @@ const User = require("../models/User");
 const { returnToken } = require("../utils/jwt");
 const { MESSAGES } = require("../utils/messages/Messages");
 const { getIO } = require("../socket.js");
+const EditBusiness = require("../models/EditBusiness.js");
 
 exports.apply = async (userID, businessName, bio, employeeCount) => {
     let user = await User.findById(userID);
@@ -17,31 +18,42 @@ exports.apply = async (userID, businessName, bio, employeeCount) => {
 
     const admins = await User.find({ role: 'admin' }).select('_id');
 
+    await craeteMessages(admins,business,'There is a new business application!');
+
+    return returnToken(user);
+};
+
+exports.editBusiness = async (userID, businessID, businessName, bio, employeeCount) => {
+    const business = await Business.findOne({ owner: userID }).populate('owner');
+
+    if (!business || business._id != businessID) throw new Error(MESSAGES.unauthorized);
+
+    if (business.hasEdit) throw new Error(MESSAGES.forbidden);
+
+    await EditBusiness.create({ business: business._id, businessName, bio, employeeCount });
+    await Business.findByIdAndUpdate(business._id, { hasEdit: true }, { runValidators: true });
+
+    const user = await User.findById(userID);
+
+    const admins = await User.find({ role: 'admin' }).select('_id');
+    await craeteMessages(admins,business,'There is a new business edit application!');
+
+    return returnToken(user);
+};
+
+async function craeteMessages(admins, business, context) {
+
     const messages = admins.map(admin => ({
         user: admin._id,
         business: business._id,
-        context: "There is a new business application!",
-        read: false,
+        context,
+        read: false
     }));
-  
+
     await Message.insertMany(messages);
-  
+
     const io = getIO();
     messages.forEach(message => {
         io.to(`user_${message.user}`).emit("message");
     });
-    
-    return returnToken(user);
-};
-
-exports.editBusiness = async (userID, businessName, bio, employeeCount) => {
-    const business = await Business.find({ owner: userID }).populate('owner');
-
-    if (!business) throw new Error(MESSAGES.unauthorized);
-
-    await Business.findByIdAndUpdate(business._id, { businessName, bio, employeeCount }, { runValidators: true });
-
-    const user = await User.findById(userID);
-
-    return returnToken(user);
-};
+}

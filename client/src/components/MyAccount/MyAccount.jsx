@@ -56,6 +56,10 @@ export const MyAccount = () => {
         navigate('/business/apply');
     }
 
+    function onBusinessEditClick() {
+        navigate('/business/edit');
+    }
+
     return (
         <>
             {isPageLoading && <Loader />}
@@ -70,6 +74,7 @@ export const MyAccount = () => {
                         {(!userBackend.isApproved && userBackend.role !== 'hirer') && <Field onClick={onNameClick} icon={'edit'} text={'change-name'} />}
                         <Field onClick={onPhoneClick} icon={'phone'} text={'change-phone'} />
                         {(!userBackend.isApproved && userBackend.role === 'seeker') && <Field onClick={onBusinessApplyClick} icon={'business'} text={'apply-business'} />}
+                        {(userBackend.isApproved && userBackend.role === 'hirer') && <Field onClick={onBusinessEditClick} icon={'business'} text={'edit-business'} />}
                     </div>
                     <div className={styles['boxes']}>
                         <Box onClick={() => { navigate('/files') }} icon={'folder_shared'} length={userBackend.files?.length || '0'} text={'my-files'} />
@@ -77,7 +82,7 @@ export const MyAccount = () => {
                     </div>
                 </div>}
             </>}
-            {!isPageLoading && error && <Page404 errorLoading={true}/>}
+            {!isPageLoading && error && <Page404 errorLoading={true} />}
         </>
     )
 }

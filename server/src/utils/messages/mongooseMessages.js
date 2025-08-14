@@ -83,5 +83,13 @@ exports.MESSAGES = {
         read: {
             required: "Read is required",
         }
+    },
+    EditBusiness: {
+        business: {
+            required: "Business is required"
+        },
+        hasEdit: {
+            required: "hasEdit is required"
+        }
     }
 }

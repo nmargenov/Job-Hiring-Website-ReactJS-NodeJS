@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
-const { MESSAGES } = require('../utils/messages/mongooseMessages');
+const { MESSAGES } = require('../utils/messages/mongooseMessages')
 
-const businessSchema = new mongoose.Schema({
-    owner: {
+const editBusinessSchema = new mongoose.Schema({
+    business: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: [true, MESSAGES.Business.owner.required],
+        ref: 'Business',
+        required: [true, MESSAGES.EditBusiness.business.required],
         unique: true
     },
     businessName: {
@@ -30,13 +30,8 @@ const businessSchema = new mongoose.Schema({
         default: 1,
         min: [1, MESSAGES.Business.employeeCount.length]
     },
-    hasEdit: {
-        type: Boolean,
-        default: false,
-        required: [true, MESSAGES.EditBusiness.hasEdit.required],
-    }
 }, { timestamps: true });
 
-const Business = mongoose.model("Business", businessSchema);
+const EditBusiness = mongoose.model("EditBusiness", editBusinessSchema);
 
-module.exports = Business
+module.exports = EditBusiness
