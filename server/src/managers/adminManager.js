@@ -138,6 +138,7 @@ exports.declineBusinessEdit = async (userID, businessID) => {
     if (!businessEdit) throw new Error(MESSAGES.forbidden);
 
     await EditBusiness.findOneAndDelete({ business: businessID });
+    await Business.findByIdAndUpdate(businessID, { hasEdit: false }, { runValidators: true });
 
     const message = await Message.create({
         user: user._id,

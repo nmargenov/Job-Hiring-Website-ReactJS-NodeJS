@@ -40,7 +40,7 @@ exports.returnToken = async (user) => {
     }
     else {
         const userBusiness = await User.findById(user._id).populate('business');
-        payload['businessID'] = userBusiness._id
+        payload['businessID'] = userBusiness.business._id
         payload['businessName'] = userBusiness.business.businessName;
     }
 

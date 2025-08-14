@@ -23,6 +23,7 @@ import { BusinessApplicationsReview } from './components/Admin/BusinessApplicati
 import { AdminProvider } from './contexts/AdminContext'
 import { Business } from './components/Admin/Business/Business'
 import { Page404 } from './components/Page404/Page404'
+import { Edit } from './components/Business/Edit/Edit'
 
 function App() {
 
@@ -52,6 +53,11 @@ function App() {
                         <Route path="/business/apply" element={
                           <MustBeSetupAndLogged>
                             <Apply />
+                          </MustBeSetupAndLogged>
+                        } />
+                        <Route path="/business/edit" element={
+                          <MustBeSetupAndLogged>
+                            <Edit />
                           </MustBeSetupAndLogged>
                         } />
                         <Route path="/admin" element={

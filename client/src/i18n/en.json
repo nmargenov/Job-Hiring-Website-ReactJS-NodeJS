@@ -88,7 +88,7 @@
     "apply": "Apply",
     "businessBio": "Business Description",
     "employeeCount": "Number of Employees",
-    "already-submitted": "You've submitted your business application!",
+    "already-submitted": "You've submitted your application!",
     "notifications": "Notifications",
     "loading": "Loading",
     "no-more": "No more notifications",
@@ -104,5 +104,6 @@
     "review": "Applications review",
     "no-applications": "There are no applications",
     "load-more": "Load more",
-    "no-more-load": "No more to load"
+    "no-more-load": "No more to load",
+    "edit-business":"Edit business"
 }

@@ -18,7 +18,7 @@ exports.apply = async (userID, businessName, bio, employeeCount) => {
 
     const admins = await User.find({ role: 'admin' }).select('_id');
 
-    await craeteMessages(admins,business,'There is a new business application!');
+    await craeteMessages(admins, business, 'There is a new business application!');
 
     return returnToken(user);
 };
@@ -36,10 +36,28 @@ exports.editBusiness = async (userID, businessID, businessName, bio, employeeCou
     const user = await User.findById(userID);
 
     const admins = await User.find({ role: 'admin' }).select('_id');
-    await craeteMessages(admins,business,'There is a new business edit application!');
+    await craeteMessages(admins, business, 'There is a new business edit application!');
 
     return returnToken(user);
 };
+
+exports.getEdit = async (userID, businessID) => {
+    let business = await EditBusiness.findOne({ business: businessID }).populate('business');
+    if (business && business?.business.owner != userID) throw new Error(MESSAGES.unauthorized);
+
+    if (business) {
+        const toReturn = business.toObject();;
+        toReturn['hasEdit'] = true
+        return toReturn;
+    }
+    
+    console.log(businessID);
+    business = await Business.findById(businessID);
+    console.log(business);
+    if (business.owner != userID) throw new Error(MESSAGES.unauthorized);
+
+    return business;
+}
 
 async function craeteMessages(admins, business, context) {
 
