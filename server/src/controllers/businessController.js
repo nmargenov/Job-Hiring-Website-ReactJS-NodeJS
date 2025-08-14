@@ -24,11 +24,12 @@ router.post(PATHS.businessApply, mustBeAuth, MustBeSetup, async (req, res) => {
 
 router.patch(PATHS.businessID, mustBeAuth, MustBeSetup, async (req, res) => {
     try {
+        console.log(req.body)
         const userID = req.user._id;
         const businessID = req.params?.businessID;
         const businessName = req.body?.businessName?.trim();
         const bio = req.body?.bio?.trim();
-        const employeeCount = req.body?.employeeCount?.trim();
+        const employeeCount = req.body?.employeeCount?.toString().trim();
         const token = await editBusiness(userID, businessID, businessName, bio, employeeCount);
         res.status(200).json(token);
     } catch (err) {

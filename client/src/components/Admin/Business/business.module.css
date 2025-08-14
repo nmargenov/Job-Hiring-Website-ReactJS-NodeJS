@@ -92,7 +92,6 @@
 }
 
 .requester-info {
-    padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -100,11 +99,20 @@
 
 .row {
     display: flex;
+    margin: 0 20px;
     flex-direction: column;
+}
+
+.requester-info h3{
+    margin: 20px 20px 0 20px;
 }
 
 .row span:first-of-type {
     color: gray;
+}
+
+.requester-info:last-of-type .row:last-of-type{
+    margin-bottom: 20px;
 }
 
 .design-button {
@@ -156,6 +164,8 @@
     height: fit-content;
     gap: 10px;
 }
+
+
 
 @media (max-width: 600px) {
     .business-div {

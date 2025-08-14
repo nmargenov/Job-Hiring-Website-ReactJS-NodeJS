@@ -6,7 +6,9 @@ const paths = {
     acceptBusiness: "/admin/:businessID/accept",
     declineBusiness: "/admin/:businessID/decline",
     business: "/admin/business/:businessID",
-    businesses: "/admin/businesses"
+    businesses: "/admin/businesses",
+    acceptEdit: "/admin/:businessID/accept-edit",
+    declineEdit: "/admin/:businessID/decline-edit"
 }
 
 export const getPendingBusinesses = (page) => {
@@ -34,4 +36,14 @@ export const declineBusiness = (businessID) => {
 export const getBusiness = (businessID) => {
     const url = BASE_URL + paths.business.replace(':businessID', businessID);
     return get(url);
+}
+
+export const acceptBusinessEdit = (businessID) => {
+    const url = BASE_URL + paths.acceptEdit.replace(':businessID', businessID);
+    return post(url);
+}
+
+export const declineBusinessEdit = (businessID) => {
+    const url = BASE_URL + paths.declineEdit.replace(':businessID', businessID);
+    return post(url);
 }

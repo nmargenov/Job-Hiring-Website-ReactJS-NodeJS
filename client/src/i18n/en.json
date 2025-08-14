@@ -105,5 +105,6 @@
     "no-applications": "There are no applications",
     "load-more": "Load more",
     "no-more-load": "No more to load",
-    "edit-business":"Edit business"
+    "edit-business":"Edit business",
+    "edit-info":"Edit business request"
 }

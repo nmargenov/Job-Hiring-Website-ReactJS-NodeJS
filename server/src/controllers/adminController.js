@@ -87,11 +87,11 @@ router.post(PATHS.acceptEditBusiness, mustBeAuth, MustBeSetup, async (req, res) 
     try {
         const userID = req.user._id;
         const businessID = req.params.businessID;
-        const user = await AcceptBusinessEdit(userID, businessID);
+        const business = await AcceptBusinessEdit(userID, businessID);
         const io = getIO();
-        io.to(`user_${user._id}`).emit("roleChanged");
-        io.to(`user_${user._id}`).emit("message");
-        res.status(200).json(user);
+        io.to(`user_${business.owner._id}`).emit("roleChanged");
+        io.to(`user_${business.owner._id}`).emit("message");
+        res.status(200).json(business);
     } catch (err) {
         const error = formatErrorMessage(err);
         res.status(400).send({ message: error });

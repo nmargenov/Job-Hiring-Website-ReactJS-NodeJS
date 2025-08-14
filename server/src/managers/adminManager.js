@@ -106,14 +106,14 @@ exports.AcceptBusinessEdit = async (userID, businessID) => {
     const businessEdit = await EditBusiness.findOne({ business: businessID });
     if (!businessEdit) throw new Error(MESSAGES.forbidden);
 
-    await Business.findByIdAndUpdate(businessID,
+    const newBusiness = await Business.findByIdAndUpdate(businessID,
         {
             businessName: businessEdit.businessName,
             bio: businessEdit.bio,
             employeeCount: businessEdit.employeeCount,
             hasEdit: false
         }
-        , { runValidators: true });
+        , { runValidators: true, new: true }).populate('owner');
 
     await EditBusiness.findOneAndDelete({ business: businessID });
 
@@ -124,7 +124,7 @@ exports.AcceptBusinessEdit = async (userID, businessID) => {
     });
     await deleteMessageForAdminsBusiness(businessID);
 
-    return user;
+    return newBusiness;
 }
 
 exports.declineBusinessEdit = async (userID, businessID) => {
@@ -171,9 +171,16 @@ exports.deleteBusiness = async (userID, businessID) => {
 exports.getBusiness = async (userID, businessID) => {
     await checkIfAdmin(userID);
 
-    const businesses = await Business.findById(businessID).populate('owner');
+    const business = await Business.findById(businessID).populate('owner');
 
-    return businesses;
+    const businessObj = business.toObject();
+
+    if (business.hasEdit) {
+        const editObj = await EditBusiness.findOne({ business: business._id });
+        businessObj['edit'] = editObj;
+    }
+
+    return businessObj;
 }
 
 async function checkIfAdmin(userID) {

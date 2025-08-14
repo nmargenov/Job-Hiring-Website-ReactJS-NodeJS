@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './business.module.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { acceptBusiness, declineBusiness, getBusiness } from '../../../services/adminService';
+import { acceptBusiness, acceptBusinessEdit, declineBusiness, declineBusinessEdit, getBusiness } from '../../../services/adminService';
 import { Loader } from '../../shared/Loader/Loader';
 import { checkPhotoURL } from '../../../utils/checkPhotoURL';
 import { useTranslation } from 'react-i18next';
@@ -14,6 +14,7 @@ export const Business = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [business, setBusiness] = useState(null);
     const [errorMsg, setErrorMsg] = useState('');
+    const [editErrorMsg, setEditErrorMsg] = useState('');
     const [error, setError] = useState(false);
 
     const navigate = useNavigate();
@@ -62,7 +63,36 @@ export const Business = () => {
             }).catch((err) => {
                 setErrorMsg(err.message);
                 setIsLoading(false);
-            })
+            });
+    }
+
+    function onAcceptEditClick() {
+        setIsLoading(true);
+        acceptBusinessEdit(business._id)
+            .then((data) => {
+                setEditErrorMsg('');
+                setBusiness(data);
+                setIsLoading(false);
+            }).catch((err) => {
+                setEditErrorMsg(err.message);
+                setIsLoading(false);
+            });
+    }
+
+    function onDeclineEditClick() {
+        setIsLoading(true);
+        declineBusinessEdit(business._id)
+            .then((data) => {
+                setEditErrorMsg('');
+                setBusiness(prev => ({
+                    ...prev,
+                    hasEdit:false
+                }));
+                setIsLoading(false);
+            }).catch((err) => {
+                setEditErrorMsg(err.message);
+                setIsLoading(false);
+            });
     }
 
     return (
@@ -107,6 +137,32 @@ export const Business = () => {
                             </div>
                         </div>}
                     </div>
+                    {business.hasEdit &&
+                        <div className={styles['requester-info']}>
+                            <h3>{t('edit-info')}</h3>
+                            <div className={styles['row']}>
+                                <span>{t('businessName')}</span>
+                                <span>{business.edit.businessName}</span>
+                            </div>
+                            <div className={styles['row']}>
+                                <span>{t('businessBio')}</span>
+                                <span>{business.edit.bio}</span>
+                            </div>
+                            <div className={styles['row']}>
+                                <span>{t('employeeCount')}</span>
+                                <span>{business.edit.employeeCount}</span>
+                            </div>
+                            <div className={styles['actions']}>
+                                <div className={styles['error-msg']}>
+                                    <span>{editErrorMsg}</span>
+                                </div>
+                                <div className={styles['buttons']}>
+                                    <button disabled={isLoading} onClick={onDeclineEditClick} className={styles['design-button']}>{t('decline')}</button>
+                                    <input disabled={isLoading} onClick={onAcceptEditClick} type='submit' value={t('approve')} />
+                                </div>
+                            </div>
+                        </div>
+                    }
                     <div className={styles['requester-info']}>
                         <h3>{t('requester-info')}</h3>
                         <div className={styles['row']}>

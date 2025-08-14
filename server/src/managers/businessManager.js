@@ -43,16 +43,16 @@ exports.editBusiness = async (userID, businessID, businessName, bio, employeeCou
 
 exports.getEdit = async (userID, businessID) => {
     let business = await EditBusiness.findOne({ business: businessID }).populate('business');
-    if (business && business?.business.owner != userID) throw new Error(MESSAGES.unauthorized);
+    if (business && business?.business?.owner != userID) throw new Error(MESSAGES.unauthorized);
 
     if (business) {
-        const toReturn = business.toObject();;
+        const toReturn = business.toObject();
         toReturn['hasEdit'] = true
         return toReturn;
     }
     
     business = await Business.findById(businessID);
-    if (business.owner != userID) throw new Error(MESSAGES.unauthorized);
+    if (business?.owner != userID) throw new Error(MESSAGES.unauthorized);
 
     return business;
 }
