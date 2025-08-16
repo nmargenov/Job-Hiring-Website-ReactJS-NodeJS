@@ -210,6 +210,33 @@ exports.makeAdmin = async (userID, adminEmail) => {
     return user;
 }
 
+exports.deleteAdmin = async (userID, adminEmail) => {
+    const admin = await checkIfAdmin(userID);
+
+    const headAdmin = await HeadAdmin.findOne({ email: admin.email });
+    if (!headAdmin) throw new Error(MESSAGES.mustBeHeadAdmin);
+
+    const user = await User.findOne({ email: adminEmail });
+    if (!user) throw new Error(MESSAGES.userNotFound);
+    if (user.role !== 'admin') throw new Error(MESSAGES.userNotAdmin);
+
+    if (user.isApproved) user.role = "hirer";
+    if (!user.isApproved) user.role = 'seeker';
+
+    await user.save();
+
+    const message = await Message.create({
+        user: user._id,
+        context: "You are no longer admin!",
+        read: false
+    });
+
+    const io = getIO();
+    io.to(`user_${user._id}`).emit("roleChanged");
+    io.to(`user_${user._id}`).emit("message");
+
+    return user;
+}
 
 async function checkIfAdmin(userID) {
     const admin = await User.findById(userID);
