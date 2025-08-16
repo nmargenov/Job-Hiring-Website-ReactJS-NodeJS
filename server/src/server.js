@@ -13,9 +13,12 @@ expressConfig(app);
 app.use(router);
 
 const { initSocket } = require("./socket.js");
+const { syncHeadAdmin } = require("./config/headAdminSync.js");
 
 const server = http.createServer(app);
 const io = initSocket(server);
+
+syncHeadAdmin();
 
 server.listen(PORT, () => {
     console.log(`Server (API + WebSocket) running on port ${PORT}`);
