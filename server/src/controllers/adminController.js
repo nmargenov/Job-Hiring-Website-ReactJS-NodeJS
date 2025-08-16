@@ -1,4 +1,4 @@
-const { acceptBusiness, declineBusiness, deleteBusiness, getPendingBusinesses, getBusiness, getBusinesses, AcceptBusinessEdit, declineBusinessEdit } = require('../managers/adminManager');
+const { acceptBusiness, declineBusiness, deleteBusiness, getPendingBusinesses, getBusiness, getBusinesses, AcceptBusinessEdit, declineBusinessEdit, makeAdmin, deleteAdmin } = require('../managers/adminManager');
 const { mustBeAuth } = require('../middlewares/authMiddleware');
 const { MustBeSetup } = require('../middlewares/isSetupMiddleware');
 const { formatErrorMessage } = require('../utils/errorMessage');
@@ -105,6 +105,30 @@ router.post(PATHS.declineEditBusiness, mustBeAuth, MustBeSetup, async (req, res)
         const user = await declineBusinessEdit(userID, businessID);
         const io = getIO();
         io.to(`user_${user._id}`).emit("message");
+        res.status(200).json(user);
+    } catch (err) {
+        const error = formatErrorMessage(err);
+        res.status(400).send({ message: error });
+    }
+});
+
+router.post(PATHS.makeAdmin, mustBeAuth, MustBeSetup, async (req, res) => {
+    try {
+        const userID = req.user._id;
+        const adminEmail = req.params.email;
+        const user = await makeAdmin(userID, adminEmail);
+        res.status(200).json(user);
+    } catch (err) {
+        const error = formatErrorMessage(err);
+        res.status(400).send({ message: error });
+    }
+});
+
+router.delete(PATHS.makeAdmin, mustBeAuth, MustBeSetup, async (req, res) => {
+    try {
+        const userID = req.user._id;
+        const adminEmail = req.params.email;
+        const user = await deleteAdmin(userID, adminEmail);
         res.status(200).json(user);
     } catch (err) {
         const error = formatErrorMessage(err);
