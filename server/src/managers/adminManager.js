@@ -5,6 +5,7 @@ const User = require("../models/User");
 const { MESSAGES } = require("../utils/messages/Messages");
 const { getIO } = require("../socket.js");
 const EditBusiness = require("../models/EditBusiness.js");
+const HeadAdmin = require("../models/HeadAdmin.js");
 
 exports.acceptBusiness = async (userID, businessID) => {
     await checkIfAdmin(userID);
@@ -183,6 +184,33 @@ exports.getBusiness = async (userID, businessID) => {
     return businessObj;
 }
 
+exports.makeAdmin = async (userID, adminEmail) => {
+    const admin = await checkIfAdmin(userID);
+
+    const headAdmin = await HeadAdmin.findOne({ email: admin.email });
+    if (!headAdmin) throw new Error(MESSAGES.mustBeHeadAdmin);
+
+    const user = await User.findOne({ email: adminEmail });
+    if (!user) throw new Error(MESSAGES.userNotFound);
+    if (user.role === 'admin') throw new Error(MESSAGES.alreadyAdmin);
+
+    user.role = "admin";
+    await user.save();
+
+    const message = await Message.create({
+        user: user._id,
+        context: "You are now admin!",
+        read: false
+    });
+
+    const io = getIO();
+    io.to(`user_${user._id}`).emit("roleChanged");
+    io.to(`user_${user._id}`).emit("message");
+
+    return user;
+}
+
+
 async function checkIfAdmin(userID) {
     const admin = await User.findById(userID);
     if (!admin || !admin.isSetup || admin.role !== "admin") {
@@ -201,6 +229,7 @@ async function checkBusiness(businessID) {
 
     return business;
 }
+
 
 const deleteMessageForAdminsBusiness = async (businessID) => {
     await Message.deleteMany({ business: businessID })

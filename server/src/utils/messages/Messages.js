@@ -14,5 +14,8 @@ exports.MESSAGES={
     invalidJobId:"Invalid job id",
     alreadyArchived:"Job is already archived",
     maxFiles:"You already have the maximum allowed files of 4",
-    fileNotFound:"File not found!"
+    fileNotFound:"File not found!",
+    userNotAdmin:"User is not admin!",
+    mustBeHeadAdmin:"Head Admin permission only!",
+    alreadyAdmin:"User is already admin!"
 }
