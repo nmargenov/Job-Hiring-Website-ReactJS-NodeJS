@@ -24,6 +24,7 @@ import { AdminProvider } from './contexts/AdminContext'
 import { Business } from './components/Admin/Business/Business'
 import { Page404 } from './components/Page404/Page404'
 import { Edit } from './components/Business/Edit/Edit'
+import { ReviewAdmins } from './components/Admin/ReviewAdmins/ReviewAdmins'
 
 function App() {
 
@@ -63,6 +64,11 @@ function App() {
                         <Route path="/admin" element={
                           <MustBeSetupAndLogged>
                             <Admin />
+                          </MustBeSetupAndLogged>
+                        } />
+                        <Route path="/admin/review" element={
+                          <MustBeSetupAndLogged>
+                            <ReviewAdmins />
                           </MustBeSetupAndLogged>
                         } />
                         <Route path="/admin/business-review" element={

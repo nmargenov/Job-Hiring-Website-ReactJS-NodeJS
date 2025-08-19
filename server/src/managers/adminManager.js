@@ -238,6 +238,20 @@ exports.deleteAdmin = async (userID, adminEmail) => {
     return user;
 }
 
+exports.findAdmins = async (userID, page, limit) => {
+    const admin = await checkIfAdmin(userID);
+
+    const headAdmin = await HeadAdmin.findOne({ email: admin.email });
+    if (!headAdmin) throw new Error(MESSAGES.mustBeHeadAdmin);
+
+    const admins = await User.find({ role: 'admin' })
+        .sort({ createdAt: -1 })
+        .skip(page * limit)
+        .limit(parseInt(limit));
+
+    return admins;
+}
+
 async function checkIfAdmin(userID) {
     const admin = await User.findById(userID);
     if (!admin || !admin.isSetup || admin.role !== "admin") {

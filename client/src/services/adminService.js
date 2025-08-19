@@ -8,7 +8,8 @@ const paths = {
     business: "/admin/business/:businessID",
     businesses: "/admin/businesses",
     acceptEdit: "/admin/:businessID/accept-edit",
-    declineEdit: "/admin/:businessID/decline-edit"
+    declineEdit: "/admin/:businessID/decline-edit",
+    admin: "/admin/"
 }
 
 export const getPendingBusinesses = (page) => {
@@ -46,4 +47,10 @@ export const acceptBusinessEdit = (businessID) => {
 export const declineBusinessEdit = (businessID) => {
     const url = BASE_URL + paths.declineEdit.replace(':businessID', businessID);
     return post(url);
+}
+
+export const getAdmin = (page) => {
+    const params = new URLSearchParams({ page, limit: 5 });
+    const url = `${BASE_URL}${paths.admin}?${params.toString()}`;
+    return get(url);
 }

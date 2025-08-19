@@ -6,13 +6,16 @@ export const Admin = () => {
     function onBusinessApplicationsClick() {
         navigate('/admin/business-review')
     }
+    function onReviewClick() {
+        navigate('/admin/review')
+    }
     return (
         <>
             <div className={styles['action-div']}>
                 <ul>
                     <li onClick={onBusinessApplicationsClick}>Review business account applications</li>
                     <li>Review job list requests</li>
-                    <li>Review admins</li>
+                    <li onClick={onReviewClick}>Review admins</li>
                 </ul>
             </div>
         </>

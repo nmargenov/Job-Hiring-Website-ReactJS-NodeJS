@@ -1,4 +1,4 @@
-const { acceptBusiness, declineBusiness, deleteBusiness, getPendingBusinesses, getBusiness, getBusinesses, AcceptBusinessEdit, declineBusinessEdit, makeAdmin, deleteAdmin } = require('../managers/adminManager');
+const { acceptBusiness, declineBusiness, deleteBusiness, getPendingBusinesses, getBusiness, getBusinesses, AcceptBusinessEdit, declineBusinessEdit, makeAdmin, deleteAdmin, findAdmins } = require('../managers/adminManager');
 const { mustBeAuth } = require('../middlewares/authMiddleware');
 const { MustBeSetup } = require('../middlewares/isSetupMiddleware');
 const { formatErrorMessage } = require('../utils/errorMessage');
@@ -129,6 +129,18 @@ router.delete(PATHS.makeAdmin, mustBeAuth, MustBeSetup, async (req, res) => {
         const userID = req.user._id;
         const adminEmail = req.params.email;
         const user = await deleteAdmin(userID, adminEmail);
+        res.status(200).json(user);
+    } catch (err) {
+        const error = formatErrorMessage(err);
+        res.status(400).send({ message: error });
+    }
+});
+
+router.get('/', mustBeAuth, MustBeSetup, async (req, res) => {
+    try {
+        const userID = req.user._id;
+        const { page = 0, limit = 5 } = req.query;
+        const user = await findAdmins(userID, page, limit);
         res.status(200).json(user);
     } catch (err) {
         const error = formatErrorMessage(err);

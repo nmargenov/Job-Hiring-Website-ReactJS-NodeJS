@@ -27,6 +27,5 @@ export function timeAgo(timestamp) {
         return `${diffInDays} day${diffInDays !== 1 ? 's' : ''} ago`;
     }
 
-    // If you want to show exact date for >30 days ago, you can format here
     return past.toLocaleDateString();
 }
