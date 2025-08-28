@@ -1,4 +1,4 @@
-const { acceptBusiness, declineBusiness, deleteBusiness, getPendingBusinesses, getBusiness, getBusinesses, AcceptBusinessEdit, declineBusinessEdit, makeAdmin, deleteAdmin, findAdmins } = require('../managers/adminManager');
+const { acceptBusiness, declineBusiness, deleteBusiness, getPendingBusinesses, getBusiness, getBusinesses, AcceptBusinessEdit, declineBusinessEdit, makeAdmin, deleteAdmin, findAdmins, findUsers } = require('../managers/adminManager');
 const { mustBeAuth } = require('../middlewares/authMiddleware');
 const { MustBeSetup } = require('../middlewares/isSetupMiddleware');
 const { formatErrorMessage } = require('../utils/errorMessage');
@@ -148,4 +148,15 @@ router.get('/', mustBeAuth, MustBeSetup, async (req, res) => {
     }
 });
 
+router.get(PATHS.adminEmail, mustBeAuth, MustBeSetup, async (req, res) => {
+    try {
+        const userID = req.user._id;
+        const adminEmail = req.params.email;
+        const users = await findUsers(userID, adminEmail);
+        res.status(200).json(users);
+    } catch (err) {
+        const error = formatErrorMessage(err);
+        res.status(400).send({ message: error });
+    }
+});
 module.exports = router;

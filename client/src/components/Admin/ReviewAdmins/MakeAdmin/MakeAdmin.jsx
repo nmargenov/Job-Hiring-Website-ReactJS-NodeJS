@@ -3,6 +3,7 @@ import { useForm } from '../../../../hooks/useForm';
 import { Form } from '../../../shared/Form/Form';
 import { FormInput } from '../../../shared/FormInput/FormInput';
 import styles from './makeAdmin.module.css';
+import { getUsers } from '../../../../services/adminService';
 
 export const MakeAdmin = () => {
     const initialValues = {
@@ -15,7 +16,12 @@ export const MakeAdmin = () => {
 
     function onSubmit(e) {
         onSubmitHandler(e);
-        console.log("test")
+        getUsers(values.email)
+            .then((data)=>{
+                console.log(data);
+            }).catch((err)=>{
+                console.log(err);
+            })
     }
 
     return (

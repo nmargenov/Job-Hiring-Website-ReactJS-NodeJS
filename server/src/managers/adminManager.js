@@ -219,8 +219,8 @@ exports.deleteAdmin = async (userID, adminEmail) => {
     const user = await User.findOne({ email: adminEmail });
     if (!user) throw new Error(MESSAGES.userNotFound);
     if (user.role !== 'admin') throw new Error(MESSAGES.userNotAdmin);
-    
-    if(userID == user._id) throw new Error(MESSAGES.selfRemove);
+
+    if (userID == user._id) throw new Error(MESSAGES.selfRemove);
 
     if (user.isApproved) user.role = "hirer";
     if (!user.isApproved) user.role = 'seeker';
@@ -257,6 +257,17 @@ exports.findAdmins = async (userID, page, limit) => {
         admins,
         hasMore: total > (parseInt(page) + 1) * parseInt(limit)
     }
+}
+
+exports.findUsers = async (userID, email) => {
+    const admin = await checkIfAdmin(userID);
+
+    const headAdmin = await HeadAdmin.findOne({ email: admin.email });
+    if (!headAdmin) throw new Error(MESSAGES.mustBeHeadAdmin);
+
+    const users = await User.find({email: {$regex: email, $options: 'i'}});
+
+    return users;
 }
 
 async function checkIfAdmin(userID) {

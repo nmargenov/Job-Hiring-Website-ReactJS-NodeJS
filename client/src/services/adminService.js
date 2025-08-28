@@ -61,3 +61,8 @@ export const removeAdmin = (email) => {
     const url = BASE_URL + paths.oneAdmin.replace(":email", email);
     return del(url);
 }
+
+export const getUsers = (email) => {
+    const url = BASE_URL + paths.oneAdmin.replace(":email", email);
+    return get(url);
+}
