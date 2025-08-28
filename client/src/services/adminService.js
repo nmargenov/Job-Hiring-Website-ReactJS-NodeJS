@@ -1,5 +1,5 @@
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
-import { get, post } from "./requester";
+import { del, get, post } from "./requester";
 
 const paths = {
     pending: '/admin/pending-businesses',
@@ -9,7 +9,9 @@ const paths = {
     businesses: "/admin/businesses",
     acceptEdit: "/admin/:businessID/accept-edit",
     declineEdit: "/admin/:businessID/decline-edit",
-    admin: "/admin/"
+    admin: "/admin/",
+    makeAdmin: "/admin/make",
+    oneAdmin: "/admin/:email"
 }
 
 export const getPendingBusinesses = (page) => {
@@ -53,4 +55,9 @@ export const getAdmin = (page) => {
     const params = new URLSearchParams({ page, limit: 5 });
     const url = `${BASE_URL}${paths.admin}?${params.toString()}`;
     return get(url);
+}
+
+export const removeAdmin = (email) => {
+    const url = BASE_URL + paths.oneAdmin.replace(":email", email);
+    return del(url);
 }

@@ -115,7 +115,7 @@ router.post(PATHS.declineEditBusiness, mustBeAuth, MustBeSetup, async (req, res)
 router.post(PATHS.makeAdmin, mustBeAuth, MustBeSetup, async (req, res) => {
     try {
         const userID = req.user._id;
-        const adminEmail = req.params.email;
+        const adminEmail = req.body?.email?.trim();
         const user = await makeAdmin(userID, adminEmail);
         res.status(200).json(user);
     } catch (err) {
@@ -124,7 +124,7 @@ router.post(PATHS.makeAdmin, mustBeAuth, MustBeSetup, async (req, res) => {
     }
 });
 
-router.delete(PATHS.makeAdmin, mustBeAuth, MustBeSetup, async (req, res) => {
+router.delete(PATHS.adminEmail, mustBeAuth, MustBeSetup, async (req, res) => {
     try {
         const userID = req.user._id;
         const adminEmail = req.params.email;

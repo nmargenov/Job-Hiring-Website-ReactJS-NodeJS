@@ -29,5 +29,6 @@ exports.PATHS={
     acceptEditBusiness:"/:businessID/accept-edit",
     declineEditBusiness:"/:businessID/decline-edit",
     editBusiness:"/:businessID/edit",
-    makeAdmin:"/make"
+    makeAdmin:"/make",
+    adminEmail:"/:email"
 }

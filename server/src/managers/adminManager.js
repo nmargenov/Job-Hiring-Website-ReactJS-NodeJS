@@ -219,6 +219,8 @@ exports.deleteAdmin = async (userID, adminEmail) => {
     const user = await User.findOne({ email: adminEmail });
     if (!user) throw new Error(MESSAGES.userNotFound);
     if (user.role !== 'admin') throw new Error(MESSAGES.userNotAdmin);
+    
+    if(userID == user._id) throw new Error(MESSAGES.selfRemove);
 
     if (user.isApproved) user.role = "hirer";
     if (!user.isApproved) user.role = 'seeker';
@@ -249,7 +251,12 @@ exports.findAdmins = async (userID, page, limit) => {
         .skip(page * limit)
         .limit(parseInt(limit));
 
-    return admins;
+    const total = await User.countDocuments({ role: "admin" });
+
+    return {
+        admins,
+        hasMore: total > (parseInt(page) + 1) * parseInt(limit)
+    }
 }
 
 async function checkIfAdmin(userID) {

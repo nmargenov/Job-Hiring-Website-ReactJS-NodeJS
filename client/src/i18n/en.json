@@ -106,5 +106,9 @@
     "load-more": "Load more",
     "no-more-load": "No more to load",
     "edit-business":"Edit business",
-    "edit-info":"Edit business request"
+    "edit-info":"Edit business request",
+    "make-admin":"Make admin",
+    "admin-list":"Admin list",
+    "remove-admin":"Remove admin",
+    "no-more-admins":"No more admins"
 }

@@ -17,5 +17,6 @@ exports.MESSAGES={
     fileNotFound:"File not found!",
     userNotAdmin:"User is not admin!",
     mustBeHeadAdmin:"Head Admin permission only!",
-    alreadyAdmin:"User is already admin!"
+    alreadyAdmin:"User is already admin!",
+    selfRemove:"You cannot remove your own admin rights!"
 }
