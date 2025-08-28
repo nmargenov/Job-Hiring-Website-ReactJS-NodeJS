@@ -6,6 +6,7 @@ import styles from './makeAdmin.module.css';
 import { getUsers } from '../../../../services/adminService';
 import { Loader } from '../../../shared/Loader/Loader';
 import { useState } from 'react';
+import { UserListItem } from './userListItem/UserListItem';
 
 export const MakeAdmin = ({ isLoading, setIsLoading }) => {
     const initialValues = {
@@ -25,13 +26,12 @@ export const MakeAdmin = ({ isLoading, setIsLoading }) => {
         getUsers(values.email)
             .then((data) => {
                 setUsers(data);
-                setHasSearch()
                 setIsLoading(false);
                 setErrorMsg('');
                 setHasSearch(values.email);
             }).catch((err) => {
                 setErrorMsg(err.message);
-                setUsers([]); 
+                setUsers([]);
                 setIsLoading(false);
             })
     }
@@ -64,10 +64,19 @@ export const MakeAdmin = ({ isLoading, setIsLoading }) => {
                 </div>
             </div>}
             {!isLoading && hasSearch && !errorMsg &&
-            <>
-            {users.length > 0 && <></>}
-            {users.length === 0 && <h2>No results for {hasSearch}</h2>}
-            </>}
+                <>
+                    {users.length > 0 &&
+                        <>
+                            {users.map(u => {
+                                return <UserListItem key={u._id}
+                                    isLoading={isLoading}
+                                    setIsLoading={setIsLoading}
+                                    item={u}
+                                    setUsers={setUsers} />
+                            })}
+                        </>}
+                    {users.length === 0 && <h2>No results for {hasSearch}</h2>}
+                </>}
         </>
     )
 }
