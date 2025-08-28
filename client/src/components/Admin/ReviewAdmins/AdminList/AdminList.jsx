@@ -43,7 +43,10 @@ export const AdminList = ({ isLoading, setIsLoading }) => {
 
     return (
         <>
-            {isLoading && <Loader />}
+            {isLoading &&
+                <div className={styles['loader-div']}>
+                    <Loader />
+                </div>}
             {!isLoading &&
                 <ul>
                     {admins.map(admin => {

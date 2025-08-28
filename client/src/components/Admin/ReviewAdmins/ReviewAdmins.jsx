@@ -12,7 +12,7 @@ export const ReviewAdmins = () => {
     return (
         <div className={styles['main-div']}>
             {!isLoading && <StatePicker state={state} setState={setState}/>}
-            {state === 'make-admin' && <MakeAdmin/>}
+            {state === 'make-admin' && <MakeAdmin isLoading={isLoading} setIsLoading={setIsLoading} />}
             {state === 'admin-list' && <AdminList isLoading={isLoading} setIsLoading={setIsLoading} />}
         </div>
     )
