@@ -22,6 +22,10 @@ export const MakeAdmin = ({ isLoading, setIsLoading }) => {
 
     function onSubmit(e) {
         onSubmitHandler(e);
+        if(values.email.trim().length < 5) {
+            setErrorMsg('You must enter at least 5 characters!');
+            return;
+        }
         setIsLoading(true);
         getUsers(values.email)
             .then((data) => {
@@ -75,7 +79,7 @@ export const MakeAdmin = ({ isLoading, setIsLoading }) => {
                                     setUsers={setUsers} />
                             })}
                         </>}
-                    {users.length === 0 && <h2>No results for {hasSearch}</h2>}
+                    {users.length === 0 && <h2>{t('no-results')} {hasSearch}</h2>}
                 </>}
         </>
     )

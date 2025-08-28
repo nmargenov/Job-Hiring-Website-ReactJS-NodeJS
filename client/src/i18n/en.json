@@ -111,5 +111,7 @@
     "admin-list":"Admin list",
     "remove-admin":"Remove admin",
     "no-more-admins":"No more admins",
-    "search":"Search"
+    "search":"Search",
+    "no-results":"No results found for",
+    "search-user":"Search user"
 }

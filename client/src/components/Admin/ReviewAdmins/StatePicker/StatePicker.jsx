@@ -22,7 +22,7 @@ export const StatePicker = ({ state, setState }) => {
 
     return (
         <div className={styles['state-div']}>
-            <span tabIndex={0} onKeyDown={(e) => { handleKeyPress(e, onMakeAdminClick) }} className={state === 'make-admin' ? styles['active'] : null} onClick={onMakeAdminClick}>{t('make-admin')}</span>
+            <span tabIndex={0} onKeyDown={(e) => { handleKeyPress(e, onMakeAdminClick) }} className={state === 'make-admin' ? styles['active'] : null} onClick={onMakeAdminClick}>{t('search-user')}</span>
             <span tabIndex={0} onKeyDown={(e) => { handleKeyPress(e, onAdminsListClick) }} className={state === 'admin-list' ? styles['active'] : null} onClick={onAdminsListClick}>{t('admin-list')}</span>
         </div>
     )
