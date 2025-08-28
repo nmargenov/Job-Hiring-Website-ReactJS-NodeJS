@@ -66,3 +66,8 @@ export const getUsers = (email) => {
     const url = BASE_URL + paths.oneAdmin.replace(":email", email);
     return get(url);
 }
+
+export const makeAdmin = (email) => {
+    const url = BASE_URL + paths.makeAdmin;
+    return post(url, { email });
+}

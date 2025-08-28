@@ -2,7 +2,8 @@ import { useState } from 'react';
 import styles from './userListItem.module.css';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../../../../contexts/AuthContext';
-import { removeAdmin } from '../../../../../services/adminService';
+import { makeAdmin, removeAdmin } from '../../../../../services/adminService';
+import { checkPhotoURL } from '../../../../../utils/checkPhotoURL';
 
 export const UserListItem = ({ item, isLoading, setIsLoading, setUsers }) => {
 
@@ -21,7 +22,7 @@ export const UserListItem = ({ item, isLoading, setIsLoading, setUsers }) => {
                 setErrorMsg('');
                 setUsers(prev => prev.map(user => {
                     return user.email === item.email
-                        ? { ...user, role: 'seeker' }
+                        ? { ...user, role: data.role }
                         : user;
                 }));
             }).catch((err) => {
@@ -32,6 +33,19 @@ export const UserListItem = ({ item, isLoading, setIsLoading, setUsers }) => {
 
     function onAcceptMakeAdminClick() {
         setIsLoading(true);
+        makeAdmin(item.email)
+            .then((data) => {
+                setIsLoading(false);
+                setErrorMsg('');
+                setUsers(prev => prev.map(user => {
+                    return user.email === item.email
+                        ? { ...user, role: 'admin' }
+                        : user;
+                }));
+            }).catch((err) => {
+                setIsLoading(false);
+                setErrorMsg(err.message);
+            })
     }
 
     function onDeclineClick() {
