@@ -110,5 +110,6 @@
     "make-admin":"Make admin",
     "admin-list":"Admin list",
     "remove-admin":"Remove admin",
-    "no-more-admins":"No more admins"
+    "no-more-admins":"No more admins",
+    "search":"Search"
 }
