@@ -47,7 +47,7 @@ nav .section:first-of-type svg:focus {
     background-color: var(--header-color);
     width: 300px;
     height: 100%;
-    position: absolute;
+    position: fixed;
     right: 0;
     top: 0;
     z-index: 999;

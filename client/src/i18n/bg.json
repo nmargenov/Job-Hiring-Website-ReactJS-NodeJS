@@ -115,5 +115,11 @@
     "search":"Търси",
     "no-results":"Няма намерени резултати за",
     "search-user":"Търси потребител",
-    "create-job":"Нова обява"
+    "create-job":"Нова обява",
+    "title":"Заглавие",
+    "description":"Описание",
+    "salary":"Заплата",
+    "location":"Локация",
+    "experience":"Стаж",
+    "create":"Създай"
 }

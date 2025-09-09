@@ -25,6 +25,7 @@ import { Business } from './components/Admin/Business/Business'
 import { Page404 } from './components/Page404/Page404'
 import { Edit } from './components/Business/Edit/Edit'
 import { ReviewAdmins } from './components/Admin/ReviewAdmins/ReviewAdmins'
+import { CreateJob } from './components/Job/CreateJob/CreateJob'
 
 function App() {
 
@@ -59,6 +60,11 @@ function App() {
                         <Route path="/business/edit" element={
                           <MustBeSetupAndLogged>
                             <Edit />
+                          </MustBeSetupAndLogged>
+                        } />
+                        <Route path="/create-job" element={
+                          <MustBeSetupAndLogged>
+                            <CreateJob />
                           </MustBeSetupAndLogged>
                         } />
                         <Route path="/admin" element={
