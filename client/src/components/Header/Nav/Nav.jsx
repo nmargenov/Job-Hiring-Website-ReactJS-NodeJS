@@ -3,7 +3,7 @@ import { useConsent } from '../../../contexts/CookieConsentContext';
 import { useTheme } from "../../../contexts/ThemeContext";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faPhone, faCookie, faClose, faSignOut, faUser, faUserShield } from "@fortawesome/free-solid-svg-icons"
+import { faHome, faPhone, faCookie, faClose, faSignOut, faUser, faUserShield, faBriefcase } from "@fortawesome/free-solid-svg-icons"
 
 import { NavItem } from '../navItem/NavItem';
 
@@ -88,6 +88,7 @@ export const Nav = ({ toggleOpen, onKey, isOpen }) => {
                     <NavItem icon={faUser} destination={'/profile'} onClick={toggleOpen} text={t("account")} />}
                 {isAuthenticated && user.role === 'admin' && <NavItem destination={'/admin'} onClick={onAdminClick} icon={faUserShield} text={t("admin-panel")} />}
                 <NavItem destination={'/contacts'} icon={faPhone} text={t("contacts")} onClick={toggleOpen} />
+                {isAuthenticated && user.role === 'hirer' && <NavItem destination={'/create-job'} icon={faBriefcase} text={t("create-job")} onClick={toggleOpen} />}
                 <NavItem onClick={onCookieClick} icon={faCookie} text={t("cookie-title")} />
                 {isAuthenticated && <NavItem onClick={onLogoutClick} icon={faSignOut} text={t("logout")} />}
             </div>
