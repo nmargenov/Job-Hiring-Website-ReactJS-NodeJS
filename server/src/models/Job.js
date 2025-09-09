@@ -11,32 +11,42 @@ const jobSchema = new mongoose.Schema({
     title: {
         type: String,
         required: [true, MESSAGES.Job.title.required],
-        minLength: [5,MESSAGES.Job.title.length],
-        maxLength: [150,MESSAGES.Job.title.length],
+        minLength: [5, MESSAGES.Job.title.length],
+        maxLength: [150, MESSAGES.Job.title.length],
     },
     description: {
         type: String,
         required: [true, MESSAGES.Job.description.required],
-        minLength: [50,MESSAGES.Job.description.length],
-        maxLength: [1500,MESSAGES.Job.description.length],
+        minLength: [50, MESSAGES.Job.description.length],
+        maxLength: [1500, MESSAGES.Job.description.length],
     },
     salary: {
         type: Number,
-        min:[1, MESSAGES.Job.salary.minValue],
-        default:null
+        min: [1, MESSAGES.Job.salary.minValue],
+        default: null
     },
     location: {
         type: String,
-        default:null,
+        default: null,
     },
-    experience:{
+    experience: {
         type: Number,
-        default:null
+        default: null
     },
     applies: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }],
+    isAccepted: {
+        type: Boolean,
+        default: false,
+        required: [true, MESSAGES.Job.isAccepted.required]
+    },
+    hasEdit: {
+        type: Boolean,
+        default: false,
+        required: [true, MESSAGES.Job.hasEdit.required]
+    },
     isActive: {
         type: Boolean,
         default: true,

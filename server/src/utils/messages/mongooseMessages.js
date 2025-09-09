@@ -68,6 +68,12 @@ exports.MESSAGES = {
         salary: {
             minValue: "Salary must be positive value"
         },
+        isAccepted: {
+            required: "isAccepted is required"
+        },
+        hasEdit: {
+            required: "hasEdit is required",
+        },
         isActive: {
             required: "isActive is required"
         }
