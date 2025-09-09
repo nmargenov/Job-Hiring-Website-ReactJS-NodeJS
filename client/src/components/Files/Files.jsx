@@ -11,7 +11,7 @@ export const Files = () => {
     const [files, setFiles] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const { t } = useTranslation();
-    const [error, setError] = useEffect(false);
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         setIsLoading(true);
