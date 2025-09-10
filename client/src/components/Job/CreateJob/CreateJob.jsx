@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Form } from '../../shared/Form/Form';
 import { FormInput } from '../../shared/FormInput/FormInput';
 import { FormTextArea } from '../../shared/FormTextArea/FormTextArea';
+import { createJob } from '../../../services/jobService';
 
 export const CreateJob = () => {
     const initialValues = {
@@ -19,6 +20,15 @@ export const CreateJob = () => {
 
     function onSubmit(e) {
         onSubmitHandler(e);
+        setIsLoading(true);
+        createJob(values.title,values.description,values.salary,values.location,values.experience)
+            .then((data)=>{
+                setIsLoading(false);
+                console.log(data);
+            }).catch((err)=>{
+                setIsLoading(false);
+                console.log(err);
+            })
     }
     return (
         <div className={styles['apply-main-div']}>
@@ -27,7 +37,7 @@ export const CreateJob = () => {
             <Form onSubmit={onSubmit}
                 errorMsg={errorMsg}
                 buttons={
-                    <input type='submit' value={t('create')} />
+                    <input type='submit' disabled={isLoading || values.title.length < 5 || values.description.length < 50} value={t('create')} />
                 }
             >
                 <FormInput
@@ -37,7 +47,8 @@ export const CreateJob = () => {
                     type={'text'}
                     minLength={'5'}
                     maxLength={'150'}
-                    validate={null}
+                    validate={values.title.length > 0 && values.title.length < 5}
+                    isLoading={isLoading}
                 />
                 <FormTextArea
                     name={'description'}
@@ -45,14 +56,16 @@ export const CreateJob = () => {
                     onInputChange={onInputChange}
                     minLength={'50'}
                     maxLength={'1500'}
-                    validate={null}
+                    validate={values.description.length > 0 && values.description.length < 50}
+                    isLoading={isLoading}
                 />
                 <FormInput
                     formName={'salary'}
                     value={values.salary}
                     onInputChange={onInputChange}
                     type={'text'}
-                    validate={null}
+                    required={false}
+                    isLoading={isLoading}
                 />
                 <FormInput
                     formName={'location'}
@@ -60,13 +73,16 @@ export const CreateJob = () => {
                     onInputChange={onInputChange}
                     type={'text'}
                     validate={null}
+                    required={false}
+                    isLoading={isLoading}
                 />
                 <FormInput
                     formName={'experience'}
                     value={values.experience}
                     onInputChange={onInputChange}
+                    required={false}
                     type={'text'}
-                    validate={null}
+                    isLoading={isLoading}
                 />
             </Form>
         </div>

@@ -1,7 +1,7 @@
 import styles from "./formInput.module.css";
 import { useTranslation } from "react-i18next";
 
-export const FormInput = ({ formName, value, onInputChange, isLoading, type, minLength, maxLength, ref, validate, onKey = () => {} }) => {
+export const FormInput = ({ formName, value, onInputChange, isLoading, type, minLength, maxLength, ref, validate, required = true, onKey = () => { } }) => {
     const { t } = useTranslation();
 
     return (
@@ -11,9 +11,9 @@ export const FormInput = ({ formName, value, onInputChange, isLoading, type, min
                     type={type}
                     name={formName}
                     placeholder=''
-                    required
+                    required ={required}
                     ref={ref}
-                    onKeyDown={(e)=>{onKey(e)}}
+                    onKeyDown={(e) => { onKey(e) }}
                     minLength={minLength}
                     maxLength={maxLength}
                     className={`${validate ? styles['invalid'] : ""}`}

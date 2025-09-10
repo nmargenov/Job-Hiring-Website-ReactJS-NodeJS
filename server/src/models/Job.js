@@ -21,8 +21,7 @@ const jobSchema = new mongoose.Schema({
         maxLength: [1500, MESSAGES.Job.description.length],
     },
     salary: {
-        type: Number,
-        min: [1, MESSAGES.Job.salary.minValue],
+        type: String,
         default: null
     },
     location: {
@@ -30,7 +29,7 @@ const jobSchema = new mongoose.Schema({
         default: null,
     },
     experience: {
-        type: Number,
+        type: String,
         default: null
     },
     applies: [{

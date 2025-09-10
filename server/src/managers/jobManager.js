@@ -7,7 +7,6 @@ exports.createJob = async (userID, title, description, salary, location, experie
     const business = await Business.findOne({ owner: userID }).populate({ path: "owner" });
 
     if (!business || !business.owner.isApproved) throw new Error(MESSAGES.unauthorized);
-
     const job = await Job.create(
         {
             owner: business._id,
