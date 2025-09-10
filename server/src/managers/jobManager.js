@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 const Business = require("../models/Business");
 const Job = require("../models/Job");
+const Message = require("../models/Message");
+const { getIO } = require("../socket.js");
 const { MESSAGES } = require("../utils/messages/Messages");
+const User = require('../models/User.js');
 
 exports.createJob = async (userID, title, description, salary, location, experience) => {
     const business = await Business.findOne({ owner: userID }).populate({ path: "owner" });
@@ -16,6 +19,9 @@ exports.createJob = async (userID, title, description, salary, location, experie
             location,
             experience
         });
+
+    const admins = await User.find({ role: 'admin' }).select('_id');
+    await craeteMessages(admins, job, "There is a new job application!");
 
     return job;
 };
@@ -83,4 +89,21 @@ async function checkIfJobOwner(jobID, userID) {
     }
 
     return job
+}
+
+async function craeteMessages(admins, job, context) {
+
+    const messages = admins.map(admin => ({
+        user: admin._id,
+        Job: job._id,
+        context,
+        read: false
+    }));
+
+    await Message.insertMany(messages);
+
+    const io = getIO();
+    messages.forEach(message => {
+        io.to(`user_${message.user}`).emit("message");
+    });
 }

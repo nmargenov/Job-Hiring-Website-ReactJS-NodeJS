@@ -22,7 +22,12 @@ const MessageSchema = new mongoose.Schema({
     business: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Business',
-        default:null
+        default: null
+    },
+    job: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Job',
+        default: null
     }
 
 }, { timestamps: true });
