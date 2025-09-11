@@ -32,10 +32,63 @@ const jobSchema = new mongoose.Schema({
         type: String,
         default: null
     },
+    fullyRemote: {
+        type: Boolean,
+        default: false
+    },
+    homeWork: {
+        type: Boolean,
+        default: false
+    },
+    level: {
+        type: String,
+        enum: ['Entry Level', "Junior Level", " Mid level", "Senior level", "Management", null],
+        default: null,
+    },
     applies: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }],
+    allTimeWork: {
+        type: Boolean,
+        default: false
+    },
+    fullTime: {
+        type: Boolean,
+        default: false
+    },
+    flexibleTime: {
+        type: Boolean,
+        default: false
+    },
+    vacation: {
+        type: String,
+        default: false
+    },
+    language: {
+        type: [String],
+        default: []
+    },
+    remoteInterview: {
+        type: Boolean,
+        default: false,
+    },
+    suitsNoExperience: {
+        type: Boolean,
+        default: false,
+    },
+    tech: {
+        type: [String],
+        enum: ["C#", "C++", "Java", "Python", "Go", "Rust",
+            "JavaScript", "TypeScript", "Node.js", "React.js",
+            "Angular", "Vue.js", "Next.js", "Nuxt.js",
+            "Django", "Flask", "Spring", "Ruby on Rails",
+            "PHP", "Laravel", "Symfony", "SQL", "MongoDB",
+            "PostgreSQL", "MySQL", "Redis", "GraphQL", "Docker",
+            "Kubernetes", "AWS", "Azure", "GCP", "Flutter", "Swift", "Kotlin", null
+        ],
+        default: null,
+    },
     isAccepted: {
         type: Boolean,
         default: false,
