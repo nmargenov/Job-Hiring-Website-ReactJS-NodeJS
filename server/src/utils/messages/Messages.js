@@ -18,5 +18,6 @@ exports.MESSAGES={
     userNotAdmin:"User is not admin!",
     mustBeHeadAdmin:"Head Admin permission only!",
     alreadyAdmin:"User is already admin!",
-    selfRemove:"You cannot remove your own admin rights!"
+    selfRemove:"You cannot remove your own admin rights!",
+    jobNotFound:"Job not found!"
 }

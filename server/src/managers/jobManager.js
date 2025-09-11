@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Business = require("../models/Business");
 const Job = require("../models/Job");
 const Message = require("../models/Message");
+
 const { getIO } = require("../socket.js");
 const { MESSAGES } = require("../utils/messages/Messages");
 const User = require('../models/User.js');
@@ -67,6 +68,13 @@ exports.editJob = async (userID, jobID, title, description, salary, location, ex
 exports.getAllActiveJobs = async () => {
     return await Job.find({ isActive: true }).populate('owner', 'businessName')
 };
+
+exports.getJob = async (jobID) => {
+    if (!mongoose.isValidObjectId(jobID)) throw new Error(MESSAGES.jobNotFound);
+    const job = await Job.findById(jobID).populate('owner');
+    if (!job) throw new Error(MESSAGES.jobNotFound);
+    return job
+}
 
 async function checkIfJobOwner(jobID, userID) {
     const job = await Job.findById(jobID).populate('owner', "owner")

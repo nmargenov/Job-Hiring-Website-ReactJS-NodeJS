@@ -1,4 +1,4 @@
-const { createJob, getAllActiveJobs, archiveJob, editJob } = require('../managers/jobManager');
+const { createJob, getAllActiveJobs, archiveJob, editJob, getJob } = require('../managers/jobManager');
 const { mustBeAuth } = require('../middlewares/authMiddleware');
 const { MustBeSetup } = require('../middlewares/isSetupMiddleware');
 const { formatErrorMessage } = require('../utils/errorMessage');
@@ -32,6 +32,18 @@ router.get("/", async (req, res) => {
         res.status(400).send({ message: error });
     }
 });
+
+router.get(PATHS.jobID, async (req, res) => {
+    try {
+        const jobID = req.params.jobID;
+        const job = await getJob(jobID);
+        res.status(200).json(job);
+    } catch (err) {
+        const error = formatErrorMessage(err);
+        console.log(err);
+        res.status(400).send({ message: error });
+    }
+})
 
 router.post(PATHS.archiveJob, mustBeAuth, MustBeSetup, async (req, res) => {
     try {
