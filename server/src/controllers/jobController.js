@@ -15,12 +15,40 @@ router.post('/', mustBeAuth, MustBeSetup, async (req, res) => {
         const salary = req.body?.salary?.trim();
         const location = req.body?.location?.trim();
         const experience = req.body?.experience?.trim();
-        const job = await createJob(userID, title, description, salary, location, experience);
-        res.status(200).json(job);
+        const fullyRemote = req.body?.fullyRemote?.trim();
+        const homeWork = req.body?.homeWork?.trim();
+        const level = req.body?.level?.trim();
+        const allTimeWork = req.body?.allTimeWork?.trim();
+        const fullTime = req.body?.fullTime?.trim();
+        const flexibleTime = req.body?.flexibleTime?.trim();
+        const vacation = req.body?.vacation?.trim();
+        const language = req.body?.language?.trim();
+        const remoteInterview = req.body?.remoteInterview?.trim();
+        const suitsNoExperience = req.body?.suitsNoExperience?.trim();
+        const tech = req.body?.tech?.trim();
+        const job = await createJob(userID,
+            title,
+            description,
+            salary,
+            location,
+            experience,
+            fullyRemote,
+            homeWork,
+            level,
+            allTimeWork,
+            fullTime,
+            flexibleTime,
+            vacation,
+            language,
+            remoteInterview,
+            suitsNoExperience,
+            tech
+            );
+res.status(200).json(job);
     } catch (err) {
-        const error = formatErrorMessage(err);
-        res.status(400).send({ message: error });
-    }
+    const error = formatErrorMessage(err);
+    res.status(400).send({ message: error });
+}
 });
 
 router.get("/", async (req, res) => {

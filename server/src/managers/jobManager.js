@@ -7,7 +7,23 @@ const { getIO } = require("../socket.js");
 const { MESSAGES } = require("../utils/messages/Messages");
 const User = require('../models/User.js');
 
-exports.createJob = async (userID, title, description, salary, location, experience) => {
+exports.createJob = async (userID,
+    title,
+    description,
+    salary,
+    location,
+    experience,
+    fullyRemote,
+    homeWork,
+    level,
+    allTimeWork,
+    fullTime,
+    flexibleTime,
+    vacation,
+    language,
+    remoteInterview,
+    suitsNoExperience,
+    tech) => {
     const business = await Business.findOne({ owner: userID }).populate({ path: "owner" });
 
     if (!business || !business.owner.isApproved) throw new Error(MESSAGES.unauthorized);
@@ -18,7 +34,18 @@ exports.createJob = async (userID, title, description, salary, location, experie
             description,
             salary,
             location,
-            experience
+            experience,
+            fullyRemote,
+            homeWork,
+            level,
+            allTimeWork,
+            fullTime,
+            flexibleTime,
+            vacation,
+            language,
+            remoteInterview,
+            suitsNoExperience,
+            tech
         });
 
     const admins = await User.find({ role: 'admin' }).select('_id');
