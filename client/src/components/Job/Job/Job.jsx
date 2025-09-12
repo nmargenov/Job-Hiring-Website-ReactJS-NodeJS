@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom"
 import { getJob } from "../../../services/jobService";
 import { Page404 } from "../../Page404/Page404";
 import { Loader } from "../../shared/Loader/Loader";
+import { JobBusinessInfo } from "./JobBusinessInfo/JobBusinessInfo";
 
 export const Job = () => {
 
@@ -20,19 +21,22 @@ export const Job = () => {
                 setIsLoading(false);
                 setJob(data);
                 setError(false);
-                console.log(data);
             }).catch((err) => {
                 setIsLoading(false);
                 setError(true);
-                console.log(err);
-            })
+            });
     }, [])
 
     return (
         <>
             {isLoading && <Loader />}
             {!isLoading && error && <Page404 />}
-            {!isLoading && !error && <h1>job</h1>}
+            {!isLoading && !error &&
+                <>
+                    <h1>job</h1>
+                    <JobBusinessInfo />
+                </>
+            }
         </>
     )
 }
