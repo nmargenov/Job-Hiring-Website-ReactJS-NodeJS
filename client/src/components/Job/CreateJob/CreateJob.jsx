@@ -94,19 +94,33 @@ export const CreateJob = () => {
         setItems(prev => [...prev, e.target.id].sort((a, b) => a.localeCompare(b)));
         SetSelectedItems(prev => prev.filter(item => item !== e.target.id));
     }
+    
     function onSubmit(e) {
         onSubmitHandler(e);
-        console.log(values);
-        console.log(selectedLanguages);
-        console.log(selectedTech);
-        // setIsLoading(true);
-        // createJob(values.title, values.description, values.salary, values.location, values.experience)
-        //     .then((data) => {
-        //         setIsLoading(false);
-        //         navigate(`/jobs/${data._id}`);
-        //     }).catch((err) => {
-        //         setIsLoading(false);
-        //     })
+        setIsLoading(true);
+        createJob(values.title,
+            values.description,
+            values.salary,
+            values.location,
+            values.experience,
+            values.vacation,
+            values.fullyRemote,
+            values.homeWork,
+            values.allTimeWork,
+            values.fullTime,
+            values.flexibleTime,
+            values.remoteInterview,
+            values.suitsNoExperience,
+            selectedLanguages,
+            selectedTech,
+            selectedLevel
+        )
+            .then((data) => {
+                setIsLoading(false);
+                navigate(`/jobs/${data._id}`);
+            }).catch((err) => {
+                setIsLoading(false);
+            })
     }
     return (
         <div className={styles['apply-main-div']}>

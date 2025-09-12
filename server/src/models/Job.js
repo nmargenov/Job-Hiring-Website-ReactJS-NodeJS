@@ -41,7 +41,7 @@ const jobSchema = new mongoose.Schema({
         default: false
     },
     level: {
-        type: String,
+        type: [String],
         enum: ['entry-level', "junior-level", "mid-level", "senior-level", "management", null],
         default: null,
     },
@@ -65,7 +65,7 @@ const jobSchema = new mongoose.Schema({
         type: String,
         default: false
     },
-    language: {
+    languages: {
         type: [String],
         default: []
     },

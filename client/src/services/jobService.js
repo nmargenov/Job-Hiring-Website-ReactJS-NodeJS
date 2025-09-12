@@ -6,9 +6,41 @@ const PATHS = {
     job: "/jobs/:jobID"
 }
 
-export const createJob = (title, description, salary, location, experience) => {
+export const createJob = (title,
+    description,
+    salary,
+    location,
+    experience,
+    vacation,
+    fullyRemote,
+    homeWork,
+    allTimeWork,
+    fullTime,
+    flexibleTime,
+    remoteInterview,
+    suitsNoExperience,
+    languages,
+    tech,
+    level) => {
     const url = BASE_URL + PATHS.jobs;
-    return post(url, { title, description, salary, location, experience })
+    return post(url, {
+        title,
+        description,
+        salary,
+        location,
+        experience,
+        vacation,
+        fullyRemote,
+        homeWork,
+        allTimeWork,
+        fullTime,
+        flexibleTime,
+        remoteInterview,
+        suitsNoExperience,
+        languages,
+        tech,
+        level
+    })
 }
 
 export const getJob = (id) => {
