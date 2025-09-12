@@ -1,19 +1,23 @@
 import { useState } from "react"
 
-export const useForm = (initialValues) =>{
+export const useForm = (initialValues) => {
     const [values, setValues] = useState(initialValues);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
 
-    function onInputChange(e){
-        setValues(state=>({...state,[e.target.name]:e.target.value}));
+    function onInputChange(e) {
+        setValues(state => ({ ...state, [e.target.name]: e.target.value }));
     }
 
-    function onSubmitHandler(e){
+    function onCheckboxChange(e) {
+        setValues(state => ({ ...state, [e.target.name]: e.target.checked }));
+    }
+
+    function onSubmitHandler(e) {
         e.preventDefault();
     }
 
-    return{
+    return {
         values,
         setValues,
         onInputChange,
@@ -21,6 +25,7 @@ export const useForm = (initialValues) =>{
         isLoading,
         setIsLoading,
         errorMsg,
-        setErrorMsg
+        setErrorMsg,
+        onCheckboxChange
     }
 }
