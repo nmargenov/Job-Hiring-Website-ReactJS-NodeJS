@@ -12,15 +12,16 @@ export const Job = () => {
 
     const [job, setJob] = useState(null);
     const [error, setError] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         setIsLoading(true);
         getJob(params.jobID)
             .then((data) => {
-                setIsLoading(false);
+                console.log(data);
                 setJob(data);
                 setError(false);
+                setIsLoading(false);
             }).catch((err) => {
                 setIsLoading(false);
                 setError(true);
@@ -34,7 +35,7 @@ export const Job = () => {
             {!isLoading && !error &&
                 <>
                     <h1>job</h1>
-                    <JobBusinessInfo />
+                    <JobBusinessInfo job={job} />
                 </>
             }
         </>

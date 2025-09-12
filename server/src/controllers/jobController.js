@@ -22,7 +22,7 @@ router.post('/', mustBeAuth, MustBeSetup, async (req, res) => {
         const fullTime = req.body?.fullTime;
         const flexibleTime = req.body?.flexibleTime;
         const vacation = req.body?.vacation;
-        const language = req.body?.language;
+        const languages = req.body?.languages;
         const remoteInterview = req.body?.remoteInterview;
         const suitsNoExperience = req.body?.suitsNoExperience;
         const tech = req.body?.tech;
@@ -39,7 +39,7 @@ router.post('/', mustBeAuth, MustBeSetup, async (req, res) => {
             fullTime,
             flexibleTime,
             vacation,
-            language,
+            languages,
             remoteInterview,
             suitsNoExperience,
             tech
@@ -47,7 +47,6 @@ router.post('/', mustBeAuth, MustBeSetup, async (req, res) => {
         res.status(200).json(job);
     } catch (err) {
         const error = formatErrorMessage(err);
-        console.log(err);
         res.status(400).send({ message: error });
     }
 });

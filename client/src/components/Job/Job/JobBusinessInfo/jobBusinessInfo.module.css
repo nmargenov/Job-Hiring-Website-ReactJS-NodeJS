@@ -11,10 +11,24 @@
 .info-div{
     display: flex;
     flex-direction: column;
+    gap:10px;
 }
 
-.info-div div{
+.item-div{
     display: flex;
     align-items: center;
     gap: 5px;
+}
+
+.title-div{
+    font-size: 21px;
+    margin:20px 0 10px 0;
+}
+
+.title{
+    font-weight: 500;
+}
+
+.date{
+    color:var(--login-form-text)
 }
