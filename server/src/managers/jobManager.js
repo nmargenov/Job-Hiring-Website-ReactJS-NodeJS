@@ -98,7 +98,13 @@ exports.getAllActiveJobs = async () => {
 
 exports.getJob = async (jobID) => {
     if (!mongoose.isValidObjectId(jobID)) throw new Error(MESSAGES.jobNotFound);
-    const job = await Job.findById(jobID).populate('owner');
+    const job = await Job.findById(jobID).populate({
+        path: 'owner',
+        populate: {
+            path: 'owner',
+            select: 'profilePicture',
+        }
+    });
     if (!job) throw new Error(MESSAGES.jobNotFound);
     return job
 }

@@ -5,6 +5,9 @@ import { getJob } from "../../../services/jobService";
 import { Page404 } from "../../Page404/Page404";
 import { Loader } from "../../shared/Loader/Loader";
 import { JobBusinessInfo } from "./JobBusinessInfo/JobBusinessInfo";
+import { JobOwnerInfo } from "./JobOwnerInfo/JobOwnerInfo";
+
+import styles from './job.module.css'
 
 export const Job = () => {
 
@@ -33,10 +36,11 @@ export const Job = () => {
             {isLoading && <Loader />}
             {!isLoading && error && <Page404 />}
             {!isLoading && !error &&
-                <>
+                <div className={styles['main']}>
                     <h1>job</h1>
                     <JobBusinessInfo job={job} />
-                </>
+                    <JobOwnerInfo job={job} />
+                </div>
             }
         </>
     )
