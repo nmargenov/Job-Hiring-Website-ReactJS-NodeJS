@@ -19,5 +19,6 @@ exports.MESSAGES={
     mustBeHeadAdmin:"Head Admin permission only!",
     alreadyAdmin:"User is already admin!",
     selfRemove:"You cannot remove your own admin rights!",
-    jobNotFound:"Job not found!"
+    jobNotFound:"Job not found!",
+    jobAlreadyAccepted:"Job has already been approved!"
 }

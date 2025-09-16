@@ -259,13 +259,42 @@ exports.findAdmins = async (userID, page, limit) => {
     }
 }
 
+exports.acceptJob = async (userID, jobID) => {
+    await checkIfAdmin(userID);
+
+    const job = await Job.findById(jobID).populate({
+        path: 'owner',
+        populate: {
+            path: 'owner',
+            select: 'profilePicture',
+        }
+    });
+    if (job.isAccepted) throw new Error(MESSAGES.jobAlreadyAccepted);
+
+    job.isAccepted = true;
+    await job.save();
+
+    const message = await Message.create({
+        user: job.owner.owner._id,
+        context: "Your job listing has been accepted!",
+        read: false,
+        job: job._id,
+    });
+
+    const io = getIO();
+    io.to(`user_${job.owner.owner._id}`).emit("message");
+
+    await deleteMessageForAdminsJob(jobID,job.owner.owner._id);
+    return job;
+};
+
 exports.findUsers = async (userID, email) => {
     const admin = await checkIfAdmin(userID);
 
     const headAdmin = await HeadAdmin.findOne({ email: admin.email });
     if (!headAdmin) throw new Error(MESSAGES.mustBeHeadAdmin);
 
-    const users = await User.find({email: {$regex: email, $options: 'i'}});
+    const users = await User.find({ email: { $regex: email, $options: 'i' } });
 
     return users;
 }
@@ -295,3 +324,10 @@ const deleteMessageForAdminsBusiness = async (businessID) => {
     const io = getIO();
     io.to('admins').emit("admin-deleted-message", { businessID });
 }
+
+const deleteMessageForAdminsJob = async (jobID, jobOwner) => {
+    await Message.deleteMany({ job: jobID, user: { $ne: jobOwner } });
+    const io = getIO();
+    io.to('admins').emit("admin-deleted-message", { jobID });
+}
+
