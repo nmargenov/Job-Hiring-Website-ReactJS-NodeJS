@@ -181,5 +181,6 @@
     "mid-level": "Mid Level",
     "senior-level": "Senior Level",
     "management": "Management",
-    "years-experience":"Years experience"
+    "years-experience":"Years experience",
+    "not-approved-warning":"Your job listing is under review. Please wait an admin to review it!"
 }

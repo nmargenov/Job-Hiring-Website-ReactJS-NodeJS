@@ -18,6 +18,10 @@
     gap:15px;
 }
 
+.warning{
+    margin-bottom: 15px;
+}
+
 @media (max-width: 1220px) {
     .main{
         flex-direction: column;

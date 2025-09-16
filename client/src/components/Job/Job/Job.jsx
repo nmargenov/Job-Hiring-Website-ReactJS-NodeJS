@@ -9,10 +9,13 @@ import { JobOwnerInfo } from "./JobOwnerInfo/JobOwnerInfo";
 
 import styles from './job.module.css'
 import { JobDescription } from "./JobDescription/JobDescription";
-
+import { useAuth } from "../../../contexts/AuthContext";
+import { NotApproved } from "../NotApproved/NotApproved";
 export const Job = () => {
 
     const params = useParams();
+
+    const { user } = useAuth();
 
     const [job, setJob] = useState(null);
     const [error, setError] = useState(null);
@@ -37,15 +40,18 @@ export const Job = () => {
             {isLoading && <Loader />}
             {!isLoading && error && <Page404 />}
             {!isLoading && !error &&
-                <div className={styles['main']}>
-                    <div className={styles['left-div']}>
-                        <JobDescription job={job} />
-                    </div>
-                    <div className={styles['right-div']}>
-                        <JobBusinessInfo job={job} />
-                        <JobOwnerInfo job={job} />
-                    </div>
-                </div>
+                <>
+                    {(user && user._id == job.owner.owner._id && job.isAccepted === false) ?? <div className={styles["warning"]}><NotApproved/></div>}
+                    < div className={styles['main']}>
+                        <div className={styles['left-div']}>
+                            <JobDescription job={job} />
+                        </div>
+                        <div className={styles['right-div']}>
+                            <JobBusinessInfo job={job} />
+                            <JobOwnerInfo job={job} />
+                        </div>
+                    </div >
+                </>
             }
         </>
     )
