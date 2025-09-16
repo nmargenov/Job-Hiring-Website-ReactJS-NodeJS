@@ -1,0 +1,43 @@
+.main {
+    display: flex;
+    align-items: center;
+    background-color: green;
+    padding: 15px 30px;
+    border-radius: 5px;
+    gap: 5px;
+    position: fixed;
+    top: 0;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: slideDown 0.7s ease forwards,
+        slideUp 0.7s ease forwards 5.7s;
+}
+
+@keyframes slideDown {
+    from {
+        top: -100px;
+        opacity: 0;
+        transform: translateX(-50%) scale(0.7);
+    }
+
+    to {
+        top: 100px;
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        top: 100px;
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+    }
+
+    to {
+        top: -100px;
+        opacity: 0;
+        transform: translateX(-50%) scale(0.7);
+    }
+}
