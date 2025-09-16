@@ -288,6 +288,32 @@ exports.acceptJob = async (userID, jobID) => {
     return job;
 };
 
+exports.declineJob = async (userID, jobID) => {
+    await checkIfAdmin(userID);
+
+    const job = await Job.findById(jobID).populate({
+        path: 'owner',
+        populate: {
+            path: 'owner',
+            select: 'profilePicture',
+        }
+    });
+    if (job.isAccepted) throw new Error(MESSAGES.jobAlreadyAccepted);
+
+    await Job.findByIdAndDelete(jobID);
+
+    const message = await Message.create({
+        user: job.owner.owner._id,
+        context: "Your job listing has been declined!",
+        read: false,
+    });
+
+    const io = getIO();
+    io.to(`user_${job.owner.owner._id}`).emit("message");
+
+    await deleteMessageForAdminsJob(jobID);
+};
+
 exports.findUsers = async (userID, email) => {
     const admin = await checkIfAdmin(userID);
 

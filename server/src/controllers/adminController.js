@@ -1,4 +1,4 @@
-const { acceptBusiness, declineBusiness, deleteBusiness, getPendingBusinesses, getBusiness, getBusinesses, AcceptBusinessEdit, declineBusinessEdit, makeAdmin, deleteAdmin, findAdmins, findUsers, acceptJob } = require('../managers/adminManager');
+const { acceptBusiness, declineBusiness, deleteBusiness, getPendingBusinesses, getBusiness, getBusinesses, AcceptBusinessEdit, declineBusinessEdit, makeAdmin, deleteAdmin, findAdmins, findUsers, acceptJob, declineJob } = require('../managers/adminManager');
 const { mustBeAuth } = require('../middlewares/authMiddleware');
 const { MustBeSetup } = require('../middlewares/isSetupMiddleware');
 const { formatErrorMessage } = require('../utils/errorMessage');
@@ -170,5 +170,17 @@ router.post(PATHS.approveJob, mustBeAuth, MustBeSetup, async (req, res) => {
         const error = formatErrorMessage(err);
         res.status(400).send({ message: error });
     }
-})
+});
+
+router.post(PATHS.declineJob, mustBeAuth, MustBeSetup, async (req, res) => {
+    try {
+        const userID = req.user._id;
+        const jobID = req.params.jobID;
+        await declineJob(userID, jobID);
+        res.status(200).json({ message: "Deleted" });
+    } catch (err) {
+        const error = formatErrorMessage(err);
+        res.status(400).send({ message: error });
+    }
+});
 module.exports = router;

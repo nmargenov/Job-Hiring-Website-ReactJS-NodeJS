@@ -31,5 +31,6 @@ exports.PATHS={
     editBusiness:"/:businessID/edit",
     makeAdmin:"/make",
     adminEmail:"/:email",
-    approveJob: "/jobs/:jobID/accept"
+    approveJob: "/jobs/:jobID/accept",
+    declineJob: "/jobs/:jobID/decline"
 }
