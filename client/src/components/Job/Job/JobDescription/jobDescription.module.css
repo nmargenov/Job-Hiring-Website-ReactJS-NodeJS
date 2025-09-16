@@ -1,0 +1,9 @@
+.main-div{
+    display: flex;
+    flex-direction: column;
+    gap:15px;
+}
+
+.main-div h2{
+    font-size: 32px;
+}

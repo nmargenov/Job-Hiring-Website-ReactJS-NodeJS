@@ -8,6 +8,7 @@ import { JobBusinessInfo } from "./JobBusinessInfo/JobBusinessInfo";
 import { JobOwnerInfo } from "./JobOwnerInfo/JobOwnerInfo";
 
 import styles from './job.module.css'
+import { JobDescription } from "./JobDescription/JobDescription";
 
 export const Job = () => {
 
@@ -37,9 +38,13 @@ export const Job = () => {
             {!isLoading && error && <Page404 />}
             {!isLoading && !error &&
                 <div className={styles['main']}>
-                    <h1>job</h1>
-                    <JobBusinessInfo job={job} />
-                    <JobOwnerInfo job={job} />
+                    <div className={styles['left-div']}>
+                        <JobDescription job={job} />
+                    </div>
+                    <div className={styles['right-div']}>
+                        <JobBusinessInfo job={job} />
+                        <JobOwnerInfo job={job} />
+                    </div>
                 </div>
             }
         </>

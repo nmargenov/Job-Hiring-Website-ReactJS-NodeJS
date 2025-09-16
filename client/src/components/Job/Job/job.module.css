@@ -1,5 +1,27 @@
 .main{
     display: flex;
+    flex-direction: row;
+    gap:15px;
+}
+
+.left-div{
+    max-width: 800px;
+}
+
+.left-div p{
+    white-space: pre-line;
+}
+
+.right-div{
+    display: flex;
     flex-direction: column;
     gap:15px;
+}
+
+@media (max-width: 1220px) {
+    .main{
+        flex-direction: column;
+        align-items: center;
+        gap:30px;
+    }
 }
