@@ -15,6 +15,11 @@ export const NotificationItem = ({ message, toggleOpen }) => {
             toggleOpen();
             navigate(`/admin/business/${message.business}`);
         }
+
+        if (message.job !== null){
+            toggleOpen();
+            navigate(`/jobs/${message.job}`);
+        }
        
         if (message.read === true) {
             return;
