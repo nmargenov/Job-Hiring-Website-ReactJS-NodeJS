@@ -183,5 +183,6 @@
     "management": "Management",
     "years-experience":"Years experience",
     "not-approved-warning":"Your job listing is under review. Please wait an admin to review it!",
-    "admin-review-job":"Job listing awaits review by admin!"
+    "admin-review-job":"Job listing awaits review by admin!",
+    "sucessfully-deleted-job":"Job listing is deleted successfully!!"
 }
