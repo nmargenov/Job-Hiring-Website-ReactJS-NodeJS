@@ -51,7 +51,7 @@ export const Job = () => {
             {!isLoading && error && <Page404 />}
             {!isLoading && !error &&
                 <>
-                    {(user && user.role === 'admin' && job.isAccepted === false) && <div className={styles["admin-review-job"]}><AdminReview/></div>}
+                    {(user && user.role === 'admin' && job.isAccepted === false) && <div className={styles["admin-review-job"]}><AdminReview job={job} setIsLoading={setIsLoading} setJob={setJob}/></div>}
                     {(user && user._id == job.owner.owner._id && job.isAccepted === false) && <div className={styles["warning"]}><NotApproved /></div>}
                     < div className={styles['main']}>
                         <div className={styles['left-div']}>

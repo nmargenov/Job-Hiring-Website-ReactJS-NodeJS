@@ -11,7 +11,8 @@ const paths = {
     declineEdit: "/admin/:businessID/decline-edit",
     admin: "/admin/",
     makeAdmin: "/admin/make",
-    oneAdmin: "/admin/:email"
+    oneAdmin: "/admin/:email",
+    acceptJob: "/admin/jobs/:jobID/accept",
 }
 
 export const getPendingBusinesses = (page) => {
@@ -70,4 +71,9 @@ export const getUsers = (email) => {
 export const makeAdmin = (email) => {
     const url = BASE_URL + paths.makeAdmin;
     return post(url, { email });
+}
+
+export const acceptJob = (jobID) => {
+    const url = BASE_URL + paths.acceptJob.replace(":jobID", jobID);
+    return post(url);
 }
