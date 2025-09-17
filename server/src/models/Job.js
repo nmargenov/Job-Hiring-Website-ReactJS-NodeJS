@@ -82,7 +82,7 @@ const jobSchema = new mongoose.Schema({
         enum: ["angular",
             "aws",
             "azure",
-            "c#",
+            "csharp",
             "c++",
             "django",
             "docker",

@@ -45,7 +45,7 @@ export const CreateJob = () => {
         "angular",
         "aws",
         "azure",
-        "c#",
+        "csharp",
         "c++",
         "django",
         "docker",

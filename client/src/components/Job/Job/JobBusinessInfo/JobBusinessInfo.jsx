@@ -22,7 +22,9 @@ export const JobBusinessInfo = ({ job }) => {
                 {job.languages.length > 0 && <div className={styles['item-div']}><i className="material-icons secondary-text">language</i><strong>{job.languages.map(language => t(language)).join(', ')}</strong></div>}
                 {job.remoteInterview && <div className={styles['item-div']}><i className="material-icons secondary-text">3p</i>{t('remoteInterview')}</div>}
                 {job.suitsNoExperience && <div className={styles['item-div']}><i className="material-icons secondary-text">moving</i>{t('suitsNoExperience')}</div>}
-
+                {job.tech.length > 0 && <div className={styles['tech']}>
+                    {job.tech.map(tech => t(tech)).join(', ')}
+                </div>}
             </div>
         </div>
     )

@@ -32,3 +32,8 @@
 .date{
     color:var(--login-form-text)
 }
+
+.tech{
+    border-top: 1px solid gray;
+    padding-top: 10px;
+}
