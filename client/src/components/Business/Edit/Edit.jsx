@@ -27,12 +27,10 @@ export const Edit = ({ businessID }) => {
 
     useEffect(() => {
         setIsPageLoading(true);
-        console.log(userAuth);
         getEdit(userAuth.businessID)
             .then((data) => {
                 setIsPageLoading(false);
                 setBusiness(data);
-                console.log(data);
                 setValues({
                     businessName: data.businessName,
                     businessBio: data.bio,
@@ -57,7 +55,6 @@ export const Edit = ({ businessID }) => {
             values.businessBio,
             values.employeeCount)
             .then((data) => {
-                console.log(data);
                 loginAuthContext(data)
                 setIsLoading(false);
                 setErrorMsg('');

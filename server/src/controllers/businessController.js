@@ -24,7 +24,6 @@ router.post(PATHS.businessApply, mustBeAuth, MustBeSetup, async (req, res) => {
 
 router.patch(PATHS.businessID, mustBeAuth, MustBeSetup, async (req, res) => {
     try {
-        console.log(req.body)
         const userID = req.user._id;
         const businessID = req.params?.businessID;
         const businessName = req.body?.businessName?.trim();

@@ -68,7 +68,6 @@ router.get(PATHS.jobID, async (req, res) => {
         res.status(200).json(job);
     } catch (err) {
         const error = formatErrorMessage(err);
-        console.log(err);
         res.status(400).send({ message: error });
     }
 })

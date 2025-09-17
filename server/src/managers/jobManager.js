@@ -66,7 +66,13 @@ exports.archiveJob = async (userID, jobID) => {
             runValidators: true,
             new: true
         }
-    ).populate('owner', 'businessName');
+    ).populate({
+        path: 'owner',
+        populate: {
+            path: 'owner',
+            select: 'profilePicture',
+        }
+    });
 
     return job;
 };

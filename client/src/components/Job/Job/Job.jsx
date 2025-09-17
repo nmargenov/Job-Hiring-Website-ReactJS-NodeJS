@@ -10,8 +10,9 @@ import { JobOwnerInfo } from "./JobOwnerInfo/JobOwnerInfo";
 import styles from './job.module.css'
 import { JobDescription } from "./JobDescription/JobDescription";
 import { useAuth } from "../../../contexts/AuthContext";
-import { NotApproved } from "../NotApproved/NotApproved";
-import { AdminReview } from "../AdminReview/AdminReview";
+import { Warning } from "../Warning/Warning";
+import { AdminReview } from "./AdminReview/AdminReview";
+import { Approved } from "./Approved/Approved";
 export const Job = () => {
 
     const params = useParams();
@@ -27,7 +28,6 @@ export const Job = () => {
         setIsLoading(true);
         getJob(params.jobID)
             .then((data) => {
-                console.log(data);
                 setJob(data);
                 if (!data.isAccepted) {
                     const isOwner = user?._id === data.owner.owner._id;
@@ -52,7 +52,9 @@ export const Job = () => {
             {!isLoading && !error &&
                 <>
                     {(user && user.role === 'admin' && job.isAccepted === false) && <div className={styles["admin-review-job"]}><AdminReview job={job} setIsLoading={setIsLoading} setJob={setJob}/></div>}
-                    {(user && user._id == job.owner.owner._id && job.isAccepted === false) && <div className={styles["warning"]}><NotApproved /></div>}
+                    {(user && user._id == job.owner.owner._id && job.isAccepted === false) && <div className={styles["warning"]}><Warning message={'not-approved-warning'} /></div>}
+                    {(user && user._id == job.owner.owner._id && job.isAccepted === true) && <div className={styles["warning"]}><Approved/></div>}
+                    {!job.isActive && <div className={styles["warning"]}><Warning message={'archived-job-warning'} /></div>}
                     < div className={styles['main']}>
                         <div className={styles['left-div']}>
                             <JobDescription job={job} />

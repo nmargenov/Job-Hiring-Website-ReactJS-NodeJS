@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import styles from './adminReview.module.css'
-import { acceptJob, declineJob } from '../../../services/adminService';
+import { acceptJob, declineJob } from '../../../../services/adminService';
 import { useNavigate } from 'react-router-dom';
-import { handleKeyPress } from '../../../utils/handleKeyPress';
+import { handleKeyPress } from '../../../../utils/handleKeyPress';
 
 export const AdminReview = ({ setJob, setIsLoading, job }) => {
     const { t } = useTranslation();

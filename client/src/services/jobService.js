@@ -3,7 +3,8 @@ import { post, get, patch } from "./requester";
 
 const PATHS = {
     jobs: "/jobs/",
-    job: "/jobs/:jobID"
+    job: "/jobs/:jobID",
+    archiveJob: "/jobs/:jobID/archive"
 }
 
 export const createJob = (title,
@@ -46,4 +47,10 @@ export const createJob = (title,
 export const getJob = (id) => {
     const url = BASE_URL + PATHS.job.replace(":jobID", id);
     return get(url);
+}
+
+
+export const archiveJob = (id) => {
+    const url = BASE_URL + PATHS.job.replace(":jobID", id);
+    return post(url);
 }
