@@ -51,6 +51,6 @@ export const getJob = (id) => {
 
 
 export const archiveJob = (id) => {
-    const url = BASE_URL + PATHS.job.replace(":jobID", id);
+    const url = BASE_URL + PATHS.archiveJob.replace(":jobID", id);
     return post(url);
 }

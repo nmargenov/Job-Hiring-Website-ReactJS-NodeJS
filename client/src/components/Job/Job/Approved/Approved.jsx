@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { handleKeyPress } from '../../../../utils/handleKeyPress';
 import { ArchiveModal } from './ArchiveModal/ArchiveModal';
 
-export const Approved = () => {
+export const Approved = ({setIsLoading, setJob, job}) => {
     const { t } = useTranslation();
 
     const [openArchived, setOpenArchived] = useState(false);
@@ -24,7 +24,7 @@ export const Approved = () => {
                     <input type="submit" value={t('edit')} />
                 </div>
             </div>
-            {openArchived && <ArchiveModal setOpen={setOpenArchived}/>}
+            {openArchived && <ArchiveModal job={job} setIsLoading={setIsLoading} setJob={setJob} setOpen={setOpenArchived}/>}
         </>
     )
 }

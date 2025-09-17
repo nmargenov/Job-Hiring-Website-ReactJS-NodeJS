@@ -53,7 +53,7 @@ export const Job = () => {
                 <>
                     {(user && user.role === 'admin' && job.isAccepted === false) && <div className={styles["admin-review-job"]}><AdminReview job={job} setIsLoading={setIsLoading} setJob={setJob}/></div>}
                     {(user && user._id == job.owner.owner._id && job.isAccepted === false) && <div className={styles["warning"]}><Warning message={'not-approved-warning'} /></div>}
-                    {(user && user._id == job.owner.owner._id && job.isAccepted === true) && <div className={styles["warning"]}><Approved/></div>}
+                    {(user && user._id == job.owner.owner._id && job.isAccepted === true && job.isActive) && <div className={styles["warning"]}><Approved job={job} setIsLoading={setIsLoading} setJob={setJob}/></div>}
                     {!job.isActive && <div className={styles["warning"]}><Warning message={'archived-job-warning'} /></div>}
                     < div className={styles['main']}>
                         <div className={styles['left-div']}>
