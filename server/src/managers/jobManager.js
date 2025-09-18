@@ -6,6 +6,7 @@ const Message = require("../models/Message");
 const { getIO } = require("../socket.js");
 const { MESSAGES } = require("../utils/messages/Messages");
 const User = require('../models/User.js');
+const EditJob = require('../models/EditJob.js');
 
 exports.createJob = async (userID,
     title,
@@ -77,24 +78,55 @@ exports.archiveJob = async (userID, jobID) => {
     return job;
 };
 
-exports.editJob = async (userID, jobID, title, description, salary, location, experience) => {
+exports.editJob = async (userID,
+    jobID,
+    title,
+    description,
+    salary,
+    location,
+    experience,
+    fullyRemote,
+    homeWork,
+    level,
+    allTimeWork,
+    fullTime,
+    flexibleTime,
+    vacation,
+    languages,
+    remoteInterview,
+    suitsNoExperience,
+    tech) => {
+
     let job = await checkIfJobOwner(jobID, userID);
 
-    job = await Job.findByIdAndUpdate(
-        jobID,
-        {
-            title,
-            description,
-            salary,
-            location,
-            experience
-        },
-        {
-            runValidators: true,
-            new: true
-        }
-    ).populate('owner', 'businessName');;
+    if (job.hasEdit) {
+        throw new Error(MESSAGES.jobEditAlreadyExists);
+    }
+    await EditJob.create({
+        job: job._id,
+        title,
+        description,
+        salary,
+        location,
+        experience,
+        fullyRemote,
+        homeWork,
+        level,
+        allTimeWork,
+        fullTime,
+        flexibleTime,
+        vacation,
+        languages,
+        remoteInterview,
+        suitsNoExperience,
+        tech
+    })
 
+    job.hasEdit = true;
+    await job.save();
+
+    const admins = await User.find({ role: 'admin' }).select('_id');
+    await craeteMessages(admins, job, "There is a new job application!");
     return job;
 };
 

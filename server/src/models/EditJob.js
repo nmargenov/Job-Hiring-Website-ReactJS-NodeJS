@@ -21,8 +21,7 @@ const editJobSchema = new mongoose.Schema({
         maxLength: [1500, MESSAGES.Job.description.length],
     },
     salary: {
-        type: Number,
-        min: [1, MESSAGES.Job.salary.minValue],
+        type: String,
         default: null
     },
     location: {
@@ -30,28 +29,91 @@ const editJobSchema = new mongoose.Schema({
         default: null,
     },
     experience: {
-        type: Number,
+        type: String,
         default: null
     },
-    applies: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }],
-    isAccepted: {
+    fullyRemote: {
+        type: Boolean,
+        default: false
+    },
+    homeWork: {
+        type: Boolean,
+        default: false
+    },
+    level: {
+        type: [String],
+        enum: ['entry-level', "junior-level", "mid-level", "senior-level", "management", null],
+        default: null,
+    },
+    allTimeWork: {
+        type: Boolean,
+        default: false
+    },
+    fullTime: {
+        type: Boolean,
+        default: false
+    },
+    flexibleTime: {
+        type: Boolean,
+        default: false
+    },
+    vacation: {
+        type: String,
+        default: false
+    },
+    languages: {
+        type: [String],
+        default: []
+    },
+    remoteInterview: {
         type: Boolean,
         default: false,
-        required: [true, MESSAGES.Job.isAccepted.required]
     },
-    hasEdit: {
+    suitsNoExperience: {
         type: Boolean,
         default: false,
-        required: [true, MESSAGES.Job.hasEdit.required]
     },
-    isActive: {
-        type: Boolean,
-        default: true,
-        required: [true, MESSAGES.Job.isActive.required]
-    }
+    tech: {
+        type: [String],
+        enum: ["angular",
+            "aws",
+            "azure",
+            "csharp",
+            "c++",
+            "django",
+            "docker",
+            "flask",
+            "flutter",
+            "gcp",
+            "go",
+            "graphql",
+            "java",
+            "javascript",
+            "kotlin",
+            "kubernetes",
+            "laravel",
+            "mongodb",
+            "mysql",
+            "nextjs",
+            "nodejs",
+            "nuxtjs",
+            "php",
+            "postgresql",
+            "python",
+            "reactjs",
+            "redis",
+            "rubyonrails",
+            "rust",
+            "spring",
+            "sql",
+            "swift",
+            "symfony",
+            "typescript",
+            "vuejs",
+            null
+        ],
+        default: null,
+    },
 
 }, { timestamps: true });
 
