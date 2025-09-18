@@ -26,9 +26,9 @@ export const Home = () => {
     return (
         <>
             {popupMessage && <ScreenNotification message={popupMessage} />}
-            <Link to={"/jobs/68c1947ae6f1f1c9b903e895"}>Link to job</Link>
-            <Link to={"/jobs/68c40a2eac54a88b5e89bdcb"}>everything</Link>
-            <Link to={"/jobs/68c9bd991041a4947cb8f682"}>none</Link>
+            <Link to={"/job/68c1947ae6f1f1c9b903e895"}>Link to job</Link>
+            <Link to={"/job/68c40a2eac54a88b5e89bdcb"}>everything</Link>
+            <Link to={"/job/68c9bd991041a4947cb8f682"}>none</Link>
         </>
     );
 }
