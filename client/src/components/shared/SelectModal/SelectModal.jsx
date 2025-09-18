@@ -26,7 +26,7 @@ export const SelectModal = ({ title, selectItem, removeItem, selectedItems, setS
 
     return (
         <>
-            <div onClick={toggleOpen} className={styles['main-div']}>
+            <div onKeyDown={(e)=>{handleKeyPress(e,toggleOpen)}} tabIndex={0} onClick={toggleOpen} className={styles['main-div']}>
                 {selectedItems.length === 0 && <span>{t(title)}</span>}
                 {selectedItems.length > 0 &&
                     selectedItems.map(item => {
