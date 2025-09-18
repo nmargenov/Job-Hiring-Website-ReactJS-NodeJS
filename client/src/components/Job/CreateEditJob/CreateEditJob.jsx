@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Form } from '../../shared/Form/Form';
 import { FormInput } from '../../shared/FormInput/FormInput';
 import { FormTextArea } from '../../shared/FormTextArea/FormTextArea';
-import { createJob, getJob } from '../../../services/jobService';
+import { createJob, editJob, getJob } from '../../../services/jobService';
 import { Navigate, useNavigate, useParams } from "react-router";
 import { ToggleSwitchForm } from '../../shared/ToggleSwitchForm/ToggleSwitchForm';
 import { SelectModal } from '../../shared/SelectModal/SelectModal';
@@ -23,7 +23,6 @@ export const CreateEditJob = ({ edit = false }) => {
                         navigate(`/job/${data._id}`);
                         return;
                     }
-                    setIsPageLoading(false);
                     setValues({
                         title: data.title,
                         description: data.description,
@@ -45,6 +44,8 @@ export const CreateEditJob = ({ edit = false }) => {
                     setTech(tech.filter(tech => !data.tech.includes(tech)));
                     setSelectedLevel(data.level);
                     setLevel(level.filter(level => !data.level.includes(level)));
+                    setJob(data);
+                    setIsPageLoading(false);
                 }).catch((err) => {
                     console.log(err);
                     setIsPageLoading(false);
@@ -63,6 +64,7 @@ export const CreateEditJob = ({ edit = false }) => {
     const [isPageLoading, setIsPageLoading] = useState(false);
     const params = useParams();
     const { user } = useAuth();
+    const [job, setJob] = useState(null);
 
     const initialValues = {
         title: '',
@@ -171,14 +173,41 @@ export const CreateEditJob = ({ edit = false }) => {
             .then((data) => {
                 setIsLoading(false);
                 navigate(`/jobs/${data._id}`);
+                setErrorMsg('');
             }).catch((err) => {
+                setErrorMsg(err.message);
                 setIsLoading(false);
             });
     }
 
     function onEdit(e) {
         onSubmitHandler(e);
-        setErrorMsg('test sasda das asd asd asd asd asda s');
+        editJob(params.jobID,
+            values.title,
+            values.description,
+            values.salary,
+            values.location,
+            values.experience,
+            values.vacation,
+            values.fullyRemote,
+            values.homeWork,
+            values.allTimeWork,
+            values.fullTime,
+            values.flexibleTime,
+            values.remoteInterview,
+            values.suitsNoExperience,
+            selectedLanguages,
+            selectedTech,
+            selectedLevel
+        )
+            .then((data) => {
+                setIsLoading(false);
+                setJob(data);
+                setErrorMsg('');
+            }).catch((err) => {
+                setErrorMsg(err.message);
+                setIsLoading(false);
+            });
     }
     return (
         <>
@@ -188,10 +217,13 @@ export const CreateEditJob = ({ edit = false }) => {
                     {edit === false && <h2>{t('create-job')}</h2>}
                     {edit === true && <h2>{t('edit-job')}</h2>}
                     <span>{t('business-apply-description')}</span>
+                    <div className={styles['sucess-message-div']}>
+                        {edit === true && job?.hasEdit && <span>{t('already-submitted-job-edit')}</span>}
+                    </div>
                     <Form onSubmit={edit ? onEdit : onSubmit}
                         errorMsg={errorMsg}
                         buttons={
-                            <input type='submit' disabled={isLoading || values.title.length < 5 || values.description.length < 50} value={edit ? t('edit') : t('create')} />
+                            <input type='submit' disabled={(edit === true && job?.hasEdit) || isLoading || values.title.length < 5 || values.description.length < 50} value={edit ? t('edit') : t('create')} />
                         }
                     >
                         <FormInput
@@ -202,7 +234,7 @@ export const CreateEditJob = ({ edit = false }) => {
                             minLength={'5'}
                             maxLength={'150'}
                             validate={values.title.length > 0 && values.title.length < 5}
-                            isLoading={isLoading}
+                            isLoading={isLoading || (edit === true && job?.hasEdit)}
                         />
                         <FormTextArea
                             name={'description'}
@@ -211,7 +243,7 @@ export const CreateEditJob = ({ edit = false }) => {
                             minLength={'50'}
                             maxLength={'1500'}
                             validate={values.description.length > 0 && values.description.length < 50}
-                            isLoading={isLoading}
+                            isLoading={isLoading || (edit === true && job?.hasEdit)}
                         />
                         <div className={styles['smaller-div']}>
                             <FormInput
@@ -220,7 +252,7 @@ export const CreateEditJob = ({ edit = false }) => {
                                 onInputChange={onInputChange}
                                 type={'text'}
                                 required={false}
-                                isLoading={isLoading}
+                                isLoading={isLoading || (edit === true && job?.hasEdit)}
                             />
                             <FormInput
                                 formName={'location'}
@@ -229,7 +261,7 @@ export const CreateEditJob = ({ edit = false }) => {
                                 type={'text'}
                                 validate={null}
                                 required={false}
-                                isLoading={isLoading}
+                                isLoading={isLoading || (edit === true && job?.hasEdit)}
                             />
                             <FormInput
                                 formName={'experience'}
@@ -237,7 +269,7 @@ export const CreateEditJob = ({ edit = false }) => {
                                 onInputChange={onInputChange}
                                 required={false}
                                 type={'text'}
-                                isLoading={isLoading}
+                                isLoading={isLoading || (edit === true && job?.hasEdit)}
                             />
                         </div>
                         <FormInput
@@ -246,37 +278,37 @@ export const CreateEditJob = ({ edit = false }) => {
                             onInputChange={onInputChange}
                             required={false}
                             type={'text'}
-                            isLoading={isLoading}
+                            isLoading={isLoading || (edit === true && job?.hasEdit)}
                         />
-                        <SelectModal title={'languages'} selectItem={selectItem} removeItem={removeItem} items={languages} setItems={setLanguages} selectedItems={selectedLanguages} setSelectedItems={setSelectedLanguages} />
-                        <SelectModal title={'tech'} selectItem={selectItem} removeItem={removeItem} items={tech} setItems={setTech} selectedItems={selectedTech} setSelectedItems={setSelectedTech} />
-                        <SelectModal title={'level'} selectItem={selectItem} removeItem={removeItem} items={level} setItems={setLevel} selectedItems={selectedLevel} setSelectedItems={setSelectedLevel} />
+                        <SelectModal disabled={isLoading || (edit === true && job?.hasEdit)} title={'languages'} selectItem={selectItem} removeItem={removeItem} items={languages} setItems={setLanguages} selectedItems={selectedLanguages} setSelectedItems={setSelectedLanguages} />
+                        <SelectModal disabled={isLoading || (edit === true && job?.hasEdit)} title={'tech'} selectItem={selectItem} removeItem={removeItem} items={tech} setItems={setTech} selectedItems={selectedTech} setSelectedItems={setSelectedTech} />
+                        <SelectModal disabled={isLoading || (edit === true && job?.hasEdit)} title={'level'} selectItem={selectItem} removeItem={removeItem} items={level} setItems={setLevel} selectedItems={selectedLevel} setSelectedItems={setSelectedLevel} />
                         <div className={styles['checkbox-div']}>
-                            <ToggleSwitchForm name="fullyRemote" check={values.fullyRemote} action={onCheckboxChange} />
+                            <ToggleSwitchForm disabled={(edit === true && job?.hasEdit) || isLoading} name="fullyRemote" check={values.fullyRemote} action={onCheckboxChange} />
                             <i className="material-icons secondary-text">public</i><label htmlFor="fullyRemote">{t("fullyRemote")}</label>
                         </div>
                         <div className={styles['checkbox-div']}>
-                            <ToggleSwitchForm name="homeWork" check={values.homeWork} action={onCheckboxChange} />
+                            <ToggleSwitchForm disabled={(edit === true && job?.hasEdit) || isLoading} name="homeWork" check={values.homeWork} action={onCheckboxChange} />
                             <i className="material-icons secondary-text">chair</i><label htmlFor="homeWork">{t("homeWork")}</label>
                         </div>
                         <div className={styles['checkbox-div']}>
-                            <ToggleSwitchForm name="allTimeWork" check={values.allTimeWork} action={onCheckboxChange} />
+                            <ToggleSwitchForm disabled={(edit === true && job?.hasEdit) || isLoading} name="allTimeWork" check={values.allTimeWork} action={onCheckboxChange} />
                             <i className="material-icons secondary-text">work</i><label htmlFor="allTimeWork">{t("allTimeWork")}</label>
                         </div>
                         <div className={styles['checkbox-div']}>
-                            <ToggleSwitchForm name="fullTime" check={values.fullTime} action={onCheckboxChange} />
+                            <ToggleSwitchForm disabled={(edit === true && job?.hasEdit) || isLoading} name="fullTime" check={values.fullTime} action={onCheckboxChange} />
                             <i className="material-icons secondary-text">schedule</i><label htmlFor="fullTime">{t("fullTime")}</label>
                         </div>
                         <div className={styles['checkbox-div']}>
-                            <ToggleSwitchForm name="flexibleTime" check={values.flexibleTime} action={onCheckboxChange} />
+                            <ToggleSwitchForm disabled={(edit === true && job?.hasEdit) || isLoading} name="flexibleTime" check={values.flexibleTime} action={onCheckboxChange} />
                             <i className="material-icons secondary-text">history_toggle_off</i><label htmlFor="flexibleTime">{t("flexibleTime")}</label>
                         </div>
                         <div className={styles['checkbox-div']}>
-                            <ToggleSwitchForm name="remoteInterview" check={values.remoteInterview} action={onCheckboxChange} />
+                            <ToggleSwitchForm disabled={(edit === true && job?.hasEdit) || isLoading} name="remoteInterview" check={values.remoteInterview} action={onCheckboxChange} />
                             <i className="material-icons secondary-text">3p</i><label htmlFor="remoteInterview">{t("remoteInterview")}</label>
                         </div>
                         <div className={styles['checkbox-div']}>
-                            <ToggleSwitchForm name="suitsNoExperience" check={values.suitsNoExperience} action={onCheckboxChange} />
+                            <ToggleSwitchForm disabled={(edit === true && job?.hasEdit) || isLoading} name="suitsNoExperience" check={values.suitsNoExperience} action={onCheckboxChange} />
                             <i className="material-icons secondary-text">moving</i><label htmlFor="suitsNoExperience">{t("suitsNoExperience")}</label>
                         </div>
                     </Form>

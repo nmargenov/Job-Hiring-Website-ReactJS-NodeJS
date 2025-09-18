@@ -4,7 +4,7 @@ import { Modal } from "./Modal/Modal";
 import { handleKeyPress } from "../../../utils/handleKeyPress";
 import { useTranslation } from "react-i18next";
 
-export const SelectModal = ({ title, selectItem, removeItem, selectedItems, setSelectedItems, items, setItems }) => {
+export const SelectModal = ({ title, selectItem, removeItem, selectedItems, setSelectedItems, items, setItems, disabled }) => {
     const [selectOpen, setSelectOpen] = useState(false);
 
     const { t } = useTranslation();
@@ -20,17 +20,23 @@ export const SelectModal = ({ title, selectItem, removeItem, selectedItems, setS
 
     function onKey(e) {
         if (e.key === "Enter" || e.key === " ") {
-            removeItem(e,setItems, setSelectedItems);
+            removeItem(e, setItems, setSelectedItems);
         }
     }
 
     return (
         <>
-            <div onKeyDown={(e)=>{handleKeyPress(e,toggleOpen)}} tabIndex={0} onClick={toggleOpen} className={styles['main-div']}>
+            <div id={disabled === true ? styles["disabled"] : ""} onKeyDown={(e) => { handleKeyPress(e, toggleOpen) }}
+                {...(!disabled && { tabIndex: 0 })}
+                {...(!disabled && { onClick: toggleOpen })}
+                className={styles['main-div']}>
                 {selectedItems.length === 0 && <span>{t(title)}</span>}
                 {selectedItems.length > 0 &&
                     selectedItems.map(item => {
-                        return (<p id={item} key={item} onClick={(e) => { onClick(e) }} className={styles['item']}>{t(item)} <i id={item} tabIndex={0} onKeyDown={(e) => { onKey(e) }} className="material-icons">close</i></p>)
+                        return (<p id={item} key={item}
+                            {...(!disabled && { onClick: (e) => onClick(e) })}
+                            className={`${styles['item']} ${disabled ? styles['disabled'] : ''}`}
+                        >{t(item)} <i id={item} {...(!disabled && { tabIndex: 0 })} onKeyDown={(e) => { onKey(e) }} className="material-icons">close</i></p>)
                     })
                 }
             </div>

@@ -44,6 +44,44 @@ export const createJob = (title,
     })
 }
 
+export const editJob = (id, title,
+    description,
+    salary,
+    location,
+    experience,
+    vacation,
+    fullyRemote,
+    homeWork,
+    allTimeWork,
+    fullTime,
+    flexibleTime,
+    remoteInterview,
+    suitsNoExperience,
+    languages,
+    tech,
+    level) => {
+    const url = BASE_URL + PATHS.job.replace(":jobID", id);
+    return patch(url, {
+        title,
+        description,
+        salary,
+        location,
+        experience,
+        vacation,
+        fullyRemote,
+        homeWork,
+        allTimeWork,
+        fullTime,
+        flexibleTime,
+        remoteInterview,
+        suitsNoExperience,
+        languages,
+        tech,
+        level
+    })
+}
+
+
 export const getJob = (id) => {
     const url = BASE_URL + PATHS.job.replace(":jobID", id);
     return get(url);

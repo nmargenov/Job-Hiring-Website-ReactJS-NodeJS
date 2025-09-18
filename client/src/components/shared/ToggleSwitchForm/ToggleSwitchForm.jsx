@@ -17,14 +17,16 @@ export const ToggleSwitchForm = ({ check = false, action = () => { }, disabled =
         <>
             <label className={styles["switch"]}>
                 <input ref={inputRef} name={name} type="checkbox" value={check} checked={check} disabled={disabled} onChange={action} />
-                <span tabIndex={0} onKeyDown={(e) => {
-                    const syntheticEvent = {
-                        ...e,
-                        target: inputRef.current,
-                        currentTarget: inputRef.current,
-                    };
-                    onKey(syntheticEvent);
-                }}
+                <span
+                    {...(!disabled && { tabIndex: 0 })}
+                    onKeyDown={(e) => {
+                        const syntheticEvent = {
+                            ...e,
+                            target: inputRef.current,
+                            currentTarget: inputRef.current,
+                        };
+                        onKey(syntheticEvent);
+                    }}
                     className={`${styles.slider} ${styles.round}`}></span>
             </label>
         </>

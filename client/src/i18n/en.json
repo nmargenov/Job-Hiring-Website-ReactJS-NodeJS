@@ -191,5 +191,7 @@
     "archive-job": "Archive job",
     "archive-job-message": "Are you sure you want to archive the job listing? Once archived no one can apply to it! This is an irreversible process!",
     "archived-job-warning":"Job listing is archived, applications are no longer permitted!",
-    "edit-job":"Edit job"
+    "edit-job":"Edit job",
+    "already-submitted-job-edit":"You've submitted your request! Please wait an approval!"
+
 }
